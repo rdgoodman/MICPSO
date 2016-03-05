@@ -6,7 +6,7 @@ public class Edge {
 	private Node end;
 	private double[] startVals;
 	private double[] endVals;
-	private FactorEntry[] factors;
+	private FactorEntry[] factors; // potentials
 	
 	/**
 	 * Creates an edge between two nodes (order doesn't actually matter)
