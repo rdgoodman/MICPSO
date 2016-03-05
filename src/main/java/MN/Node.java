@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Node {
 	
-	ArrayList<Node> neighbors; // TODO: this is also the MB. Will need to build this
-	double[] vals; // values this Node can take on (discrete problem)
+	private ArrayList<Node> neighbors; // TODO: this is also the MB. Will need to build this
+	private double[] vals; // values this Node can take on (discrete problem)
 	
 	// TODO: need some way to indicate the variable in this...
 	
@@ -31,6 +31,14 @@ public class Node {
 
 	public void setNeighbors(ArrayList<Node> neighbors) {
 		this.neighbors = neighbors;
+	}
+
+	public double[] getVals() {
+		return vals;
+	}
+
+	public void setVals(double[] vals) {
+		this.vals = vals;
 	}
 
 }
