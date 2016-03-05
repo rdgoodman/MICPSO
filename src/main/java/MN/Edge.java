@@ -1,5 +1,7 @@
 package MN;
 
+import java.text.DecimalFormat;
+
 public class Edge {
 
 	private Node start;
@@ -39,5 +41,25 @@ public class Edge {
 		}
 	}
 
+	/**
+	 * Prints the factor potentials
+	 */
+	public void printFactors(){
+		System.out.println("Start \t End \t Factor");
+		DecimalFormat fourd = new DecimalFormat("#.####");
+		DecimalFormat oned = new DecimalFormat("#.####");
+
+		
+		int counter = 0;
+		
+		// creates a new potential for each combination of start and end node vals
+		for (int s = 0; s < startVals.length; s++){
+			for (int e = 0; e < endVals.length; e++){
+				System.out.println(oned.format(startVals[s]) + "\t " + oned.format(endVals[e]) + "\t " + fourd.format(factors[counter].getPotential()));
+				counter++;
+			}
+		}
+		
+	}
 
 }
