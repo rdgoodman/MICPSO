@@ -7,8 +7,14 @@ public class MarkovNetwork {
 	private ArrayList<Node> nodes;
 	private ArrayList<Edge> edges;
 	
+	public MarkovNetwork(){
+		// TODO: read in from file
+	}
 	
 	
+	/**
+	 * Use this to create the network structure (known) for the network
+	 */
 	private void createNetworkStructure(){
 		// TODO: finish this
 		
@@ -17,8 +23,7 @@ public class MarkovNetwork {
 		// step 2: create edges 
 		
 		// step 3: ...with any luck, we can have the Node class keep track of its 
-		// own Markov blanket
-		
+		// own Markov blanket		
 	}
 
 	/**
