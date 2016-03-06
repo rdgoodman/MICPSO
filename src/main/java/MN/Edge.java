@@ -45,6 +45,7 @@ public class Edge {
 	 * Prints the factor potentials
 	 */
 	public void printFactors(){
+		System.out.println("phi[" + start.getName() + ", " + end.getName() + "]");
 		System.out.println("Start \t End \t Factor");
 		DecimalFormat fourd = new DecimalFormat("#.####");
 		DecimalFormat oned = new DecimalFormat("#.####");

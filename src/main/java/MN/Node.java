@@ -6,6 +6,7 @@ public class Node {
 	
 	private ArrayList<Node> neighbors; // TODO: this is also the MB. Will need to build this
 	private double[] vals; // values this Node can take on (discrete problem)
+	private String name;
 	
 	// TODO: need some way to indicate the variable in this...
 	
@@ -13,9 +14,10 @@ public class Node {
 	 * Creates a new Node
 	 * @param vals the values this Node's variable can take on (must be a discrete problem, i.e. finite size)
 	 */
-	public Node(double[] vals){
+	public Node(double[] vals, String name){
 		this.vals = vals;
 		neighbors = new ArrayList<Node>();
+		this.name = name;
 	}
 	
 	/**
@@ -39,6 +41,14 @@ public class Node {
 
 	public void setVals(double[] vals) {
 		this.vals = vals;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
