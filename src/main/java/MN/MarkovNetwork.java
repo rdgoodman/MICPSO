@@ -18,4 +18,12 @@ public class MarkovNetwork {
 		
 	}
 
+	/**
+	 * Returns the result of Gibbs sampling this distribution
+	 * @return
+	 */
+	private Sample Sample(){
+		// TODO: stub
+		return null;
+	}
 }
