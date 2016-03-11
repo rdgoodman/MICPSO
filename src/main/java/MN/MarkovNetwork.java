@@ -55,22 +55,32 @@ public class MarkovNetwork {
 			}
 		}
 
-		// 2) For each non-evidence variable (so, all of them) [order doesn't
+		// 2) For each non-evidence variable (so, all of them) [order
+		// doesn't
 		// matter]...
+		for (Node n : nodes) {
 
-		// 3) Pick a variable, X
+			// 3) Pick a variable, X
 
-		// 4) Calculate P(X|MB(X)) using current values for MB(X)
+			// 4) Calculate P(X|MB(X)) using current values for MB(X)
+			ArrayList<Node> MB = n.getMB();
+			for (Node m : MB){
+				// TODO: pull factor entries related to values of nodes in MBs
+				// TODO: ALSO, get n's own probability dist as well (how?)
+				
+			}
+			
+			
+			// 5) Resample value of X using the above distribution
 
-		// 5) Resample value of X using the above distribution
+			// 5a) For each value in vals(X), calculate basically the clique
+			// potential
+			// (in red on notes from 3/6)
 
-		// 5a) For each value in vals(X), calculate basically the clique
-		// potential
-		// (in red on notes from 3/6)
+			// 5b) Normalize results
 
-		// 5b) Normalize results
-
-		// 5c) Sample
+			// 5c) Sample
+		}
 
 		// end for
 

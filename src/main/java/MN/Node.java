@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Node {
 	
-	private ArrayList<Node> neighbors; // TODO: this is also the MB. Will need to build this
+	private ArrayList<Node> MB; // TODO: this is also the MB. Will need to build this
 	private double[] vals; // values this Node can take on (discrete problem)
 	private String name;
 	
@@ -16,7 +16,7 @@ public class Node {
 	 */
 	public Node(double[] vals, String name){
 		this.vals = vals;
-		neighbors = new ArrayList<Node>();
+		MB = new ArrayList<Node>();
 		this.name = name;
 	}
 	
@@ -24,15 +24,15 @@ public class Node {
 	 * Adds a neighbor to this node (must create Edge separately)
 	 */
 	public void addNeighbor(Node n){
-		neighbors.add(n);
+		MB.add(n);
 	}
 	
-	public ArrayList<Node> getNeighbors() {
-		return neighbors;
+	public ArrayList<Node> getMB() {
+		return MB;
 	}
 
-	public void setNeighbors(ArrayList<Node> neighbors) {
-		this.neighbors = neighbors;
+	public void setMB(ArrayList<Node> neighbors) {
+		this.MB = neighbors;
 	}
 
 	public double[] getVals() {
