@@ -64,8 +64,17 @@ public class MarkovNetwork {
 
 			// 4) Calculate P(X|MB(X)) using current values for MB(X)
 			ArrayList<Node> MB = n.getMB();
+			ProbDist probs = new ProbDist(n.getVals());
+			
 			for (Node m : MB){
-				// TODO: pull factor entries related to values of nodes in MBs
+				// TODO: pull factor entries related to values of nodes (from sample) in MBs
+				// i.e. pull all FactorEntries where the value of m is compatible with the current sample
+				// feed results of multiplication into ProbDist object
+				
+				// TODO: JESUS FUCKING CHRIST THE POTENTIALS ARE ON THE EDGES FOR FUCKS SAKE
+				// so really, we need to pull the factor entries related to the EDGES between n and m
+				
+				
 				// TODO: ALSO, get n's own probability dist as well (how?)
 				
 			}
