@@ -18,9 +18,7 @@ public class EdgeTest {
 		Node B = new Node(bVals, "B");
 		
 		Edge AB = new Edge(A, B);
-		AB.printFactors();
-
-		
+		AB.printFactors();		
 	}
 
 }
