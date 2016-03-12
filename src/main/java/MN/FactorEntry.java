@@ -23,7 +23,18 @@ public class FactorEntry {
 		// TODO: might wanna rethink this random initialization, I guess
 		this.potential = Math.random();
 	}
+	
 
+	public double getValue(Node n){
+		if (n.equals(A)){
+			return valA;
+		} else if (n.equals(B)){
+			return valB;
+		}
+		// TODO: throw exception
+		return Double.MIN_VALUE;
+	}
+	
 	public Double getPotential() {
 		return potential;
 	}
@@ -51,6 +62,7 @@ public class FactorEntry {
 	public Double getValA() {
 		return valA;
 	}
+	
 
 	public void setValA(Double valA) {
 		this.valA = valA;

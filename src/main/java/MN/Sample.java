@@ -20,8 +20,17 @@ public class Sample {
 	 * @param n Node which has been sampled
 	 * @param value Value sampled for the node's variable
 	 */
-	protected void setInitialValue(Node n, Double value){
+	protected void setSampledValue(Node n, Double value){
 		values.put(n, value);
+	}
+	
+	/**
+	 * Returns the value assigned to Node n
+	 * @param n
+	 * @return
+	 */
+	protected double getValue(Node n){
+		return values.get(n);
 	}
 	
 	

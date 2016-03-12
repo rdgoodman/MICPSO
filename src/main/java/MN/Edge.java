@@ -39,6 +39,25 @@ public class Edge {
 	}
 	
 	/**
+	 * Returns the factor associated with a particular assignment to both endpoints
+	 * @param n1
+	 * @param valN1
+	 * @param n2
+	 * @param valN2
+	 * @return
+	 */
+	protected double getPotential(Node n1, double valN1, Node n2, double valN2){	
+		// search through factorentry[]
+		for (FactorEntry f : factors){
+			if (f.getValue(n1) == valN1 && f.getValue(n2) == valN2){
+				return f.getPotential();
+			}
+		}
+		// TODO: throw exception
+		return 0.0;
+	}
+	
+	/**
 	 * Returns true if the given node is an endpoint for this Edge
 	 */
 	public Boolean hasEndpoint(Node n){
@@ -69,6 +88,22 @@ public class Edge {
 			}
 		}
 		
+	}
+
+	public LinkedList<Node> getEndpoints() {
+		return endpoints;
+	}
+
+	public void setEndpoints(LinkedList<Node> endpoints) {
+		this.endpoints = endpoints;
+	}
+
+	public FactorEntry[] getFactors() {
+		return factors;
+	}
+
+	public void setFactors(FactorEntry[] factors) {
+		this.factors = factors;
 	}
 
 }
