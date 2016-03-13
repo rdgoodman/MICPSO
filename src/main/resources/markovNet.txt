@@ -1,0 +1,9 @@
+% Names of all variables in Markov network (comma separated)
+A, B, C, D
+
+% Edges in Markov network (in format A,B to indicate edge between A & B) - order does not matter, semi-colon separated
+A,B; B,C; C,D; D,A
+
+% Values for the variables in the Markov network (variable on left of colon)
+A: 0, 1; B: 2, 3; C: 4, 5; D: 6, 7
+
