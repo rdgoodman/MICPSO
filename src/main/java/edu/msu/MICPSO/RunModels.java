@@ -8,8 +8,6 @@ import MN.Node;
 
 public class RunModels {
 
-	private static double[] vals;
-
 	public static void main(String[] args) throws FileNotFoundException {
 		//TODO: Clean this up, make more universal
 		
@@ -17,7 +15,7 @@ public class RunModels {
 		Scanner s = null;
 		
 		// The filePath and fileName where the Markov net file is located
-		String filePath = "C:/Users/Monica/Desktop/";
+		String filePath = "src/main/resources/";
 		String fileName = "markovNet.txt";
 		
 		// array for storing node names
