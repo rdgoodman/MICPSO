@@ -12,6 +12,15 @@ public class MarkovNetwork {
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 	}
+	
+	public MarkovNetwork(ArrayList<Node> nodes, ArrayList<Edge> edges) {
+		// TODO: for testing only
+		this.nodes = nodes;
+		this.edges = edges;
+		
+		System.out.println("Created our network!");
+		print();
+	}
 
 	/**
 	 * Use this to create the network structure (known) for the network
@@ -123,5 +132,16 @@ public class MarkovNetwork {
 
 	public void setEdges(ArrayList<Edge> edges) {
 		this.edges = edges;
+	}
+	
+	public void print(){
+		System.out.println("NODES");
+		for (int i = 0; i < nodes.size(); i++){
+			System.out.println("> " + nodes.get(i).getName());
+		}
+		System.out.println("EDGES");
+		for (int i = 0; i < edges.size(); i++){
+			edges.get(i).printFactors();
+		}
 	}
 }

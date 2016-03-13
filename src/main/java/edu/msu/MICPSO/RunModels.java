@@ -1,9 +1,11 @@
 package edu.msu.MICPSO;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import MN.Edge;
+import MN.MarkovNetwork;
 import MN.Node;
 
 public class RunModels {
@@ -22,7 +24,10 @@ public class RunModels {
         String[] nodes = null;
         String[] edges = null;
         String[] stringValues = null;
-        Node[] nodeArray = new Node[4];
+       // Node[] nodeArray = new Node[4];
+        ArrayList<Node> nodesArray = new ArrayList<Node>();
+        ArrayList<Edge> edgesArray = new ArrayList<Edge>();
+        
 		      
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(filePath + fileName);
@@ -137,7 +142,7 @@ public class RunModels {
         	thisVal = Double.parseDouble(stringValues[i].substring(3, 4));
         	values[n] = thisVal;
         	Node thisNode = new Node (values, nodeName);          	
-        	nodeArray[i] = thisNode;
+        	nodesArray.add(thisNode);
         }
         
         //TODO: Clean this up
@@ -146,28 +151,32 @@ public class RunModels {
         Node bNode = null;
     
         // for each edge
-        for(int i = 0; i < edges.length; i++) {
+        // TODO: oh sweet jesus fix the size issue
+        for(int i = 0; i < 4; i++) {
         	// for each node in the array
-        	for (int n = 0; n < nodeArray.length; n++) {
+        	for (int n = 0; n < 4; n++) {
         		// get the first node in the edge
-        		if (edges[i].startsWith(nodeArray[n].getName())) {
-        			aNode = nodeArray[n];
+        		if (edges[i].startsWith(nodesArray.get(n).getName())) {
+        			aNode = nodesArray.get(n);
         		}
         	}
-
-        	for (int n = 0; n < nodeArray.length; n++) {
+        	// TODO: fix it here too
+        	for (int n = 0; n < 4; n++) {
         		// get the first node in the edge
-        		if (edges[i].endsWith(nodeArray[n].getName())) {
-        			bNode = nodeArray[n];
+        		if (edges[i].endsWith(nodesArray.get(n).getName())) {
+        			bNode = nodesArray.get(n);
         		}
         		
         	}
         	
         	Edge E = new Edge (aNode, bNode);
+        	edgesArray.add(E);
         	aNode.addNeighbor(bNode);
         	bNode.addNeighbor(aNode);        	
-        	E.printFactors();
-        }  	
+        	//E.printFactors();
+        }  
+        
+        MarkovNetwork MN = new MarkovNetwork(nodesArray, edgesArray);
 
     }
 }
