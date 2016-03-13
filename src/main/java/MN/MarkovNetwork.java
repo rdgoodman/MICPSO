@@ -40,20 +40,19 @@ public class MarkovNetwork {
 	 * 
 	 * @return
 	 */
-	private Sample Sample() {
-
+	public Sample sample() {
+		
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
 		for (Node n : nodes) {
-			// TODO: chosen uniformly - does that work?
+			// chosen uniformly - does that work?
 			double[] vals = n.getVals();
 			double r = Math.random();
-			double interval = 1 / vals.length;
-
-			// TODO: holy guacamole, test this
+			double interval = (double) 1 / vals.length;
+			
 			int counter = 0;
-			for (double i = 0; i <= 1; i += interval) {
+			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
 					sample.setSampledValue(n, vals[counter]);
 					break;
@@ -61,7 +60,7 @@ public class MarkovNetwork {
 				counter++;
 			}
 		}
-
+		
 		// 2) For each non-evidence variable (so, all of them) [order
 		// doesn't
 		// matter]...
@@ -115,6 +114,10 @@ public class MarkovNetwork {
 			}
 
 		}
+		
+		// TODO: testing, remove
+		sample.print();
+		
 		return sample;
 	}
 

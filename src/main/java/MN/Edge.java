@@ -73,7 +73,7 @@ public class Edge {
 	 */
 	public void printFactors(){
 		System.out.println("phi[" + endpoints.getFirst().getName() + ", " + endpoints.getLast().getName() + "]");
-		System.out.println("Start \t End \t Factor");
+		System.out.println(endpoints.getFirst().getName() + "\t " + endpoints.getLast().getName() + "\t Factor");
 		DecimalFormat fourd = new DecimalFormat("#.####");
 		DecimalFormat oned = new DecimalFormat("#.####");
 

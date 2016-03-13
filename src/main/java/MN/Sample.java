@@ -1,6 +1,7 @@
 package MN;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 public class Sample {
 
@@ -33,5 +34,11 @@ public class Sample {
 		return values.get(n);
 	}
 	
+	public void print(){
+        Set<Node> keys = values.keySet();
+        for(Node key : keys){
+            System.out.println(key.getName() + ": " + values.get(key));
+        }
+	}
 	
 }

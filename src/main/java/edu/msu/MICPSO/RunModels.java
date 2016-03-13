@@ -177,6 +177,7 @@ public class RunModels {
         }  
         
         MarkovNetwork MN = new MarkovNetwork(nodesArray, edgesArray);
+        MN.sample();
 
     }
 }
