@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public class Node {
 	
-	private ArrayList<Node> MB; // TODO: this is also the MB. Will need to build this
+	private ArrayList<Node> MB; // TODO: Will need to build this
 	private double[] vals; // values this Node can take on (discrete problem)
 	private String name;
-	
-	// TODO: need some way to indicate the variable in this...
-	
+		
 	/**
 	 * Creates a new Node
 	 * @param vals the values this Node's variable can take on (must be a discrete problem, i.e. finite size)

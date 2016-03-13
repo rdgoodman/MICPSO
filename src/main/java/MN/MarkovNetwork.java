@@ -23,9 +23,7 @@ public class MarkovNetwork {
 
 		// step 2: create edges
 
-		// step 3: ...with any luck, we can have the Node class keep track of
-		// its
-		// own Markov blanket
+		// each time an edge A-B is created, do: A.addNeighbor(B) and B.addNeighbor(A)
 	}
 
 	/**
