@@ -139,7 +139,8 @@ public class RunModels {
         	Node thisNode = new Node (values, nodeName);          	
         	nodeArray[i] = thisNode;
         }
-        	
+        
+        //TODO: Clean this up
         // initialize edges
         Node aNode = null;
         Node bNode = null;
@@ -163,6 +164,8 @@ public class RunModels {
         	}
         	
         	Edge E = new Edge (aNode, bNode);
+        	aNode.addNeighbor(bNode);
+        	bNode.addNeighbor(aNode);        	
         	E.printFactors();
         }  	
 
