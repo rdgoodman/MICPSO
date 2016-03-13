@@ -61,13 +61,18 @@ public class MarkovNetwork {
 			}
 		}
 		
+		System.out.println(" Initial sample: ");
+		sample.print();
+		
 		// 2) For each non-evidence variable (so, all of them) [order
 		// doesn't
 		// matter]...
 		for (Node N : nodes) {
+			
+			System.out.println(">>>>> Resampling Node " + N.getName());
 
 			// 4) Calculate P(X|MB(X)) using current values for MB(X)
-			ArrayList<Node> MB = N.getMB();
+			ArrayList<Node> MB = N.getMB();			
 			ArrayList<Edge> E = new ArrayList<Edge>();
 
 			// Get all edges adjacent to N (there must be a better way to do
@@ -86,8 +91,10 @@ public class MarkovNetwork {
 			// for each value of N
 			double[] nVals = N.getVals();
 			for (int n = 0; n < nVals.length; n++) {
+				//System.out.println();
+				//System.out.print("P~ (" + N.getName() + " == " + nVals[n] + ") \n");
 
-				for (Node M : MB) {
+				for (Node M : MB) {					
 					Edge edge = null;
 					// pull the edge between N and M
 					for (Edge e : E) {
@@ -101,13 +108,18 @@ public class MarkovNetwork {
 
 					// get potential where M=mVal and N=nVals[n]
 					double p = edge.getPotential(N, nVals[n], M, mVal);
+					//System.out.print(p + "[" +  M.getName() + " == " + mVal + "] *");
 
 					// multiply current P(N==n) by p
 					probs.setProb(nVals[n], probs.getProb(nVals[n]) * p);
 				}
+				
+				//probs.print();
 
 				// re-normalize
 				probs.normalize();
+				
+				//probs.print();
 
 				// re-sample resulting distribution for N
 				sample.setSampledValue(N, probs.sample());
@@ -116,6 +128,7 @@ public class MarkovNetwork {
 		}
 		
 		// TODO: testing, remove
+		System.out.println("\n Final sample: ");
 		sample.print();
 		
 		return sample;
