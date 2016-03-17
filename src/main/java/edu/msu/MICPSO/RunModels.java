@@ -175,49 +175,47 @@ public class RunModels {
         	Node thisNode = new Node (values, nodeName);          	
         	nodesArray.add(thisNode);
         }
-        
-        //TODO: Clean this up
-        // initialize edges
-        Node aNode = null;
-        Node bNode = null;
+
+        // makes temporary node objects to store the start/end of an edge 
+        Node startingNode = null;
+        Node endingNode = null;
     
-        // for each edge
-        // TODO: oh sweet jesus fix the size issue
-        for(int i = 0; i < 4; i++) {
-        	// for each node in the array
-        	for (int n = 0; n < 4; n++) {
-        		// get the first node in the edge
-        		if (stringEdges[i].startsWith(nodesArray.get(n).getName())) {
-        			aNode = nodesArray.get(n);
+        // goes through each edge in the array of edges (from the file read in earlier)
+        for(int e = 0; e < stringEdges.length; e++) {
+        	// for each node in the array of Nodes gets the starting and ednging nodes
+        	for (int n = 0; n < nodesArray.size(); n++) {        	
+        		// gets the first node from the string array of edges
+        		if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
+        			startingNode = nodesArray.get(n);
         		}
         	}
-        	// TODO: fix it here too
-        	for (int n = 0; n < 4; n++) {
-        		// get the first node in the edge
-        		if (stringEdges[i].endsWith(nodesArray.get(n).getName())) {
-        			bNode = nodesArray.get(n);
-        		}
-        		
+
+        	for (int n = 0; n < nodesArray.size(); n++) {
+        		// get the last node from the string array of edges
+        		if (stringEdges[e].endsWith(nodesArray.get(n).getName())) {
+        			endingNode = nodesArray.get(n);
+        		}	
         	}
         	
-        	Edge E = new Edge (aNode, bNode);
+        	Edge E = new Edge (startingNode, endingNode);
         	edgesArray.add(E);
-        	aNode.addNeighbor(bNode);
-        	bNode.addNeighbor(aNode);        	
+        	startingNode.addNeighbor(endingNode);
+        	endingNode.addNeighbor(startingNode);        	
         }  
         
         MarkovNetwork MN = new MarkovNetwork(nodesArray, edgesArray);
         MN.sample();
 
-        System.out.println("Nodes");
-        for (int i = 0; i < nodesArray.size(); i++) {
-			System.out.println("> " + nodesArray.get(i).getName());;
-        }
-
-        System.out.println("Edges");
-        for (int i = 0; i < edgesArray.size(); i++) {
-        	edgesArray.get(i).printFactors();
-        }
+// 		  for testing - remove when finished        
+//        System.out.println("Nodes");
+//        for (int i = 0; i < nodesArray.size(); i++) {
+//			System.out.println("> " + nodesArray.get(i).getName());;
+//        }
+//
+//        System.out.println("Edges");
+//        for (int i = 0; i < edgesArray.size(); i++) {;
+//        	edgesArray.get(i).printFactors();
+//        }
         
     }
 }
