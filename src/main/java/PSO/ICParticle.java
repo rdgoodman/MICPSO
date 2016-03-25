@@ -1,8 +1,14 @@
 package PSO;
 
+import MN.ProbDist;
 import MN.Sample;
 
 public class ICParticle implements Particle {
+	
+	private Sample pBest;
+	private ProbDist[] probs; 
+	// TODO: will have to create Nodes for our variables as well, even though this isn't an MN
+	// so we can create samples
 
 	@Override
 	public Sample sample() {
@@ -44,6 +50,12 @@ public class ICParticle implements Particle {
 	public Particle copy() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void bias(double epsilon) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
