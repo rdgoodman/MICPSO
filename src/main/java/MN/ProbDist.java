@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class ProbDist {
 
 	ProbDistEntry[] probs;
+	Node N;
 
-	public ProbDist(double[] possibleVals) {
+	public ProbDist(double[] possibleVals, Node N) {
 		probs = new ProbDistEntry[possibleVals.length];
+		this.N = N;
 
 		// create an empty ( == 1) entry for every possible value
 		for (int i = 0; i < probs.length; i++) {
