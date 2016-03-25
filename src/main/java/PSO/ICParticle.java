@@ -1,14 +1,24 @@
 package PSO;
 
+import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
 
 public class ICParticle implements Particle {
 	
 	private Sample pBest;
+	private Node[] variables;
 	private ProbDist[] probs; 
-	// TODO: will have to create Nodes for our variables as well, even though this isn't an MN
-	// so we can create samples
+
+	
+	public ICParticle(String filename){
+		// TODO: read stuff from file. It's hard.
+		
+		// procedure:
+		
+		// 1) create Nodes
+		// 2) foreach Node, create a ProbDist with its list of values and itself
+	}
 
 	@Override
 	public Sample sample() {
