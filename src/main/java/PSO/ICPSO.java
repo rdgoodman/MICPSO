@@ -37,9 +37,7 @@ public class ICPSO {
 		this.phi2 = phi2;
 		
 		pop = new ArrayList<Particle>();
-		
-		// TODO: read Nodes from file
-		
+				
 		
 		// loop to create population:
 		// Particle constructor takes fileName

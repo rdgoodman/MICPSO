@@ -89,8 +89,9 @@ public class ProbDist {
 	}
 
 	public void print() {
+		System.out.println("Variable: " + N.getName());
 		for (int i = 0; i < probs.length; i++) {
-			System.out.println("Pr(" + probs[i].getValue() + ") =" + probs[i].getProb());
+			System.out.println("> Pr(" + probs[i].getValue() + ") =" + probs[i].getProb());
 		}
 	}
 

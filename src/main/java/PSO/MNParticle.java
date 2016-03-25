@@ -52,4 +52,10 @@ public class MNParticle implements Particle {
 		
 	}
 
+	@Override
+	public void print() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

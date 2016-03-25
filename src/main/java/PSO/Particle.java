@@ -12,5 +12,6 @@ public interface Particle {
 	public void adjustPBest();
 	public void bias(double epsilon);
 	public Particle copy(); // TODO: will return a deep copy of this particle
+	public void print();
 
 }

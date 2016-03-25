@@ -17,7 +17,7 @@ public class MarkovNetwork {
     String[] stringEdges = null;
     String[] stringValues = null;
 	
-    // the largest number of nodes associated with any node
+    // the largest number of values associated with any node
     int numValues = 0;
 
 	public MarkovNetwork() throws FileNotFoundException {		
@@ -173,7 +173,7 @@ public class MarkovNetwork {
     
         // goes through each edge in the array of edges (from the file read in earlier)
         for(int e = 0; e < stringEdges.length; e++) {
-        	// for each node in the array of Nodes gets the starting and ednging nodes
+        	// for each node in the array of Nodes gets the starting and ending nodes
         	for (int n = 0; n < nodesArray.size(); n++) {        	
         		// gets the first node from the string array of edges
         		if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
