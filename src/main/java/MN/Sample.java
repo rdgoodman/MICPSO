@@ -10,6 +10,7 @@ public class Sample {
 	// will we be using an index or ID or something for nodes? I don't freaking know
 	
 	private Hashtable<Node, Double> values;
+	private double fitness;
 	
 	/**
 	 * For MICPSO
@@ -31,7 +32,7 @@ public class Sample {
 	 * @param n Node which has been sampled
 	 * @param value Value sampled for the node's variable
 	 */
-	protected void setSampledValue(Node n, Double value){
+	public void setSampledValue(Node n, Double value){
 		values.put(n, value);
 	}
 	
@@ -49,6 +50,14 @@ public class Sample {
         for(Node key : keys){
             System.out.println(key.getName() + ": " + values.get(key));
         }
+	}
+
+	public double getFitness() {
+		return fitness;
+	}
+
+	public void setFitness(double fitness) {
+		this.fitness = fitness;
 	}
 	
 }

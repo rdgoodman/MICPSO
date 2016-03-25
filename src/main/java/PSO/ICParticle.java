@@ -17,8 +17,11 @@ public class ICParticle implements Particle {
 	private Sample pBest;
 	private Node[] variables;
 	private ProbDist[] probs;
+	private FitnessFunction f;
 
-	public ICParticle(String fileName) throws FileNotFoundException {
+	public ICParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
+		this.f = f;
+		
 		// TODO: read stuff from file. It's hard.
 
 		// procedure:
@@ -139,8 +142,15 @@ public class ICParticle implements Particle {
 
 	@Override
 	public Sample sample() {
-		// TODO Auto-generated method stub
-		return null;
+		Sample s = new Sample();
+		
+		// builds a sample by independently sampling every distribution
+		for (int i = 0; i < probs.length; i++){
+			double val = probs[i].sample();
+			s.setSampledValue(probs[i].getNode(), val);
+		}
+		
+		return s;
 	}
 
 	@Override

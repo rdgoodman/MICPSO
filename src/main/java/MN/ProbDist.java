@@ -34,7 +34,7 @@ public class ProbDist {
 	/**
 	 * Samples from this distribution, returns sampled value
 	 */
-	protected double sample() {
+	public double sample() {
 		double p = Math.random();
 
 		// create upper and lower bounds
@@ -93,6 +93,14 @@ public class ProbDist {
 		for (int i = 0; i < probs.length; i++) {
 			System.out.println("> Pr(" + probs[i].getValue() + ") =" + probs[i].getProb());
 		}
+	}
+
+	public Node getNode() {
+		return N;
+	}
+
+	public void setNode(Node n) {
+		N = n;
 	}
 
 }
