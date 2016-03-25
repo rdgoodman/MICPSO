@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import PSO.FitnessFunction;
 import PSO.GCFitnessFunction;
 import PSO.ICParticle;
 
@@ -16,8 +15,7 @@ public class ICParticleTest {
 	public void testInitialization() throws FileNotFoundException {		
 		
 		String filename = ("src/main/resources/markovNet.txt");
-		// TODO; this fitness function stuff is probably all kinds of broken
-		ICParticle p = new ICParticle(filename, (FitnessFunction) new GCFitnessFunction());
+		ICParticle p = new ICParticle(filename, new GCFitnessFunction());
 		p.print();
 	}
 

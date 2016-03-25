@@ -1,7 +1,9 @@
 package PSO;
 
+import MN.Sample;
+
 public interface FitnessFunction {
 	
-	public double calcFitness();
+	public double calcFitness(Sample s);
 
 }
