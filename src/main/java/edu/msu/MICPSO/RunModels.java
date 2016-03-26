@@ -16,5 +16,6 @@ public class RunModels {
         
         // samples the above network using Gibbs sampling
         MN.sample();
+	
     }
 }
