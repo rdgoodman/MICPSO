@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class ProbDist {
 
 	ProbDistEntry[] probs;
+	Node N;
 
-	public ProbDist(double[] possibleVals) {
+	public ProbDist(double[] possibleVals, Node N) {
 		probs = new ProbDistEntry[possibleVals.length];
+		this.N = N;
 
 		// create an empty ( == 1) entry for every possible value
 		for (int i = 0; i < probs.length; i++) {
@@ -32,7 +34,7 @@ public class ProbDist {
 	/**
 	 * Samples from this distribution, returns sampled value
 	 */
-	protected double sample() {
+	public double sample() {
 		double p = Math.random();
 
 		// create upper and lower bounds
@@ -87,9 +89,18 @@ public class ProbDist {
 	}
 
 	public void print() {
+		System.out.println("Variable: " + N.getName());
 		for (int i = 0; i < probs.length; i++) {
-			System.out.println("Pr(" + probs[i].getValue() + ") =" + probs[i].getProb());
+			System.out.println("> Pr(" + probs[i].getValue() + ") =" + probs[i].getProb());
 		}
+	}
+
+	public Node getNode() {
+		return N;
+	}
+
+	public void setNode(Node n) {
+		N = n;
 	}
 
 }
