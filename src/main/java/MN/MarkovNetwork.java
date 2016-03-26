@@ -38,7 +38,7 @@ public class MarkovNetwork {
         try {
         	s = new Scanner(new BufferedReader(new FileReader(file)));
                         
-            String potential;
+            String tempVal;
             
             /*
              * Reads the file, ignoring lines with % (which are comment lines).
@@ -52,50 +52,50 @@ public class MarkovNetwork {
              */
             while (s.hasNext()) {
             	// Read the first line in the file
-                potential = s.nextLine();
+                tempVal = s.nextLine();
                 
                 // gets the type of problem first
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 }                 
                
-                problemType = potential;
+                problemType = tempVal;
 
                 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
 
                 // gets the number associated with the optimal solution
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                 
                 
                // if the line is not a comment, per the file structure is the optimal number
                // associated with the solution 
-                if(!potential.startsWith("%")) {
-                	optimalNo = Integer.parseInt(potential);            
+                if(!tempVal.startsWith("%")) {
+                	optimalNo = Integer.parseInt(tempVal);            
                 }
                 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
                 
                 
                 // gets the node info first
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                                 
                 // splits the string into an array of separate node objects
-                if (!potential.startsWith("%")){
-        			stringNodes = potential.split(",");
+                if (!tempVal.startsWith("%")){
+        			stringNodes = tempVal.split(",");
                 }
                 	
                 // trims extra whitespace from node objects
@@ -107,18 +107,18 @@ public class MarkovNetwork {
                 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
                       
                 // gets the edge info first
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                 
                // if the line is not a comment, per the file structure is the edges 
-                if(!potential.startsWith("%")) {
-                	stringEdges = potential.split(";");            
+                if(!tempVal.startsWith("%")) {
+                	stringEdges = tempVal.split(";");            
                 }
                 
                 // trims extra whitespace from edge objects
@@ -130,18 +130,18 @@ public class MarkovNetwork {
 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
                 
                 // get variable info
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                                            	
                 // if the line is not a comment, per file structure is values
-                if(!potential.startsWith("%")) {
-                	stringValues = potential.split(";");            
+                if(!tempVal.startsWith("%")) {
+                	stringValues = tempVal.split(";");            
                 }
                 
                 // trims the extra information and gets the (in node order) values
