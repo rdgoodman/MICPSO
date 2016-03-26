@@ -1,3 +1,9 @@
+% Indicates whether the problem is Graph Coloring (GS) or Dominating Set (DS)
+DS
+
+% The number associated with the optimal solution of the above problem
+3
+
 % Names of all variables in Markov network (comma separated)
 A, B, C, D
 

@@ -12,8 +12,11 @@ public class MarkovNetwork {
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 	
-   	// Arrays for storing the string values read in from file
-    String[] stringNodes = null;
+   	// Variables for storing the string values read in from file
+	// TODO: Right now we are not doing anything with problemType or optimalNo
+    String problemType = "";
+    int optimalNo = 0;
+	String[] stringNodes = null;
     String[] stringEdges = null;
     String[] stringValues = null;
 	
@@ -48,15 +51,48 @@ public class MarkovNetwork {
              * 
              */
             while (s.hasNext()) {
-            	 // Read the first line in the file
+            	// Read the first line in the file
                 potential = s.nextLine();
-                	
+                
+                // gets the type of problem first
+                // checks for comments, when present, discards them
+                while (potential.startsWith("%")) {
+                	potential = s.nextLine();
+                }                 
+               
+                problemType = potential;
+
+                
+                //keep scanning for the next non-empty line
+                if (s.nextLine().equals("")) {
+                	potential = s.nextLine();
+                }
+
+                // gets the number associated with the optimal solution
+                // checks for comments, when present, discards them
+                while (potential.startsWith("%")) {
+                	potential = s.nextLine();
+                } 
+                
+                
+               // if the line is not a comment, per the file structure is the optimal number
+               // associated with the solution 
+                if(!potential.startsWith("%")) {
+                	optimalNo = Integer.parseInt(potential);            
+                }
+                
+                //keep scanning for the next non-empty line
+                if (s.nextLine().equals("")) {
+                	potential = s.nextLine();
+                }
+                
+                
                 // gets the node info first
                 // checks for comments, when present, discards them
                 while (potential.startsWith("%")) {
                 	potential = s.nextLine();
                 } 
-                               
+                                
                 // splits the string into an array of separate node objects
                 if (!potential.startsWith("%")){
         			stringNodes = potential.split(",");
@@ -131,6 +167,7 @@ public class MarkovNetwork {
             }
             // creates the Markov network
             createNetworkStructure();
+            
         } finally {
             if (s != null) {
                 s.close();
@@ -194,6 +231,7 @@ public class MarkovNetwork {
         	startingNode.addNeighbor(endingNode);
         	endingNode.addNeighbor(startingNode);        	
         }
+               
         // for testing, can remove when finished
         print();
 	}
