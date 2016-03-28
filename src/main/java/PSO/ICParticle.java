@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import MN.Edge;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
@@ -16,22 +15,31 @@ public class ICParticle implements Particle {
 
 	private Sample pBest;
 	private Node[] variables;
-	private ProbDist[] probs;
+	//TODO: Is this okay I changed this to an array list? If so delete commented out lines
+	private ArrayList<ProbDist> probs = new ArrayList<ProbDist>();
+	//private ProbDist[] probs = null;
 	private FitnessFunction f;
 
+	// Array list for storing nodes
+	private ArrayList<Node> nodesArray = new ArrayList<Node>();
+	
 	public ICParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
 		this.f = f;
 		
-		// TODO: read stuff from file. It's hard.
-
+		// TODO: read stuff from file. It's hard. 
 		// procedure:
-
 		// 1) create Nodes
 		// 2) foreach Node, create a ProbDist with its list of values and itself
 
-		// Arrays for storing the string values read in from file
+	   	// Variables for storing the string values read in from file
+		// TODO: Right now we are not doing anything with problemType or optimalNo
+		// TODO: Update these comments, and move this in to own method
+		// TODO: Do I need to call normalize for the prob dist?
+	    String problemType = "";
+	    int optimalNo = 0;
 		String[] stringNodes = null;
 		String[] stringValues = null;
+		
 		// the largest number of values associated with any node
 		int numValues = 0;
 
@@ -45,32 +53,63 @@ public class ICParticle implements Particle {
 		try {
 			s = new Scanner(new BufferedReader(new FileReader(file)));
 
-			String potential;
+			String tempVal;
 
-			/*
-			 * Reads the file, ignoring lines with % (which are comment lines).
-			 * File is structured so that the nodes are first (comma separated),
-			 * followed by the edges (in form A, B semi-colon separated) and
-			 * then the values for the variables (in form A: 0, 1). The values
-			 * need to be in the same order as the node variables. At this
-			 * stage, the variables are read in as strings, and after the file
-			 * is closed they are converted to the appropriate object type
-			 * (i.e., Node or Edge objects).
-			 * 
-			 */
+            /*
+             * Reads the file, ignoring lines with % (which are comment lines).
+             * File is structured so that the problem description (GC or DS) is first, 
+             * the number associated with the optimal solution is second, nodes are 
+             * next (comma separated), and then the values for the variables 
+             * (in form A: 0, 1). The values need to be in the same order as the node 
+             * variables. At this stage, the variables are read in as strings, and after 
+             * the file is closed they are converted to the appropriate object type 
+             * (i.e., Node objects).
+             * 
+             */
+			
 			while (s.hasNext()) {
 				// Read the first line in the file
-				potential = s.nextLine();
+				tempVal = s.nextLine();
 
+				// gets the type of problem first
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
+
+				problemType = tempVal;
+
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					tempVal = s.nextLine();
+				}
+
+				// gets the number associated with the optimal solution
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
+                
+               // if the line is not a comment, per the file structure is the optimal number
+               // associated with the solution 
+                if(!tempVal.startsWith("%")) {
+                	optimalNo = Integer.parseInt(tempVal);            
+                }
+                
+                //keep scanning for the next non-empty line
+                if (s.nextLine().equals("")) {
+                	tempVal = s.nextLine();
+                }
+				
 				// gets the node info first
 				// checks for comments, when present, discards them
-				while (potential.startsWith("%")) {
-					potential = s.nextLine();
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
 				}
 
 				// splits the string into an array of separate node objects
-				if (!potential.startsWith("%")) {
-					stringNodes = potential.split(",");
+				if (!tempVal.startsWith("%")) {
+					stringNodes = tempVal.split(",");
 				}
 
 				// trims extra whitespace from node objects
@@ -82,30 +121,30 @@ public class ICParticle implements Particle {
 
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
-					potential = s.nextLine();
+					tempVal = s.nextLine();
 				}
 
 				// reads the edge info, but we do not need it, so does not store
 				// them
 				// checks for comments, when present, discards them
-				while (potential.startsWith("%")) {
-					potential = s.nextLine();
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
 				}
 
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
-					potential = s.nextLine();
+					tempVal = s.nextLine();
 				}
 
 				// get variable info
 				// checks for comments, when present, discards them
-				while (potential.startsWith("%")) {
-					potential = s.nextLine();
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
 				}
 
 				// if the line is not a comment, per file structure is values
-				if (!potential.startsWith("%")) {
-					stringValues = potential.split(";");
+				if (!tempVal.startsWith("%")) {
+					stringValues = tempVal.split(";");
 				}
 
 				// trims the extra information and gets the (in node order)
@@ -125,19 +164,45 @@ public class ICParticle implements Particle {
 
 					tempNumValues = stringValues[i].split(",").length;
 					// finds the largest number of values for any nodes (for use
-					// in
-					// initializing the Node objects)
+					// in initializing the Node objects)
 					if (tempNumValues > numValues) {
 						numValues = tempNumValues;
 					}
 				}
-			}
-
+			}			
 		} finally {
 			if (s != null) {
 				s.close();
 			}
 		}
+		
+		//TODO: Move this into a separate method.
+		// step 1: create nodes
+        // initialize node and value objects from the string arrays
+        for(int i = 0; i < stringNodes.length; i++) {
+        	String nodeName = stringNodes[i];
+     	    double[] values = new double[numValues]; 
+     	    
+    		int startIndex = 0;
+    		int stopIndex = 1;
+    		
+        	// gets values from the value array
+        	for (int n = 0; n < numValues; n++) {
+        		// reminder: values are comma separated            	
+        		double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
+            	values[n] = thisVal;            	
+            	startIndex = startIndex + 2;
+            	stopIndex = startIndex + 1;
+        	}
+
+        	// creates a node with the appropriate values and node name 
+        	Node thisNode = new Node(values, nodeName);          	
+        	nodesArray.add(thisNode);
+        	ProbDist p = new ProbDist(values, thisNode);       	
+        	probs.add(p);    	
+        	//        	probs[i] = p;
+        }
+        print();
 	}
 
 	@Override
@@ -145,9 +210,12 @@ public class ICParticle implements Particle {
 		Sample s = new Sample();
 		
 		// builds a sample by independently sampling every distribution
-		for (int i = 0; i < probs.length; i++){
-			double val = probs[i].sample();
-			s.setSampledValue(probs[i].getNode(), val);
+		//for (int i = 0; i < probs.length; i++){
+		for (int i = 0; i < probs.size(); i++) {
+			//double val = probs[i].sample();
+			double val = probs.get(i).sample();
+			//s.setSampledValue(probs[i].getNode(), val);
+			s.setSampledValue(probs.get(i).getNode(), val);
 		}
 		
 		return s;
@@ -197,8 +265,11 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void print() {
-		for (int i = 0; i < probs.length; i++){
-			probs[i].print();
+		
+		//for (int i = 0; i < probs.length; i++){
+		for (int i = 0; i < probs.size(); i++){
+			//probs[i].print();
+			probs.get(i).print();
 		}
 	}
 

@@ -9,6 +9,7 @@ public class ProbDist {
 
 	public ProbDist(double[] possibleVals, Node N) {
 		probs = new ProbDistEntry[possibleVals.length];
+				
 		this.N = N;
 
 		// create an empty ( == 1) entry for every possible value

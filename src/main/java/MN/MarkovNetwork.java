@@ -23,16 +23,13 @@ public class MarkovNetwork {
     // the largest number of values associated with any node
     int numValues = 0;
 
-	public MarkovNetwork() throws FileNotFoundException {		
+	public MarkovNetwork(String inputFile) throws FileNotFoundException {		
 		// The scanner for reading in the Markov net file
 		Scanner s = null;
-		
-		// The filePath and fileName where the Markov net file is located
-		String filePath = "src/main/resources/";
-		String fileName = "markovNet.txt";
-				              
-		// The entire file name, for retrieving the Markov net file
-		File file = new File(filePath + fileName);
+					              
+		// The entire file name (passed in from RunModels), 
+		// for retrieving the Markov net file
+		File file = new File(inputFile);
 		
 		// Reads in the nodes, edges and values in from a specifically formatted file
         try {
@@ -42,38 +39,38 @@ public class MarkovNetwork {
             
             /*
              * Reads the file, ignoring lines with % (which are comment lines).
-             * File is structured so that the nodes are first (comma separated), 
-             * followed by the edges (in form A, B semi-colon separated) and then the 
-             * values for the variables (in form A: 0, 1). The values need to 
-             * be in the same order as the node variables. At this stage, the variables 
-             * are read in as strings, and after the file is closed they are converted 
-             * to the appropriate object type (i.e., Node or Edge objects).
+             * File is structured so that the problem description (GC or DS) is first, 
+             * the number associated with the optimal solution is second, nodes are 
+             * next (comma separated), followed by the edges (in form A, B semi-colon 
+             * separated) and then the values for the variables (in form A: 0, 1). 
+             * The values need to be in the same order as the node variables. 
+             * At this stage, the variables are read in as strings, and after the 
+             * file is closed they are converted to the appropriate object type 
+             * (i.e., Node or Edge objects).
              * 
              */
             while (s.hasNext()) {
             	// Read the first line in the file
                 tempVal = s.nextLine();
                 
-                // gets the type of problem first
-                // checks for comments, when present, discards them
-                while (tempVal.startsWith("%")) {
-                	tempVal = s.nextLine();
-                }                 
-               
-                problemType = tempVal;
+				// gets the type of problem first
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
 
-                
-                //keep scanning for the next non-empty line
-                if (s.nextLine().equals("")) {
-                	tempVal = s.nextLine();
-                }
+				problemType = tempVal;
 
-                // gets the number associated with the optimal solution
-                // checks for comments, when present, discards them
-                while (tempVal.startsWith("%")) {
-                	tempVal = s.nextLine();
-                } 
-                
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					tempVal = s.nextLine();
+				}
+
+				// gets the number associated with the optimal solution
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
                 
                // if the line is not a comment, per the file structure is the optimal number
                // associated with the solution 
@@ -86,8 +83,7 @@ public class MarkovNetwork {
                 	tempVal = s.nextLine();
                 }
                 
-                
-                // gets the node info first
+                // gets the node info
                 // checks for comments, when present, discards them
                 while (tempVal.startsWith("%")) {
                 	tempVal = s.nextLine();
