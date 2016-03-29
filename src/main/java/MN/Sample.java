@@ -5,9 +5,7 @@ import java.util.Set;
 
 public class Sample {
 
-	// TODO: will contain the results of a Gibbs sampling run
-	// This will (directly or indirectly) need to be able to be fed into our fitness function
-	// will we be using an index or ID or something for nodes? I don't freaking know
+	// TODO: This will (directly or indirectly) need to be able to be fed into our fitness function
 	
 	private Hashtable<Node, Double> values;
 	private double fitness;

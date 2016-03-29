@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import MN.Edge;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
@@ -28,6 +26,8 @@ public class ICParticle implements Particle {
 
 		// 1) create Nodes
 		// 2) foreach Node, create a ProbDist with its list of values and itself
+		
+		///////////////////////////////////////////////////////////
 
 		// Arrays for storing the string values read in from file
 		String[] stringNodes = null;
