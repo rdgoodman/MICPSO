@@ -7,14 +7,27 @@ import java.util.Scanner;
 import MN.Edge;
 import MN.MarkovNetwork;
 import MN.Node;
+import PSO.GCFitnessFunction;
+import PSO.ICParticle;
 
 public class RunModels {
 
 	public static void main(String[] args) throws FileNotFoundException {	
-		// creates a Markov network (read in from file)
-        MarkovNetwork MN = new MarkovNetwork();
+		// The filePath and fileName where the Markov net file is located
+		String filePath = "src/main/resources/";
+		String fileName = "markovNet.txt";
+		
+		// for passing in to MarkovNetwork or ICParticle
+		String inputFile = filePath + fileName;
+				
+//		// creates a Markov network (read in from file)
+//        MarkovNetwork MN = new MarkovNetwork(inputFile);
+//        
+//        // samples the above network using Gibbs sampling
+//        MN.sample();
         
-        // samples the above network using Gibbs sampling
-        MN.sample();
+
+		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction());
+		p.sample();
     }
 }

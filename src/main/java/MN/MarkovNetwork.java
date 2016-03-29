@@ -12,54 +12,86 @@ public class MarkovNetwork {
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 	
-   	// Arrays for storing the string values read in from file
-    String[] stringNodes = null;
+   	// Variables for storing the string values read in from file
+	// TODO: Right now we are not doing anything with problemType or optimalNo
+    String problemType = "";
+    int optimalNo = 0;
+	String[] stringNodes = null;
     String[] stringEdges = null;
     String[] stringValues = null;
 	
     // the largest number of values associated with any node
     int numValues = 0;
 
-	public MarkovNetwork() throws FileNotFoundException {		
+	public MarkovNetwork(String inputFile) throws FileNotFoundException {		
 		// The scanner for reading in the Markov net file
 		Scanner s = null;
-		
-		// The filePath and fileName where the Markov net file is located
-		String filePath = "src/main/resources/";
-		String fileName = "markovNet.txt";
-				              
-		// The entire file name, for retrieving the Markov net file
-		File file = new File(filePath + fileName);
+					              
+		// The entire file name (passed in from RunModels), 
+		// for retrieving the Markov net file
+		File file = new File(inputFile);
 		
 		// Reads in the nodes, edges and values in from a specifically formatted file
         try {
         	s = new Scanner(new BufferedReader(new FileReader(file)));
                         
-            String potential;
+            String tempVal;
             
             /*
              * Reads the file, ignoring lines with % (which are comment lines).
-             * File is structured so that the nodes are first (comma separated), 
-             * followed by the edges (in form A, B semi-colon separated) and then the 
-             * values for the variables (in form A: 0, 1). The values need to 
-             * be in the same order as the node variables. At this stage, the variables 
-             * are read in as strings, and after the file is closed they are converted 
-             * to the appropriate object type (i.e., Node or Edge objects).
+             * File is structured so that the problem description (GC or DS) is first, 
+             * the number associated with the optimal solution is second, nodes are 
+             * next (comma separated), followed by the edges (in form A, B semi-colon 
+             * separated) and then the values for the variables (in form A: 0, 1). 
+             * The values need to be in the same order as the node variables. 
+             * At this stage, the variables are read in as strings, and after the 
+             * file is closed they are converted to the appropriate object type 
+             * (i.e., Node or Edge objects).
              * 
              */
             while (s.hasNext()) {
-            	 // Read the first line in the file
-                potential = s.nextLine();
-                	
-                // gets the node info first
+            	// Read the first line in the file
+                tempVal = s.nextLine();
+                
+				// gets the type of problem first
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
+
+				problemType = tempVal;
+
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					tempVal = s.nextLine();
+				}
+
+				// gets the number associated with the optimal solution
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = s.nextLine();
+				}
+                
+               // if the line is not a comment, per the file structure is the optimal number
+               // associated with the solution 
+                if(!tempVal.startsWith("%")) {
+                	optimalNo = Integer.parseInt(tempVal);            
+                }
+                
+                //keep scanning for the next non-empty line
+                if (s.nextLine().equals("")) {
+                	tempVal = s.nextLine();
+                }
+                
+                // gets the node info
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
-                               
+                                
                 // splits the string into an array of separate node objects
-                if (!potential.startsWith("%")){
-        			stringNodes = potential.split(",");
+                if (!tempVal.startsWith("%")){
+        			stringNodes = tempVal.split(",");
                 }
                 	
                 // trims extra whitespace from node objects
@@ -71,18 +103,18 @@ public class MarkovNetwork {
                 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
                       
                 // gets the edge info first
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                 
                // if the line is not a comment, per the file structure is the edges 
-                if(!potential.startsWith("%")) {
-                	stringEdges = potential.split(";");            
+                if(!tempVal.startsWith("%")) {
+                	stringEdges = tempVal.split(";");            
                 }
                 
                 // trims extra whitespace from edge objects
@@ -94,18 +126,18 @@ public class MarkovNetwork {
 
                 //keep scanning for the next non-empty line
                 if (s.nextLine().equals("")) {
-                	potential = s.nextLine();
+                	tempVal = s.nextLine();
                 }
                 
                 // get variable info
                 // checks for comments, when present, discards them
-                while (potential.startsWith("%")) {
-                	potential = s.nextLine();
+                while (tempVal.startsWith("%")) {
+                	tempVal = s.nextLine();
                 } 
                                            	
                 // if the line is not a comment, per file structure is values
-                if(!potential.startsWith("%")) {
-                	stringValues = potential.split(";");            
+                if(!tempVal.startsWith("%")) {
+                	stringValues = tempVal.split(";");            
                 }
                 
                 // trims the extra information and gets the (in node order) values
@@ -131,6 +163,7 @@ public class MarkovNetwork {
             }
             // creates the Markov network
             createNetworkStructure();
+            
         } finally {
             if (s != null) {
                 s.close();
@@ -194,6 +227,7 @@ public class MarkovNetwork {
         	startingNode.addNeighbor(endingNode);
         	endingNode.addNeighbor(startingNode);        	
         }
+               
         // for testing, can remove when finished
         print();
 	}
