@@ -16,9 +16,11 @@ public class ICParticle implements Particle {
 	private Node[] variables;
 	private ProbDist[] probs;
 	private FitnessFunction f;
+	private int numSamples;
 
-	public ICParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
+	public ICParticle(String fileName, FitnessFunction f, int numSamples) throws FileNotFoundException {
 		this.f = f;
+		this.numSamples = numSamples;
 		
 		// TODO: read stuff from file. It's hard.
 
@@ -156,7 +158,23 @@ public class ICParticle implements Particle {
 	@Override
 	public double calcFitness() {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		double particleFit = 0;
+		// average over a certain number of samples
+		for (int i = 0; i < numSamples; i++){
+			// 1) generate a sample and calculate its fitness
+			Sample s = sample();
+			double fit = f.calcFitness(s);
+			particleFit += fit;
+			
+			// 2) Save this sample if it's the new pBest
+			if (pBest == null | fit > pBest.getFitness()){ 
+				// TODO: recall that this assumes a max problem, refactor later
+				setPBest(s);
+			}
+		}
+		
+		return particleFit / numSamples;
 	}
 
 	@Override
@@ -172,9 +190,9 @@ public class ICParticle implements Particle {
 	}
 
 	@Override
-	public void setPBest() {
-		// TODO Auto-generated method stub
-
+	public void setPBest(Sample s) {
+		pBest = s;
+		adjustPBest();
 	}
 
 	@Override

@@ -28,11 +28,6 @@ public class MNParticle implements Particle {
 
 	}
 
-	@Override
-	public void setPBest() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void adjustPBest() {
@@ -54,6 +49,12 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void print() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPBest(Sample s) {
 		// TODO Auto-generated method stub
 		
 	}

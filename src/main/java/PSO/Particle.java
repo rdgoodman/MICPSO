@@ -8,7 +8,7 @@ public interface Particle {
 	public double calcFitness();
 	public void updateVelocity(); // TODO: will need arguments
 	public void updatePosition();
-	public void setPBest();
+	public void setPBest(Sample s);
 	public void adjustPBest();
 	public void bias(double epsilon);
 	public Particle copy(); // TODO: will return a deep copy of this particle

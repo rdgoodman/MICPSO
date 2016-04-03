@@ -35,7 +35,9 @@ public class GCFitnessFunction implements FitnessFunction{
 		
 		// TODO: maximization problem
 		// TODO: throw an exception if this is > 0
-		return optimal - usedColors.size();
+		double fit = optimal - usedColors.size();
+		s.setFitness(fit);
+		return fit;
 	}
 
 }

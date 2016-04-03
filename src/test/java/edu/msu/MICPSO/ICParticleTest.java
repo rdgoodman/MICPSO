@@ -15,7 +15,7 @@ public class ICParticleTest {
 	public void testInitialization() throws FileNotFoundException {		
 		
 		String filename = ("src/main/resources/markovNet.txt");
-		ICParticle p = new ICParticle(filename, new GCFitnessFunction(3));
+		ICParticle p = new ICParticle(filename, new GCFitnessFunction(3), 5);
 		p.print();
 	}
 
