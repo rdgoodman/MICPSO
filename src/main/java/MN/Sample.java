@@ -58,4 +58,8 @@ public class Sample {
 		this.fitness = fitness;
 	}
 	
+	public Hashtable<Node, Double> getTable(){
+		return values;
+	}
+	
 }

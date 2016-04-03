@@ -1,6 +1,10 @@
 package PSO;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import MN.Sample;
+import MN.Node;
 
 public class GCFitnessFunction implements FitnessFunction{
 	
@@ -15,7 +19,23 @@ public class GCFitnessFunction implements FitnessFunction{
 	public double calcFitness(Sample s) {
 		// TODO Auto-generated method stub
 		// TODO count up number of colors/labels used and compare with optimal
-		return 0;
+		
+		// step 1: get list of keys
+		Set<Node> keys = s.getTable().keySet();
+		
+		// step 2: iterate with counter
+		ArrayList<Double> usedColors = new ArrayList<Double>();
+		
+		for (Node k : keys){
+			if (!usedColors.contains(s.getTable().get(k))){
+				// adds this key's value to the list if it isn't already there
+				usedColors.add(s.getTable().get(k));
+			}
+		}
+		
+		// TODO: maximization problem
+		// TODO: throw an exception if this is > 0
+		return optimal - usedColors.size();
 	}
 
 }
