@@ -20,14 +20,14 @@ public class RunModels {
 		// for passing in to MarkovNetwork or ICParticle
 		String inputFile = filePath + fileName;
 				
-//		// creates a Markov network (read in from file)
-//        MarkovNetwork MN = new MarkovNetwork(inputFile);
-//        
-//        // samples the above network using Gibbs sampling
-//        MN.sample();
+		// creates a Markov network (read in from file)
+        MarkovNetwork MN = new MarkovNetwork(inputFile);
+        
+        // samples the above network using Gibbs sampling
+        MN.sample();
         
 
-		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction(3));
-		p.sample();
+//		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction(3));
+//		p.sample();
     }
 }
