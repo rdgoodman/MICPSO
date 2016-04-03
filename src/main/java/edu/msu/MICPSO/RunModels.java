@@ -27,7 +27,7 @@ public class RunModels {
 //        MN.sample();
         
 
-		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction());
+		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction(3));
 		p.sample();
     }
 }
