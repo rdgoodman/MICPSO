@@ -25,7 +25,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
-	int runs = 2;
+	int runs = 10;
 
 	public MarkovNetwork(String inputFile) throws FileNotFoundException {
 		// The scanner for reading in the Markov net file
@@ -304,8 +304,8 @@ public class MarkovNetwork {
 				double[] nVals = N.getVals();
 				for (int n = 0; n < nVals.length; n++) {
 					// System.out.println();
-					// System.out.print("P~ (" + N.getName() + " == " + nVals[n]
-					// + ") \n");
+//					 System.out.print("\n P~ (" + N.getName() + " == " + nVals[n]
+//					 + ") \n");
 
 					for (Node M : MB) {
 						Edge edge = null;
@@ -321,19 +321,21 @@ public class MarkovNetwork {
 
 						// get potential where M=mVal and N=nVals[n]
 						double p = edge.getPotential(N, nVals[n], M, mVal);
-						// System.out.print(p + "[" + M.getName() + " == " +
-						// mVal + "] *");
+//						 System.out.print(p + "[" + M.getName() + " == " +
+//					 mVal + "] *");
 
 						// multiply current P(N==n) by p
 						probs.setProb(nVals[n], probs.getProb(nVals[n]) * p);
 					}
 
-					// probs.print();
+//					System.out.println("\n Unnormalized");
+//					probs.print();
 
 					// re-normalize
 					probs.normalize();
 
-					// probs.print();
+//					System.out.println("Normalized");
+//					probs.print();
 
 					// re-sample resulting distribution for N
 					sample.setSampledValue(N, probs.sample());
