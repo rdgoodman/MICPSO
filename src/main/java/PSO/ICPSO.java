@@ -19,7 +19,7 @@ public class ICPSO {
 									// property of the sample
 
 	// parameters:
-	private int iterations;
+	//private int iterations;
 	private int numParticles;
 	private int numSamples;
 	private double epsilon;
@@ -32,7 +32,7 @@ public class ICPSO {
 
 	public ICPSO(String fileName, boolean Markov, int iterations, int numParticles, int numSamples, double epsilon,
 			double omega, double phi1, double phi2) throws FileNotFoundException {
-		this.iterations = iterations;
+		//this.iterations = iterations;
 		this.numParticles = numParticles;
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
@@ -82,10 +82,8 @@ public class ICPSO {
 	 * 
 	 * @return
 	 */
-	public Sample run() {
-		// TODO stub
-		
-		// TODO: figure out termination criterion
+	public Sample run() {		
+		// termination criterion
 		int runsUnchanged = 0;
 		boolean terminated = false;
 		double prevBestSampleFit = 0; // TODO: remember to set this at some point
