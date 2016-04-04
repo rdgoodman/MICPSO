@@ -229,13 +229,6 @@ public class ICParticle implements Particle {
 		}
 	}
 
-
-	@Override
-	public void bias(double epsilon) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public  ICParticle copy() {
 		ICParticle cp = new ICParticle(f, pBest_sample);

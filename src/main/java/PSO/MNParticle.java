@@ -37,11 +37,6 @@ public class MNParticle implements Particle {
 		return null;
 	}
 
-	@Override
-	public void bias(double epsilon) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void print() {
@@ -59,6 +54,12 @@ public class MNParticle implements Particle {
 	public void adjustPBest() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Object[] getProbs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

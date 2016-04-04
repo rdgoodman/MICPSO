@@ -10,7 +10,7 @@ public interface Particle {
 	public void updatePosition();
 	public void setPBest(Sample s);
 	public void adjustPBest();
-	public void bias(double epsilon);
+	//public void bias(double epsilon);
 	public Particle copy(); // returns a DEEP copy of this particle
 	public void print();
 	public Object[] getProbs(); // TODO: this is kludgy
