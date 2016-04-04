@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ProbDist {
 
 	ProbDistEntry[] probs;
+	double[] velocity;
 	Node N;
 
 	public ProbDist(double[] possibleVals, Node N) {
@@ -15,6 +16,12 @@ public class ProbDist {
 		// create an empty ( == 1) entry for every possible value
 		for (int i = 0; i < probs.length; i++) {
 			probs[i] = new ProbDistEntry(possibleVals[i]);
+		}
+		
+		// randomly initialize velocity
+		velocity = new double[probs.length];
+		for (int i = 0; i < velocity.length; i++){
+			velocity[i] = Math.random();
 		}
 	}
 	
@@ -127,6 +134,32 @@ public class ProbDist {
 	}
 	
 	/**
+	 * Carries out the velocity update for this distribution
+	 * @param omega
+	 * @param cognitive
+	 * @param social
+	 * @param object
+	 * @param probDist
+	 */
+	public void updateVelocity(double omega, double cognitive, double social, ProbDist g, ProbDist p) {
+		// TODO Auto-generated method stub
+		
+		// these correspond to our momentum, cognitive, & social terms
+		double[] m = new double[probs.length];
+		double[] c = new double[probs.length];
+		double[] s = new double[probs.length];
+
+		for (int i = 0; i < probs.length; i++){
+			m[i] = omega * velocity[i]; // momentum
+			c[i] = cognitive * p.getProbs()[i].getProb(); // cognitive
+			s[i] = social * g.getProbs()[i].getProb(); // social
+			// add it all up to get this new entry in the velocity vector
+			velocity[i] = m[i] + c[i] + s[i];
+		}
+		
+	}
+
+	/**
 	 * Returns a deep copy of this distribution
 	 * @return
 	 */
@@ -140,6 +173,7 @@ public class ProbDist {
 		}
 		
 		cp.setProbs(position);
+		cp.setVelocity(velocity); // we probably don't need this, but couldn't hurt
 		
 		return cp;
 	}
@@ -159,9 +193,21 @@ public class ProbDist {
 	public void setNode(Node n) {
 		N = n;
 	}
+	
+	public ProbDistEntry[] getProbs(){
+		return probs;
+	}
 
 	public void setProbs(ProbDistEntry[] probs) {
 		this.probs = probs;
+	}
+
+	public double[] getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(double[] velocity) {
+		this.velocity = velocity;
 	}
 
 }

@@ -13,9 +13,12 @@ import MN.Sample;
 public class ICParticle implements Particle {
 
 	private Sample pBest_sample;
-	private Particle pBest_position;
+	private ICParticle pBest_position;
 	private Node[] variables;
 	private ProbDist[] probs;
+
+	// TODO; need to add in velocity term, for fucks sake
+	
 	private FitnessFunction f;
 	private int numSamples;
 	private double epsilon;
@@ -189,10 +192,15 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
-		// TODO Auto-generated method stub
 		// decide on multipliers
 		double cognitive = Math.random() * phi1;
 		double social = Math.random() * phi2;
+		
+		// update each prob dist
+		for (int i = 0; i < probs.length; i++){
+			// call update for each element
+			probs[i].updateVelocity(omega, cognitive, social, ((ICParticle) gBest).getProbs()[i], pBest_position.getProbs()[i]);
+		}
 
 		// update each CPD
 //		for (int i = 0; i < numYears; i++) {
@@ -240,8 +248,7 @@ public class ICParticle implements Particle {
 	}
 
 	@Override
-	public  Particle copy() {
-		// TODO Auto-generated method stub
+	public  ICParticle copy() {
 		ICParticle cp = new ICParticle(f, pBest_sample);
 		
 		ProbDist[] cpProbs = new ProbDist[probs.length];
@@ -265,5 +272,11 @@ public class ICParticle implements Particle {
 	public void setDist(ProbDist[] probs){
 		this.probs = probs;
 	}
+
+
+	public ProbDist[] getProbs() {
+		return probs;
+	}
+
 
 }
