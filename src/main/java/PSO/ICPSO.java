@@ -15,7 +15,7 @@ public class ICPSO {
 	// TODO: we need to store the best sample AND its fitness as well as what
 	// generated it...
 	private Sample bestSample;
-	private double bestSampleFit; // TODO: probably better to have this as a
+	//private double bestSampleFit; // TODO: probably better to have this as a
 									// property of the sample
 
 	// parameters:
@@ -91,20 +91,43 @@ public class ICPSO {
 		double prevBestSampleFit = 0; // TODO: remember to set this at some point
 		
 		while (!terminated){
+			
+			// 1) evaluate all particles
+			// 2) set gBest (maybe pull a collections.sort?)
+			
 			// iterate through all particles
 			for (Particle p : pop){
+							
+				// 1) update velocity
+				p.updateVelocity(omega, phi1, phi2, gBest);
 				
+				// 2) update position
+				p.updatePosition();
+				
+				// 3) evaluate fitness
+				double fit = p.calcFitness(); // this is never used
+				double sampleFit = p.getBestSample().getFitness();
+				
+				// TODO: recall this is a max problem, refactor that later
+				if (sampleFit > bestSample.getFitness()){
+					setBestSample(p.getBestSample());
+					// set gBest and bias
+					setGBest(p);
+				}			
 			}
 			
 			
 			// Next half-dozen or so lines used to determine convergence
-			if (Math.abs(prevBestSampleFit - bestSampleFit) < threshold){
+			if (Math.abs(prevBestSampleFit - bestSample.getFitness()) < threshold){
 				runsUnchanged++;
 			} else {
 				runsUnchanged = 0;
 			}			
 			if (runsUnchanged >= numToConsiderConverged){
-				return bestSample;
+				// return if the solution hasn't significantly changed in a certain
+				// number of iterations
+				
+				terminated = true;
 			}
 		}
 				
@@ -115,22 +138,24 @@ public class ICPSO {
 	/**
 	 * Creates a copy of the best sample
 	 */
-	private void setBestSample() {
-		// TODO stub
+	private void setBestSample(Sample s) {
+		bestSample = s;
 	}
 
 	/**
 	 * Adjusts probabilities to bias gBest toward best sample
 	 */
 	public void adjustGBest(Particle p) {
-		// TODO stub
+		// TODO stub. Need to figure out how to make this work with both types of particles...
+		// maybe call their adjustPBest method, overload it somehow?
 	}
 
 	/**
 	 * Sets the global best
 	 */
 	private void setGBest(Particle p) {
-		// TODO stub
+		adjustGBest(p);
+		gBest = p.copy();
 	}
 
 }

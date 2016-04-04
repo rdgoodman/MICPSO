@@ -14,5 +14,6 @@ public interface Particle {
 	public Particle copy(); // returns a DEEP copy of this particle
 	public void print();
 	public Object[] getProbs(); // TODO: this is kludgy
+	public Sample getBestSample();
 
 }

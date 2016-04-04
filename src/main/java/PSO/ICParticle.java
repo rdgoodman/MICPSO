@@ -261,4 +261,10 @@ public class ICParticle implements Particle {
 	}
 
 
+	@Override
+	public Sample getBestSample() {
+		return pBest_sample;
+	}
+
+
 }

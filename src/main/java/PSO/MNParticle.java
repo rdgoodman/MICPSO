@@ -61,5 +61,11 @@ public class MNParticle implements Particle {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Sample getBestSample() {
+		// TODO;
+		return null;
+	}
 
 }
