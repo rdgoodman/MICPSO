@@ -18,7 +18,7 @@ public class ICParticle implements Particle {
 	private FitnessFunction f;
 	private int numSamples;
 
-	public ICParticle(String fileName, FitnessFunction f, int numSamples) throws FileNotFoundException {
+	public ICParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
 		this.f = f;
 		this.numSamples = numSamples;
 		
@@ -197,8 +197,11 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void adjustPBest() {
-		// TODO Auto-generated method stub
-
+		// call bias() method for each variable
+		for (int i = 0; i < probs.length; i++){
+			// TODO: figure out how to get the order right?
+			// or does it even matter, within the sample method?
+		}
 	}
 
 	@Override

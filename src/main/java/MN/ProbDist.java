@@ -9,7 +9,7 @@ public class ProbDist {
 
 	public ProbDist(double[] possibleVals, Node N) {
 		probs = new ProbDistEntry[possibleVals.length];
-				
+
 		this.N = N;
 
 		// create an empty ( == 1) entry for every possible value
@@ -59,6 +59,35 @@ public class ProbDist {
 
 		// TODO: throw exception
 		return -1;
+	}
+
+	/**
+	 * Biases distribution toward producing a value
+	 * 
+	 * @param valK
+	 *            value we want to bias towards
+	 * @param epsilon
+	 *            scaling factor
+	 */
+	public void bias(double valK, double epsilon) {
+		// TODO: sanity-check this
+		double delta = 0;
+		// adjust each probability in the distribution
+		for (int j = 0; j < probs.length; j++) {
+			// add to delta if k=/=k' (see paper)
+			if (probs[j].getValue() != valK) {
+				delta += (probs[j].getProb() - (probs[j].getProb() * epsilon));
+				// decrease probability
+				probs[j].setProb(probs[j].getProb() * epsilon);
+			}
+		}
+
+		for (int j = 0; j < probs.length; j++) {
+			if (probs[j].getValue() == valK) {
+				// adjust probability that corresponds to sample value
+				probs[j].setProb(probs[j].getProb() + delta);
+			}
+		}
 	}
 
 	/**
