@@ -17,10 +17,12 @@ public class ICParticle implements Particle {
 	private ProbDist[] probs;
 	private FitnessFunction f;
 	private int numSamples;
+	private double epsilon;
 
 	public ICParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
 		this.f = f;
 		this.numSamples = numSamples;
+		this.epsilon = epsilon;
 		
 		// TODO: read stuff from file. It's hard.
 
@@ -199,8 +201,10 @@ public class ICParticle implements Particle {
 	public void adjustPBest() {
 		// call bias() method for each variable
 		for (int i = 0; i < probs.length; i++){
-			// TODO: figure out how to get the order right?
-			// or does it even matter, within the sample method?
+			// retrieves value associated with this dist's node in sample
+			double k = pBest.getTable().get(probs[i].getNode());
+			// calls bias() with that value
+			probs[i].bias(k, epsilon);
 		}
 	}
 
