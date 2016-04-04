@@ -17,6 +17,14 @@ public class ProbDist {
 			probs[i] = new ProbDistEntry(possibleVals[i]);
 		}
 	}
+	
+	/**
+	 * This constructor is only used by the copy() method
+	 */
+	public ProbDist(Node n){
+		this.N = n;
+	}
+	
 
 	/**
 	 * Turns this into an actual-factual valid probability distribution. Wow!
@@ -117,6 +125,25 @@ public class ProbDist {
 			}
 		}
 	}
+	
+	/**
+	 * Returns a deep copy of this distribution
+	 * @return
+	 */
+	public ProbDist copy(){
+		ProbDist cp = new ProbDist(N);
+		ProbDistEntry[] position = new ProbDistEntry[probs.length];
+		
+		// copy each dist entry
+		for (int i = 0; i < probs.length; i++){
+			position[i] = probs[i].copy();
+		}
+		
+		cp.setProbs(position);
+		
+		return cp;
+	}
+	
 
 	public void print() {
 		System.out.println("Variable: " + N.getName());
@@ -131,6 +158,10 @@ public class ProbDist {
 
 	public void setNode(Node n) {
 		N = n;
+	}
+
+	public void setProbs(ProbDistEntry[] probs) {
+		this.probs = probs;
 	}
 
 }

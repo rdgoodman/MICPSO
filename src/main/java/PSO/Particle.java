@@ -6,7 +6,7 @@ public interface Particle {
 	
 	public Sample sample();
 	public double calcFitness();
-	public void updateVelocity(); // TODO: will need arguments
+	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest); 
 	public void updatePosition();
 	public void setPBest(Sample s);
 	public void adjustPBest();

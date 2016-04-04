@@ -16,10 +16,12 @@ public class MNParticle implements Particle {
 		return 0;
 	}
 
-	@Override
-	public void updateVelocity() {
-		// TODO Auto-generated method stub
 
+
+	@Override
+	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

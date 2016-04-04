@@ -25,5 +25,11 @@ public class ProbDistEntry {
 	public void setProb(double prob) {
 		this.prob = prob;
 	}
+	
+	public ProbDistEntry copy(){
+		ProbDistEntry cp = new ProbDistEntry(value);
+		cp.setProb(prob);
+		return cp;
+	}
 
 }

@@ -12,7 +12,8 @@ import MN.Sample;
 
 public class ICParticle implements Particle {
 
-	private Sample pBest;
+	private Sample pBest_sample;
+	private Particle pBest_position;
 	private Node[] variables;
 	private ProbDist[] probs;
 	private FitnessFunction f;
@@ -143,6 +144,16 @@ public class ICParticle implements Particle {
 			}
 		}
 	}
+	
+	
+	/**
+	 * This constructor is intended for use with the copy() method
+	 * @param f
+	 */
+	public ICParticle(FitnessFunction f, Sample pBest_sample){
+		this.f = f;
+		this.pBest_sample = pBest_sample;
+	}
 
 	@Override
 	public Sample sample() {
@@ -158,9 +169,7 @@ public class ICParticle implements Particle {
 	}
 
 	@Override
-	public double calcFitness() {
-		// TODO Auto-generated method stub
-		
+	public double calcFitness() {		
 		double particleFit = 0;
 		// average over a certain number of samples
 		for (int i = 0; i < numSamples; i++){
@@ -170,19 +179,32 @@ public class ICParticle implements Particle {
 			particleFit += fit;
 			
 			// 2) Save this sample if it's the new pBest
-			if (pBest == null | fit > pBest.getFitness()){ 
+			if (pBest_sample == null | fit > pBest_sample.getFitness()){ 
 				// TODO: recall that this assumes a max problem, refactor later
 				setPBest(s);
 			}
-		}
-		
+		}	
 		return particleFit / numSamples;
 	}
 
 	@Override
-	public void updateVelocity() {
+	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
 		// TODO Auto-generated method stub
+		// decide on multipliers
+		double cognitive = Math.random() * phi1;
+		double social = Math.random() * phi2;
 
+		// update each CPD
+//		for (int i = 0; i < numYears; i++) {
+//			for (int j = 0; j < numObjects; j++) {
+//				// 1) extract the relevant part of gBest
+//				Dist g = gBest[i][j];
+//				// 2) extract relevant part of pBest
+//				Dist p = pBest[i][j];
+//				// 3) send to CPD updater
+//				position[i][j].updateVelocity(omega, cognitive, social, g, p);
+//			}
+//		}
 	}
 
 	@Override
@@ -193,8 +215,10 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void setPBest(Sample s) {
-		pBest = s;
+		pBest_sample = s;
 		adjustPBest();
+		// TODO: set pBest dist!
+		pBest_position = this.copy();
 	}
 
 	@Override
@@ -202,17 +226,12 @@ public class ICParticle implements Particle {
 		// call bias() method for each variable
 		for (int i = 0; i < probs.length; i++){
 			// retrieves value associated with this dist's node in sample
-			double k = pBest.getTable().get(probs[i].getNode());
+			double k = pBest_sample.getTable().get(probs[i].getNode());
 			// calls bias() with that value
 			probs[i].bias(k, epsilon);
 		}
 	}
 
-	@Override
-	public Particle copy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void bias(double epsilon) {
@@ -221,10 +240,30 @@ public class ICParticle implements Particle {
 	}
 
 	@Override
+	public  Particle copy() {
+		// TODO Auto-generated method stub
+		ICParticle cp = new ICParticle(f, pBest_sample);
+		
+		ProbDist[] cpProbs = new ProbDist[probs.length];
+		
+		for (int i = 0; i < cpProbs.length; i++){
+			cpProbs[i] = probs[i].copy();
+		}
+		
+		cp.setDist(cpProbs);
+		
+		return cp;
+	}
+
+	@Override
 	public void print() {
 		for (int i = 0; i < probs.length; i++){
 			probs[i].print();
 		}
+	}
+	
+	public void setDist(ProbDist[] probs){
+		this.probs = probs;
 	}
 
 }
