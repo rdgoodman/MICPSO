@@ -109,7 +109,7 @@ public class ICPSO {
 				double sampleFit = p.getBestSample().getFitness();
 				
 				// TODO: recall this is a max problem, refactor that later
-				if (sampleFit > bestSample.getFitness()){
+				if (bestSample == null || sampleFit > bestSample.getFitness()){
 					setBestSample(p.getBestSample());
 					// set gBest and bias
 					setGBest(p);

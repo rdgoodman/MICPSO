@@ -14,7 +14,7 @@ public class ICParticle implements Particle {
 
 	private Sample pBest_sample;
 	private ICParticle pBest_position;
-	private Node[] variables;
+	private Node[] variables; // TODO: do we ever need to use this?
 	private ProbDist[] probs;
 
 	// TODO; need to add in velocity term, for fucks sake
@@ -233,12 +233,10 @@ public class ICParticle implements Particle {
 	public  ICParticle copy() {
 		ICParticle cp = new ICParticle(f, pBest_sample);
 		
-		ProbDist[] cpProbs = new ProbDist[probs.length];
-		
+		ProbDist[] cpProbs = new ProbDist[probs.length];		
 		for (int i = 0; i < cpProbs.length; i++){
 			cpProbs[i] = probs[i].copy();
-		}
-		
+		}		
 		cp.setDist(cpProbs);
 		
 		return cp;
