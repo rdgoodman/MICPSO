@@ -15,10 +15,7 @@ public class ICParticle implements Particle {
 	private Sample pBest_sample;
 	private ICParticle pBest_position;
 	private Node[] variables; // TODO: do we ever need to use this?
-	private ProbDist[] probs;
-
-	// TODO; need to add in velocity term, for fucks sake
-	
+	private ProbDist[] probs;	
 	private FitnessFunction f;
 	private int numSamples;
 	private double epsilon;
@@ -214,7 +211,7 @@ public class ICParticle implements Particle {
 	public void setPBest(Sample s) {
 		pBest_sample = s;
 		adjustPBest();
-		// TODO: set pBest dist!
+		// sets pBest dist!
 		pBest_position = this.copy();
 	}
 

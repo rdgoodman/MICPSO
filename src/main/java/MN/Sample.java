@@ -4,8 +4,6 @@ import java.util.Hashtable;
 import java.util.Set;
 
 public class Sample {
-
-	// TODO: This will (directly or indirectly) need to be able to be fed into our fitness function
 	
 	private Hashtable<Node, Double> values;
 	private double fitness;

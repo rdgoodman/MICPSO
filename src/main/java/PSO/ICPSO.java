@@ -43,7 +43,7 @@ public class ICPSO {
 		// Particle constructor takes fileName
 		
 		
-		// TODO: based on info about problem type from file,
+		// based on info about problem type from file,
 		// create a fitness function
 		
 		boolean graphColoring = true;
@@ -132,8 +132,7 @@ public class ICPSO {
 			}			
 			if (runsUnchanged >= numToConsiderConverged){
 				// return if the solution hasn't significantly changed in a certain
-				// number of iterations
-				
+				// number of iterations			
 				terminated = true;
 			}
 		}				
