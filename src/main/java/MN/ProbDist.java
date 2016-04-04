@@ -63,7 +63,7 @@ public class ProbDist {
 			low = UB[i];
 			// TODO: check upper and lower bounds here
 			// TODO: elsewhere, make sure we don't end up with negative values
-			// or anything
+			// or anything. This could happen in the normalization step pretty easily
 		}
 
 		for (int i = 0; i < probs.length; i++) {
@@ -142,7 +142,6 @@ public class ProbDist {
 	 * @param probDist
 	 */
 	public void updateVelocity(double omega, double cognitive, double social, ProbDist g, ProbDist p) {
-		// TODO Auto-generated method stub
 		
 		// these correspond to our momentum, cognitive, & social terms
 		double[] m = new double[probs.length];
@@ -157,6 +156,18 @@ public class ProbDist {
 			velocity[i] = m[i] + c[i] + s[i];
 		}
 		
+	}
+
+	/**
+	 * Adds the velocity vector to the current position and makes it a valid distribution again
+	 */
+	public void updatePosition() {
+		// add velocity to each entry
+		for (int i = 0; i < probs.length; i++){
+			probs[i].setProb(probs[i].getProb() + velocity[i]);
+		}
+		// re-normalize
+		normalize();
 	}
 
 	/**

@@ -196,29 +196,18 @@ public class ICParticle implements Particle {
 		double cognitive = Math.random() * phi1;
 		double social = Math.random() * phi2;
 		
-		// update each prob dist
+		// update velocity for each prob dist
 		for (int i = 0; i < probs.length; i++){
 			// call update for each element
 			probs[i].updateVelocity(omega, cognitive, social, ((ICParticle) gBest).getProbs()[i], pBest_position.getProbs()[i]);
 		}
-
-		// update each CPD
-//		for (int i = 0; i < numYears; i++) {
-//			for (int j = 0; j < numObjects; j++) {
-//				// 1) extract the relevant part of gBest
-//				Dist g = gBest[i][j];
-//				// 2) extract relevant part of pBest
-//				Dist p = pBest[i][j];
-//				// 3) send to CPD updater
-//				position[i][j].updateVelocity(omega, cognitive, social, g, p);
-//			}
-//		}
 	}
 
 	@Override
 	public void updatePosition() {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < probs.length; i++){
+			probs[i].updatePosition();
+		}
 	}
 
 	@Override
