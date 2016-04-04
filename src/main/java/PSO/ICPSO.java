@@ -9,13 +9,11 @@ public class ICPSO {
 
 	private ArrayList<Particle> pop; // population
 	private FitnessFunction f;
-	// global best position will be stored in the position element(?) of this
-	// particle, along with fitness
+	// global best position stored in the position of this particle
 	private Particle gBest;
-	// TODO: we need to store the best sample AND its fitness as well as what
-	// generated it...
+	// stores the best sample AND its fitness 
 	private Sample bestSample;
-	//private double bestSampleFit; // TODO: probably better to have this as a
+	//private double bestSampleFit; // probably better to have this as a
 									// property of the sample
 
 	// parameters:
@@ -28,7 +26,7 @@ public class ICPSO {
 	private double phi2;
 	// determines convergence
 	private double threshold = 0.01;
-	private double numToConsiderConverged = 10;
+	private double numToConsiderConverged = 50;
 
 	public ICPSO(String fileName, boolean Markov, int iterations, int numParticles, int numSamples, double epsilon,
 			double omega, double phi1, double phi2) throws FileNotFoundException {
@@ -79,8 +77,6 @@ public class ICPSO {
 
 	/**
 	 * Returns the global best sample from the swarm
-	 * 
-	 * @return
 	 */
 	public Sample run() {		
 		// termination criterion
@@ -90,8 +86,18 @@ public class ICPSO {
 		
 		while (!terminated){
 			
-			// 1) evaluate all particles
+			// 1) evaluate all particles			
 			// 2) set gBest (maybe pull a collections.sort?)
+			double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+			for (Particle p: pop){
+				p.calcFitness();
+				double fit = p.getBestSample().getFitness();
+				if (fit > maxFit){ // TODO: again, assuming max
+					maxFit = fit;
+					bestSample = p.getBestSample();
+					gBest = p.copy();
+				}
+			}
 			
 			// iterate through all particles
 			for (Particle p : pop){
@@ -102,12 +108,15 @@ public class ICPSO {
 				// 2) update position
 				p.updatePosition();
 				
+				// 2.5) change the previous best sample fitness
+				prevBestSampleFit = bestSample.getFitness();
+				
 				// 3) evaluate fitness
 				double fit = p.calcFitness(); // this is never used
 				double sampleFit = p.getBestSample().getFitness();
 				
 				// TODO: recall this is a max problem, refactor that later
-				if (bestSample == null || sampleFit > bestSample.getFitness()){
+				if (sampleFit > bestSample.getFitness()){
 					setBestSample(p.getBestSample());
 					// set gBest and bias
 					setGBest(p);
@@ -127,8 +136,7 @@ public class ICPSO {
 				
 				terminated = true;
 			}
-		}
-				
+		}				
 		
 		return bestSample;
 	}
