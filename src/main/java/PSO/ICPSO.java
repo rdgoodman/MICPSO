@@ -51,7 +51,6 @@ public class ICPSO {
 		
 		if (graphColoring){
 			f = new GCFitnessFunction(optimal);
-
 		} else {
 			// TODO
 		}
@@ -151,8 +150,9 @@ public class ICPSO {
 	 * Adjusts probabilities to bias gBest toward best sample
 	 */
 	public void adjustGBest(Particle p) {
-		// TODO stub. Need to figure out how to make this work with both types of particles...
-		// maybe call their adjustPBest method, overload it somehow?
+		// adjust p's distribution based on its best sample
+		// (which is now also the global best sample)
+		p.adjustPBest();
 	}
 
 	/**
