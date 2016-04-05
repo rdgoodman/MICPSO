@@ -28,7 +28,19 @@ public class ICPSO {
 	private double threshold = 0.01;
 	private double numToConsiderConverged = 50;
 
-	public ICPSO(String fileName, boolean Markov, int iterations, int numParticles, int numSamples, double epsilon,
+	/**
+	 * Creates an instance of either ICPSO or MICPSO depending on the Markov boolean argument
+	 * @param fileName the name of the file encoding the optimization problem
+	 * @param Markov true if MICPSO, false if normal ICPSO
+	 * @param numParticles the number of particles in the swarm
+	 * @param numSamples the number of samples to use to evaluate particle fitness
+	 * @param epsilon scaling factor
+	 * @param omega multiplier on momentum
+	 * @param phi1 multiplier on cognitive component
+	 * @param phi2 multipier on social component
+	 * @throws FileNotFoundException
+	 */
+	public ICPSO(String fileName, boolean Markov, int numParticles, int numSamples, double epsilon,
 			double omega, double phi1, double phi2) throws FileNotFoundException {
 		//this.iterations = iterations;
 		this.numParticles = numParticles;
@@ -37,12 +49,7 @@ public class ICPSO {
 		this.omega = omega;
 		this.phi1 = phi1;
 		this.phi2 = phi2;
-						
-		
-		// loop to create population:
-		// Particle constructor takes fileName
-		
-		
+				
 		// based on info about problem type from file,
 		// create a fitness function
 		
@@ -55,6 +62,7 @@ public class ICPSO {
 			// TODO
 		}
 		
+		// loops to create population
 		initializePop(fileName, Markov);		
 	}
 
