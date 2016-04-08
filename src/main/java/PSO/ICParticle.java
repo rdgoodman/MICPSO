@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import MN.Edge;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
@@ -14,11 +16,15 @@ public class ICParticle implements Particle {
 
 	private Sample pBest_sample;
 	private ICParticle pBest_position;
-	private Node[] variables; // TODO: do we ever need to use this?
+	//private Node[] variables; // TODO: do we ever need to use this?
 	private ProbDist[] probs;	
 	private FitnessFunction f;
 	private int numSamples;
 	private double epsilon;
+	
+	// Array list for storing nodes and edges
+	private ArrayList<Node> nodesArray = new ArrayList<Node>();
+	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 
 	public ICParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
 		this.f = f;
@@ -72,10 +78,53 @@ public class ICParticle implements Particle {
 				while (potential.startsWith("%")) {
 					potential = s.nextLine();
 				}
+				
+				
+				////////////////////////////////////
+				
+				// TODO: ignore this otherwise, this should be taken care of in the optimization itself
+								
+				if (potential.equals("GS")){
+					System.out.println("GRAPH COLORING"); 
+				} else {
+					System.out.println("DOMINATING SET");
+				}
+				
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					potential = s.nextLine();
+				}
+
+				// checks for comments, when present, discards them
+				while (potential.startsWith("%")) {
+					potential = s.nextLine();
+				}
+				
+				// gets optimal solution size
+				int size = Integer.valueOf(potential);
+				System.out.println("Size: " + size);
+				
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					potential = s.nextLine();
+				}
+
+				// checks for comments, when present, discards them
+				while (potential.startsWith("%")) {
+					potential = s.nextLine();
+				}
+				
+				////////////////////////////////////
+
 
 				// splits the string into an array of separate node objects
 				if (!potential.startsWith("%")) {
 					stringNodes = potential.split(",");
+					
+					System.out.println("Nodes:");
+					for (int i = 0; i < stringNodes.length; i++){
+						System.out.println(stringNodes[i]);
+					}
 				}
 
 				// trims extra whitespace from node objects
@@ -143,6 +192,39 @@ public class ICParticle implements Particle {
 				s.close();
 			}
 		}
+		
+		// create array of probdists
+		probs = new ProbDist[stringNodes.length];
+		
+		// create nodes
+		// initialize node and value objects from the string arrays
+		for (int i = 0; i < stringNodes.length; i++) {
+			String nodeName = stringNodes[i];
+			double[] values = new double[numValues];
+
+			int startIndex = 0;
+			int stopIndex = 1;
+
+			// gets values from the value array
+			for (int n = 0; n < numValues; n++) {
+				// reminder: values are comma separated
+				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
+				values[n] = thisVal;
+				startIndex = startIndex + 2;
+				stopIndex = startIndex + 1;
+			}
+
+			// creates a node with the appropriate values and node name
+			Node thisNode = new Node(values, nodeName);
+			nodesArray.add(thisNode);
+			
+			//System.out.println("New node: " + thisNode.getVals().length);
+			
+			// TODO: create ProbDists using nodes
+			probs[i] = new ProbDist(thisNode.getVals(), thisNode);
+			
+		}
+
 	}
 	
 	
