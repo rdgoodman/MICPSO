@@ -84,11 +84,11 @@ public class ICParticle implements Particle {
 				
 				// TODO: ignore this otherwise, this should be taken care of in the optimization itself
 								
-				if (potential.equals("GS")){
-					System.out.println("GRAPH COLORING"); 
-				} else {
-					System.out.println("DOMINATING SET");
-				}
+//				if (potential.equals("GS")){
+//					System.out.println("GRAPH COLORING"); 
+//				} else {
+//					System.out.println("DOMINATING SET");
+//				}
 				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
@@ -102,7 +102,7 @@ public class ICParticle implements Particle {
 				
 				// gets optimal solution size
 				int size = Integer.valueOf(potential);
-				System.out.println("Size: " + size);
+				//System.out.println("Size: " + size);
 				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
@@ -210,6 +210,7 @@ public class ICParticle implements Particle {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
+				// TODO: this is all hard-coded, isn't it?
 				startIndex = startIndex + 2;
 				stopIndex = startIndex + 1;
 			}

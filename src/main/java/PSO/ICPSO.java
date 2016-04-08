@@ -1,7 +1,11 @@
 package PSO;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import MN.Sample;
 
@@ -11,13 +15,13 @@ public class ICPSO {
 	private FitnessFunction f;
 	// global best position stored in the position of this particle
 	private Particle gBest;
-	// stores the best sample AND its fitness 
+	// stores the best sample AND its fitness
 	private Sample bestSample;
-	//private double bestSampleFit; // probably better to have this as a
-									// property of the sample
+	// private double bestSampleFit; // probably better to have this as a
+	// property of the sample
 
 	// parameters:
-	//private int iterations;
+	// private int iterations;
 	private int numParticles;
 	private int numSamples;
 	private double epsilon;
@@ -28,122 +32,203 @@ public class ICPSO {
 	private double threshold = 0.01;
 	private double numToConsiderConverged = 50;
 
+	// type of problem
+	boolean graphColoring = false;
+	int optimalSolution;
+
 	/**
-	 * Creates an instance of either ICPSO or MICPSO depending on the Markov boolean argument
-	 * @param fileName the name of the file encoding the optimization problem
-	 * @param Markov true if MICPSO, false if normal ICPSO
-	 * @param numParticles the number of particles in the swarm
-	 * @param numSamples the number of samples to use to evaluate particle fitness
-	 * @param epsilon scaling factor
-	 * @param omega multiplier on momentum
-	 * @param phi1 multiplier on cognitive component
-	 * @param phi2 multipier on social component
+	 * Creates an instance of either ICPSO or MICPSO depending on the Markov
+	 * boolean argument
+	 * 
+	 * @param fileName
+	 *            the name of the file encoding the optimization problem
+	 * @param Markov
+	 *            true if MICPSO, false if normal ICPSO
+	 * @param numParticles
+	 *            the number of particles in the swarm
+	 * @param numSamples
+	 *            the number of samples to use to evaluate particle fitness
+	 * @param epsilon
+	 *            scaling factor
+	 * @param omega
+	 *            multiplier on momentum
+	 * @param phi1
+	 *            multiplier on cognitive component
+	 * @param phi2
+	 *            multipier on social component
 	 * @throws FileNotFoundException
 	 */
-	public ICPSO(String fileName, boolean Markov, int numParticles, int numSamples, double epsilon,
-			double omega, double phi1, double phi2) throws FileNotFoundException {
-		//this.iterations = iterations;
+	public ICPSO(String fileName, boolean Markov, int numParticles, int numSamples, double epsilon, double omega,
+			double phi1, double phi2) throws FileNotFoundException {
+		// this.iterations = iterations;
 		this.numParticles = numParticles;
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 		this.omega = omega;
 		this.phi1 = phi1;
 		this.phi2 = phi2;
-				
+		
+		pop = new ArrayList<Particle>();
+
 		// based on info about problem type from file,
 		// create a fitness function
-		
-		boolean graphColoring = true;
-		int optimal = 3; // TODO: read from file, obviously
-		
-		if (graphColoring){
-			f = new GCFitnessFunction(optimal);
+
+		Scanner s = null;
+
+		// The entire file name, for retrieving the Markov net file
+		File file = new File(fileName);
+
+		// Reads in the nodes, edges and values in from a specifically formatted
+		// file
+		try {
+			s = new Scanner(new BufferedReader(new FileReader(file)));
+
+			String potential;
+
+			/*
+			 * Reads the file, ignoring lines with % (which are comment lines).
+			 * File is structured so that the nodes are first (comma separated),
+			 * followed by the edges (in form A, B semi-colon separated) and
+			 * then the values for the variables (in form A: 0, 1). The values
+			 * need to be in the same order as the node variables. At this
+			 * stage, the variables are read in as strings, and after the file
+			 * is closed they are converted to the appropriate object type
+			 * (i.e., Node or Edge objects).
+			 * 
+			 */
+			// Read the first line in the file
+			potential = s.nextLine();
+
+			// gets the node info first
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// TODO: only getting type of problem and optimal size
+
+			if (potential.equals("GS")) {
+				System.out.println("GRAPH COLORING");
+				graphColoring = true;
+			} else {
+				System.out.println("DOMINATING SET");
+				// graphcoloring already false
+			}
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				potential = s.nextLine();
+			}
+
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// gets optimal solution size
+			optimalSolution = Integer.valueOf(potential);
+			System.out.println("Size: " + optimalSolution);
+		} finally {
+			if (s != null) {
+				s.close();
+			}
+		}
+
+		if (graphColoring) {
+			f = new GCFitnessFunction(optimalSolution);
 		} else {
 			// TODO
 		}
-		
+
 		// loops to create population
-		initializePop(fileName, Markov);		
+		initializePop(fileName, Markov);
 	}
 
 	/**
 	 * Initializes the population
-	 * @param markov True if we want MICPSO, false if we want ICPSO
-	 * @throws FileNotFoundException 
+	 * 
+	 * @param markov
+	 *            True if we want MICPSO, false if we want ICPSO
+	 * @throws FileNotFoundException
 	 */
-	private void initializePop(String fileName, boolean markov) throws FileNotFoundException {		
+	private void initializePop(String fileName, boolean markov) throws FileNotFoundException {
+		System.out.println("Creating population of size " + numParticles);
+		
 		// creates the correct number of the correct type of particle
-		for (int i = 0; i < numParticles; i++){
-			if (markov){
+		for (int i = 0; i < numParticles; i++) {
+			System.out.println(">> Particle " + i);
+			
+			if (markov) {
 				pop.add(new MNParticle());
 			} else {
 				pop.add(new ICParticle(fileName, f, numSamples, epsilon));
 			}
-		}				
+		}
 	}
 
 	/**
 	 * Returns the global best sample from the swarm
 	 */
-	public Sample run() {		
+	public Sample run() {
 		// termination criterion
 		int runsUnchanged = 0;
 		boolean terminated = false;
-		double prevBestSampleFit = 0; // TODO: remember to set this at some point
-		
-		while (!terminated){
-			
-			// 1) evaluate all particles			
+		double prevBestSampleFit = 0; // TODO: remember to set this at some
+										// point
+
+		while (!terminated) {
+
+			// 1) evaluate all particles
 			// 2) set gBest (maybe pull a collections.sort?)
 			double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
-			for (Particle p: pop){
+			for (Particle p : pop) {
 				p.calcFitness();
 				double fit = p.getBestSample().getFitness();
-				if (fit > maxFit){ // TODO: again, assuming max
+				if (fit > maxFit) { // TODO: again, assuming max
 					maxFit = fit;
 					bestSample = p.getBestSample();
 					gBest = p.copy();
 				}
 			}
-			
+
 			// iterate through all particles
-			for (Particle p : pop){
-							
+			for (Particle p : pop) {
+
 				// 1) update velocity
 				p.updateVelocity(omega, phi1, phi2, gBest);
-				
+
 				// 2) update position
 				p.updatePosition();
-				
+
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = bestSample.getFitness();
-				
+
 				// 3) evaluate fitness
 				double fit = p.calcFitness(); // this is never used
 				double sampleFit = p.getBestSample().getFitness();
-				
+
 				// TODO: recall this is a max problem, refactor that later
-				if (sampleFit > bestSample.getFitness()){
+				if (sampleFit > bestSample.getFitness()) {
 					setBestSample(p.getBestSample());
 					// set gBest and bias
 					setGBest(p);
-				}			
+				}
 			}
-			
-			
+
 			// Next half-dozen or so lines used to determine convergence
-			if (Math.abs(prevBestSampleFit - bestSample.getFitness()) < threshold){
+			if (Math.abs(prevBestSampleFit - bestSample.getFitness()) < threshold) {
 				runsUnchanged++;
 			} else {
 				runsUnchanged = 0;
-			}			
-			if (runsUnchanged >= numToConsiderConverged){
-				// return if the solution hasn't significantly changed in a certain
-				// number of iterations			
+			}
+			if (runsUnchanged >= numToConsiderConverged) {
+				// return if the solution hasn't significantly changed in a
+				// certain
+				// number of iterations
 				terminated = true;
 			}
-		}				
-		
+		}
+
 		return bestSample;
 	}
 
