@@ -191,12 +191,14 @@ public class ICPSO {
 			}
 		}
 		
-		while (!terminated && runs < 1) {
-
+		while (!terminated && runs < 2) {
+			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {
-				System.out.println(">>>> Particle ");
+				System.out.println("\n >>>> Particle ");
 				p.print();
 
 				// 1) update velocity
@@ -206,6 +208,7 @@ public class ICPSO {
 				// 2) update position
 				System.out.println(">> Position Update ");
 				p.updatePosition();
+				p.print();
 
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = bestSample.getFitness();
@@ -237,6 +240,7 @@ public class ICPSO {
 			runs++;
 		}
 
+		System.out.println("Returning best sample");
 		return bestSample;
 	}
 
@@ -244,6 +248,7 @@ public class ICPSO {
 	 * Creates a copy of the best sample
 	 */
 	private void setBestSample(Sample s) {
+		System.out.println("!!! New best sample with fitness " + s.getFitness() + "!!!");
 		bestSample = s;
 	}
 

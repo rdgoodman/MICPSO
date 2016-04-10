@@ -260,9 +260,10 @@ public class ICParticle implements Particle {
 			Sample s = sample();
 			double fit = f.calcFitness(s);
 			particleFit += fit;
+			System.out.println("Sample fitness: " + fit);
 			
 			// 2) Save this sample if it's the new pBest
-			if (pBest_sample == null | fit > pBest_sample.getFitness()){ 
+			if (pBest_sample == null || fit > pBest_sample.getFitness()){ 
 				// TODO: recall that this assumes a max problem, refactor later
 				setPBest(s);
 			}
