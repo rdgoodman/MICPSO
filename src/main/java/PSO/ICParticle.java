@@ -223,6 +223,7 @@ public class ICParticle implements Particle {
 			
 			// TODO: create ProbDists using nodes
 			probs[i] = new ProbDist(thisNode.getVals(), thisNode);
+			probs[i].normalize();
 			
 		}
 

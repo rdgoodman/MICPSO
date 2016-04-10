@@ -36,7 +36,7 @@ public class ProbDist {
 	/**
 	 * Turns this into an actual-factual valid probability distribution. Wow!
 	 */
-	protected void normalize() {
+	public void normalize() {
 		double denominator = 0;
 		for (int i = 0; i < probs.length; i++) {
 			denominator += probs[i].getProb();
