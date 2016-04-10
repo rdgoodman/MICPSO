@@ -18,6 +18,7 @@ public class PSOTest {
 		//double phi1, double phi2
 		
 		ICPSO p = new ICPSO(filename, false, 2, 2, 0.05, 0.4, 0.7, 0.7);
+		p.run();
 	}
 
 }

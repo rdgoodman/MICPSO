@@ -175,29 +175,36 @@ public class ICPSO {
 		boolean terminated = false;
 		double prevBestSampleFit = 0; // TODO: remember to set this at some
 										// point
+		int runs = 0; // TODO: testing, remove
 
-		while (!terminated) {
-
-			// 1) evaluate all particles
-			// 2) set gBest (maybe pull a collections.sort?)
-			double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
-			for (Particle p : pop) {
-				p.calcFitness();
-				double fit = p.getBestSample().getFitness();
-				if (fit > maxFit) { // TODO: again, assuming max
-					maxFit = fit;
-					bestSample = p.getBestSample();
-					gBest = p.copy();
-				}
+		System.out.println("Evaluating Particles");
+		// 1) evaluate all particles
+		// 2) set gBest (maybe pull a collections.sort?)
+		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+		for (Particle p : pop) {				
+			p.calcFitness();
+			double fit = p.getBestSample().getFitness();
+			if (fit > maxFit) { // TODO: again, assuming max
+				maxFit = fit;
+				bestSample = p.getBestSample();
+				gBest = p.copy();
 			}
+		}
+		
+		while (!terminated && runs < 1) {
+
 
 			// iterate through all particles
 			for (Particle p : pop) {
+				System.out.println(">>>> Particle ");
+				p.print();
 
 				// 1) update velocity
+				System.out.println(">> Velocity Update");
 				p.updateVelocity(omega, phi1, phi2, gBest);
 
 				// 2) update position
+				System.out.println(">> Position Update ");
 				p.updatePosition();
 
 				// 2.5) change the previous best sample fitness
@@ -227,6 +234,7 @@ public class ICPSO {
 				// number of iterations
 				terminated = true;
 			}
+			runs++;
 		}
 
 		return bestSample;
