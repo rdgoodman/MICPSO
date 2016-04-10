@@ -101,7 +101,7 @@ public class ICParticle implements Particle {
 				}
 				
 				// gets optimal solution size
-				int size = Integer.valueOf(potential);
+				//int size = Integer.valueOf(potential);
 				//System.out.println("Size: " + size);
 				
 				// keep scanning for the next non-empty line
