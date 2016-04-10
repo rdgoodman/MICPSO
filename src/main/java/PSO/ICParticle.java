@@ -249,6 +249,8 @@ public class ICParticle implements Particle {
 			s.setSampledValue(probs[i].getNode(), val);
 		}
 		
+		System.out.println("Sample: ");
+		s.print();
 		return s;
 	}
 

@@ -2,7 +2,7 @@
 GS
 
 % The number associated with the optimal solution of the above problem
-3
+2
 
 % Names of all variables in Markov network (comma separated)
 A, B, C, D

@@ -191,7 +191,7 @@ public class ICPSO {
 			}
 		}
 		
-		while (!terminated && runs < 2) {
+		while (!terminated && runs < 3) {
 			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
 			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
@@ -240,7 +240,8 @@ public class ICPSO {
 			runs++;
 		}
 
-		System.out.println("Returning best sample");
+		System.out.println("Returning best sample:");
+		bestSample.print();
 		return bestSample;
 	}
 
