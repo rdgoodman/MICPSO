@@ -11,7 +11,7 @@ import PSO.ICPSO;
 public class PSOTest {
 
 	@Test
-	public void test() throws FileNotFoundException {
+	public void testICPSO() throws FileNotFoundException {
 		String filename = ("src/main/resources/markovNet.txt");
 		
 		// String fileName, boolean Markov, int numParticles, int numSamples, double epsilon, double omega,

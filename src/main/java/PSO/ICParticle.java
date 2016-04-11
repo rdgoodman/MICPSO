@@ -296,6 +296,7 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void setPBest(Sample s) {
+		System.out.println(" ^ new ^ personal ^ best");
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!

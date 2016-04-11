@@ -218,6 +218,8 @@ public class ICPSO {
 				double sampleFit = p.getBestSample().getFitness();
 
 				// TODO: recall this is a max problem, refactor that later
+				System.out.println("Sample fitness: " + sampleFit + " >? Best fitness: " + bestSample.getFitness());
+				
 				if (sampleFit > bestSample.getFitness()) {
 					setBestSample(p.getBestSample());
 					// set gBest and bias
@@ -249,6 +251,7 @@ public class ICPSO {
 	 * Creates a copy of the best sample
 	 */
 	private void setBestSample(Sample s) {
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println("!!! New best sample with fitness " + s.getFitness() + "!!!");
 		bestSample = s;
 	}
