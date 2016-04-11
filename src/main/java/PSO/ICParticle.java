@@ -305,6 +305,12 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void adjustPBest() {
+		
+		System.out.println("________________________");
+		System.out.println("Adjusting using sample: ");
+		pBest_sample.print();
+		print();
+		
 		// call bias() method for each variable
 		for (int i = 0; i < probs.length; i++){
 			// retrieves value associated with this dist's node in sample
@@ -312,6 +318,8 @@ public class ICParticle implements Particle {
 			// calls bias() with that value
 			probs[i].bias(k, epsilon);
 		}
+		print();
+		System.out.println("________________________");
 	}
 
 	@Override
