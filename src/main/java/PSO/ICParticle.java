@@ -24,7 +24,6 @@ public class ICParticle implements Particle {
 	
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
-	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 
 	/**
 	 * Creates a new particle for ICPSO (no dependency handling)
@@ -38,13 +37,6 @@ public class ICParticle implements Particle {
 		this.f = f;
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
-		
-		// TODO: read stuff from file. It's hard.
-
-		// procedure:
-
-		// 1) create Nodes
-		// 2) foreach Node, create a ProbDist with its list of values and itself
 		
 		///////////////////////////////////////////////////////////
 
@@ -90,13 +82,8 @@ public class ICParticle implements Particle {
 				
 				////////////////////////////////////
 				
-				// TODO: ignore this otherwise, this should be taken care of in the optimization itself
-								
-//				if (potential.equals("GS")){
-//					System.out.println("GRAPH COLORING"); 
-//				} else {
-//					System.out.println("DOMINATING SET");
-//				}
+				// all the stuff within this little section is read, but ignored/not used
+				// since the problem type/size is handled in the PSO class
 				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
@@ -107,10 +94,6 @@ public class ICParticle implements Particle {
 				while (potential.startsWith("%")) {
 					potential = s.nextLine();
 				}
-				
-				// gets optimal solution size
-				//int size = Integer.valueOf(potential);
-				//System.out.println("Size: " + size);
 				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
@@ -343,13 +326,6 @@ public class ICParticle implements Particle {
 		return cp;
 	}
 
-	@Override
-	public void print() {
-		for (int i = 0; i < probs.length; i++){
-			probs[i].print();
-		}
-	}
-	
 	public void setDist(ProbDist[] probs){
 		this.probs = probs;
 	}
@@ -363,6 +339,14 @@ public class ICParticle implements Particle {
 	@Override
 	public Sample getBestSample() {
 		return pBest_sample;
+	}
+
+
+	@Override
+	public void print() {
+		for (int i = 0; i < probs.length; i++){
+			probs[i].print();
+		}
 	}
 
 

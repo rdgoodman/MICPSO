@@ -3,7 +3,6 @@ package PSO;
 import java.io.FileNotFoundException;
 
 import MN.MarkovNetwork;
-import MN.ProbDist;
 import MN.Sample;
 
 public class MNParticle implements Particle {
@@ -33,17 +32,33 @@ public class MNParticle implements Particle {
 		net = new MarkovNetwork(fileName);
 		
 	}
+	
+	// TODO: I think we'll need a copy() method for Markov Networks in order to
+	// make a copy constructor for the particle. Yikes.
 
 	@Override
 	public Sample sample() {
-		// TODO Auto-generated method stub
-		return null;
+		return net.sample();
 	}
 
 	@Override
 	public double calcFitness() {
-		// TODO Auto-generated method stub
-		return 0;
+		double particleFit = 0;
+		// average over a certain number of samples
+		for (int i = 0; i < numSamples; i++){
+			// 1) generate a sample and calculate its fitness
+			Sample s = sample();
+			double fit = f.calcFitness(s);
+			particleFit += fit;
+			System.out.println("Sample fitness: " + fit);
+			
+			// 2) Save this sample if it's the new pBest
+			if (pBest_sample == null || fit > pBest_sample.getFitness()){ 
+				// TODO: recall that this assumes a max problem, refactor later
+				setPBest(s);
+			}
+		}	
+		return particleFit / numSamples;
 	}
 
 
@@ -62,22 +77,19 @@ public class MNParticle implements Particle {
 
 
 	@Override
-	public Particle copy() {
+	public MNParticle copy() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public void print() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setPBest(Sample s) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(" ^ new ^ personal ^ best");
+		pBest_sample = s;
+		adjustPBest();
+		// sets pBest dist!
+		pBest_position = this.copy();		
 	}
 
 	@Override
@@ -88,14 +100,19 @@ public class MNParticle implements Particle {
 
 	@Override
 	public Object[] getProbs() {
-		// TODO Auto-generated method stub
+		// TODO This is used to get the position of gbest & pbest in velocity update
 		return null;
 	}
 	
 	@Override
 	public Sample getBestSample() {
-		// TODO;
-		return null;
+		return pBest_sample;
+	}
+
+	@Override
+	public void print() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
