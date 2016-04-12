@@ -32,9 +32,6 @@ public class MNParticle implements Particle {
 		net = new MarkovNetwork(fileName);
 		
 	}
-	
-	// TODO: I think we'll need a copy() method for Markov Networks in order to
-	// make a copy constructor for the particle. Yikes.
 
 	@Override
 	public Sample sample() {
@@ -80,14 +77,14 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void updatePosition() {
-		// TODO Auto-generated method stub
-
+		net.updatePotentials();
 	}
 
 
 	@Override
 	public MNParticle copy() {
-		// TODO Auto-generated method stub
+		// TODO: I think we'll need a copy() method for Markov Networks in order to
+		// make a copy constructor for the particle. Yikes.
 		return null;
 	}
 

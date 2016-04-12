@@ -43,6 +43,15 @@ public class Edge {
 	}
 	
 	/**
+	 * Adds the velocity vector to each potential value
+	 */
+	public void updateFactorPotentials(){
+		for (int i = 0; i < factors.length; i++){
+			factors[i].setPotential(factors[i].getPotential() + velocity[i]);
+		}
+	}
+	
+	/**
 	 * Returns the factor associated with a particular assignment to both endpoints
 	 * @param n1
 	 * @param valN1

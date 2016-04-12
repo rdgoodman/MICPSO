@@ -13,7 +13,6 @@ public class MarkovNetwork {
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 
 	// Variables for storing the string values read in from file
-	// TODO: Right now we are not doing anything with problemType or optimalNo
 	String problemType = "";
 	int optimalNo = 0;
 	String[] stringNodes = null;
@@ -350,6 +349,15 @@ public class MarkovNetwork {
 
 		return sample;
 	}
+	
+	/**
+	 * Performs position update
+	 */
+	public void updatePotentials(){
+		for (Edge e: edgesArray){
+			e.updateFactorPotentials();
+		}
+	}
 
 	public ArrayList<Node> getNodes() {
 		return nodesArray;
@@ -366,7 +374,24 @@ public class MarkovNetwork {
 	public void setEdges(ArrayList<Edge> edges) {
 		this.edgesArray = edges;
 	}
+	
+	public double[][] getAllPotentials(){
+		double[][] entries = new double[edgesArray.size()][];
+		// TODO
+		return entries;
+	}
 
+	
+	public double[][] getAllVelocities(){
+		double[][] velocities = new double[edgesArray.size()][];
+		// TODO
+		return velocities;
+	}
+	
+	public void adjustAllVelocities(double[][] newV){
+		// TODO
+	}
+	
 	public void print() {
 		System.out.println("NODES");
 		for (int i = 0; i < nodesArray.size(); i++) {
