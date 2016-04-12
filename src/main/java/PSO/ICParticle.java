@@ -26,6 +26,14 @@ public class ICParticle implements Particle {
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 
+	/**
+	 * Creates a new particle for ICPSO (no dependency handling)
+	 * @param fileName the file containing the problem encoding
+	 * @param f the fitness function for the problem
+	 * @param numSamples the number of samples to create during each fitness evaluation
+	 * @param epsilon scaling factor
+	 * @throws FileNotFoundException
+	 */
 	public ICParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
 		this.f = f;
 		this.numSamples = numSamples;

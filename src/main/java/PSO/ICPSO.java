@@ -159,7 +159,7 @@ public class ICPSO {
 			System.out.println(">> Particle " + i);
 			
 			if (markov) {
-				pop.add(new MNParticle());
+				pop.add(new MNParticle(fileName, f, numSamples, epsilon));
 			} else {
 				pop.add(new ICParticle(fileName, f, numSamples, epsilon));
 			}

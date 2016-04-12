@@ -10,6 +10,8 @@ More Urgent:
 
 > PSO termination criterion is still untested
 
+> We need some bigger test examples in a baaaaaaad way (or at least, we will very soon)
+
 
 
 
