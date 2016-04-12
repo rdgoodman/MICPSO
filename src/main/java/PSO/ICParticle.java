@@ -211,7 +211,7 @@ public class ICParticle implements Particle {
 			
 			//System.out.println("New node: " + thisNode.getVals().length);
 			
-			// TODO: create ProbDists using nodes
+			// create ProbDists using nodes
 			probs[i] = new ProbDist(thisNode.getVals(), thisNode);
 			probs[i].normalize();
 			

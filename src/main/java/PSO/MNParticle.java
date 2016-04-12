@@ -65,8 +65,17 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
-		// TODO Auto-generated method stub
+		// decide on multipliers
+		double cognitive = Math.random() * phi1;
+		double social = Math.random() * phi2;
 		
+		// update velocity for each prob dist
+//		for (int i = 0; i < probs.length; i++){
+//			// call update for each element
+//			probs[i].updateVelocity(omega, cognitive, social, ((ICParticle) gBest).getProbs()[i], pBest_position.getProbs()[i]);
+//		}	
+		
+		// TODO: update velocity for each FactorEntry...oy vay
 	}
 
 	@Override

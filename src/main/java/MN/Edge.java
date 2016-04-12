@@ -7,6 +7,7 @@ public class Edge {
 
 	private LinkedList<Node> endpoints;
 	private FactorEntry[] factors; // potentials
+	private double[] velocity; // velocity vector
 	
 	/**
 	 * Creates an edge between two nodes (order doesn't actually matter)
@@ -21,18 +22,21 @@ public class Edge {
 	}
 
 	/**
-	 * Initializes the factor potential table. Potentials are randomly initialized!
+	 * Initializes the factor potential table and velocities. Both are randomly initialized!
 	 * @param size the number of potentials in the table
 	 */
 	private void initializeFactors(int size) {
 		factors = new FactorEntry[size];
+		velocity = new double[size];
 		
 		int counter = 0;
 		
 		// creates a new potential for each combination of start and end node vals
+		// and a new velocity entry to each as well
 		for (int s = 0; s < endpoints.getFirst().getVals().length; s++){
 			for (int e = 0; e < endpoints.getLast().getVals().length; e++){
 				factors[counter] = new FactorEntry(endpoints.getFirst(), endpoints.getLast(), endpoints.getFirst().getVals()[s], endpoints.getLast().getVals()[e]);
+				velocity[counter] = Math.random();
 				counter++;
 			}
 		}
@@ -104,6 +108,14 @@ public class Edge {
 
 	public void setFactors(FactorEntry[] factors) {
 		this.factors = factors;
+	}
+
+	public double[] getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(double[] velocity) {
+		this.velocity = velocity;
 	}
 
 }
