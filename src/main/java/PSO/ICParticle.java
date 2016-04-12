@@ -306,7 +306,7 @@ public class ICParticle implements Particle {
 	@Override
 	public void adjustPBest() {
 		
-		System.out.println("________________________");
+		System.out.println("________________________ s");
 		System.out.println("Adjusting using sample: ");
 		pBest_sample.print();
 		print();
@@ -319,7 +319,7 @@ public class ICParticle implements Particle {
 			probs[i].bias(k, epsilon);
 		}
 		print();
-		System.out.println("________________________");
+		System.out.println("________________________ f");
 	}
 
 	@Override
