@@ -16,7 +16,6 @@ public class ICParticle implements Particle {
 
 	private Sample pBest_sample;
 	private ICParticle pBest_position;
-	//private Node[] variables; // TODO: do we ever need to use this?
 	private ProbDist[] probs;	
 	private FitnessFunction f;
 	private int numSamples;

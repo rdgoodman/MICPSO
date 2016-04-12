@@ -101,6 +101,8 @@ public class MNParticle implements Particle {
 	@Override
 	public Object[] getProbs() {
 		// TODO This is used to get the position of gbest & pbest in velocity update
+		// frighteningly, I think this may involve extracting the FactorEntries from
+		// all the edges in the MN...
 		return null;
 	}
 	
@@ -111,8 +113,7 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void print() {
-		// TODO Auto-generated method stub
-		
+		net.print();
 	}
 
 }
