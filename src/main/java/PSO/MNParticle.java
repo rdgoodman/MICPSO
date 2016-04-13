@@ -73,6 +73,9 @@ public class MNParticle implements Particle {
 //		}	
 		
 		// TODO: update velocity for each FactorEntry...oy vay
+		// 1) call getAllPotentials (V) and getAllEntries (P)
+		// 2) create new velocity [][] component-wise using V and P
+		// 3) call net.adjustAllVelocities(new velocity [][])
 	}
 
 	@Override
@@ -104,11 +107,11 @@ public class MNParticle implements Particle {
 		
 	}
 
-	@Override
-	public Object[] getProbs() {
+	public double[][] getProbs() {
 		// TODO This is used to get the position of gbest & pbest in velocity update
 		// frighteningly, I think this may involve extracting the FactorEntries from
-		// all the edges in the MN...
+		// all the edges in the MN...or something
+		// TODO NO WAIT I THINK THIS NEEDS TO BASICALLY BE net.getAllPotentials 
 		return null;
 	}
 	

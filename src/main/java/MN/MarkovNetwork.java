@@ -303,8 +303,9 @@ public class MarkovNetwork {
 				double[] nVals = N.getVals();
 				for (int n = 0; n < nVals.length; n++) {
 					// System.out.println();
-//					 System.out.print("\n P~ (" + N.getName() + " == " + nVals[n]
-//					 + ") \n");
+					// System.out.print("\n P~ (" + N.getName() + " == " +
+					// nVals[n]
+					// + ") \n");
 
 					for (Node M : MB) {
 						Edge edge = null;
@@ -320,21 +321,21 @@ public class MarkovNetwork {
 
 						// get potential where M=mVal and N=nVals[n]
 						double p = edge.getPotential(N, nVals[n], M, mVal);
-//						 System.out.print(p + "[" + M.getName() + " == " +
-//					 mVal + "] *");
+						// System.out.print(p + "[" + M.getName() + " == " +
+						// mVal + "] *");
 
 						// multiply current P(N==n) by p
 						probs.setProb(nVals[n], probs.getProb(nVals[n]) * p);
 					}
 
-//					System.out.println("\n Unnormalized");
-//					probs.print();
+					// System.out.println("\n Unnormalized");
+					// probs.print();
 
 					// re-normalize
 					probs.normalize();
 
-//					System.out.println("Normalized");
-//					probs.print();
+					// System.out.println("Normalized");
+					// probs.print();
 
 					// re-sample resulting distribution for N
 					sample.setSampledValue(N, probs.sample());
@@ -349,12 +350,12 @@ public class MarkovNetwork {
 
 		return sample;
 	}
-	
+
 	/**
 	 * Performs position update
 	 */
-	public void updatePotentials(){
-		for (Edge e: edgesArray){
+	public void updatePotentials() {
+		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
 		}
 	}
@@ -374,24 +375,36 @@ public class MarkovNetwork {
 	public void setEdges(ArrayList<Edge> edges) {
 		this.edgesArray = edges;
 	}
-	
-	public double[][] getAllPotentials(){
+
+	public double[][] getAllPotentials() {
 		double[][] entries = new double[edgesArray.size()][];
-		// TODO
+		// each row represents all the factor potentials from one edge
+		for (int i = 0; i < edgesArray.size(); i++) {
+			entries[i] = edgesArray.get(i).getAllEntries();
+		}
 		return entries;
 	}
 
-	
-	public double[][] getAllVelocities(){
+	public double[][] getAllVelocities() {
 		double[][] velocities = new double[edgesArray.size()][];
-		// TODO
+		// each row represents all the velocity entries from one edge
+		for (int i = 0; i < edgesArray.size(); i++) {
+			velocities[i] = edgesArray.get(i).getVelocity();
+		}
 		return velocities;
 	}
-	
-	public void adjustAllVelocities(double[][] newV){
-		// TODO
+
+	/**
+	 * Should only be called with the output of a particle's velocity update
+	 * @param newV
+	 */
+	public void adjustAllVelocities(double[][] newV) {
+		// replaces the velocity vectors with the new ones, incoming from velocity update
+		for (int e = 0; e < newV.length; e++){
+			edgesArray.get(e).setVelocity(newV[e]);
+		}
 	}
-	
+
 	public void print() {
 		System.out.println("NODES");
 		for (int i = 0; i < nodesArray.size(); i++) {

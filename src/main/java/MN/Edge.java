@@ -126,5 +126,27 @@ public class Edge {
 	public void setVelocity(double[] velocity) {
 		this.velocity = velocity;
 	}
+	
+	/**
+	 * Returns an array consisting of all the factor entries in the edge's potential function
+	 * @return
+	 */
+	public double[] getAllEntries(){
+		double[] e = new double[factors.length];
+		for (int i = 0; i < factors.length; i++){
+			e[i] = factors[i].getPotential();
+		}
+		return e;
+	}
+	
+	/**
+	 * Returns an array consisting of all the factor entries in the edge's potential function
+	 * @return
+	 */
+	public void setEntries(double[] newEntries){
+		for (int i = 0; i < factors.length; i++){
+			factors[i].setPotential(newEntries[i]);
+		}
+	}
 
 }

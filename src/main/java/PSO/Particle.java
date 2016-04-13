@@ -12,7 +12,7 @@ public interface Particle {
 	public void adjustPBest();
 	public Particle copy(); // returns a DEEP copy of this particle
 	public void print();
-	public Object[] getProbs(); // this is kludgy, but seems to work
+	//public Object[] getProbs(); // this is kludgy, but seems to work
 	public Sample getBestSample();
 
 }
