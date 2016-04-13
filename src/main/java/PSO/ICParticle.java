@@ -42,9 +42,6 @@ public class ICParticle implements Particle {
 		// Arrays for storing the string values read in from file
 		String[] stringNodes = null;
 		String[] stringValues = null;
-		// the largest number of values associated with any node
-		int numValues = 0;
-
 		Scanner s = null;
 
 		// The entire file name, for retrieving the Markov net file
@@ -159,20 +156,11 @@ public class ICParticle implements Particle {
 					int startOfValues;
 					// assists in getting the largest number of values found for
 					// any node
-					int tempNumValues = 0;
 					startOfValues = stringValues[i].lastIndexOf(":");
 					stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
 					// trims extra whitespace from edge objects
 					if (stringValues[i].startsWith(" ")) {
 						stringValues[i] = stringValues[i].trim();
-					}
-
-					tempNumValues = stringValues[i].split(",").length;
-					// finds the largest number of values for any nodes (for use
-					// in
-					// initializing the Node objects)
-					if (tempNumValues > numValues) {
-						numValues = tempNumValues;
 					}
 				}
 			}
@@ -190,8 +178,19 @@ public class ICParticle implements Particle {
 		// initialize node and value objects from the string arrays
 		for (int i = 0; i < stringNodes.length; i++) {
 			String nodeName = stringNodes[i];
+			
+			// holds the number of values associated with any nod
+			int numValues = 0;
+			
+			// determines the number of values for each nodes
+			for (int j = 0; j < stringValues[i].length(); j++) {
+				if (Character.isDigit(stringValues[i].charAt(j))) {
+			    	numValues++;
+			    }
+			}
+			
 			double[] values = new double[numValues];
-
+			
 			int startIndex = 0;
 			int stopIndex = 1;
 
@@ -200,7 +199,7 @@ public class ICParticle implements Particle {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
-				// TODO: this is all hard-coded, isn't it?
+				// handles the value and the comma
 				startIndex = startIndex + 2;
 				stopIndex = startIndex + 1;
 			}

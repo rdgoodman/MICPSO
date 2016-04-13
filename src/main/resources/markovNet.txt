@@ -1,5 +1,5 @@
-% Indicates whether the problem is Graph Coloring (GS) or Dominating Set (DS)
-GS
+% Indicates whether the problem is Graph Coloring (GC) or Dominating Set (DS)
+GC
 
 % The number associated with the optimal solution of the above problem
 1

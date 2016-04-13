@@ -107,7 +107,7 @@ public class ICPSO {
 
 			// TODO: only getting type of problem and optimal size
 
-			if (potential.equals("GS")) {
+			if (potential.equals("GC")) {
 				System.out.println("GRAPH COLORING");
 				graphColoring = true;
 			} else {
