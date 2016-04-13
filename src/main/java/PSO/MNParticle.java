@@ -58,8 +58,6 @@ public class MNParticle implements Particle {
 		return particleFit / numSamples;
 	}
 
-
-
 	@Override
 	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
 		// decide on multipliers
@@ -79,7 +77,7 @@ public class MNParticle implements Particle {
 			}
 		}
 		// 3) call net.adjustAllVelocities(new velocity [][])
-		net.adjustAllVelocities(V); // TODO this might be unnecessary, test		
+		net.adjustAllVelocities(V); 	
 	}
 	
 	@Override
@@ -102,13 +100,27 @@ public class MNParticle implements Particle {
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!
-		pBest_position = this.copy();		
+		pBest_position = this.copy(); // TODO this needs to be overridden 		
 	}
 
 	@Override
 	public void adjustPBest() {
-		// TODO Auto-generated method stub
+		System.out.println("________________________ s");
+		System.out.println("Adjusting using sample: ");
+		pBest_sample.print();
+		print();
 		
+		// TODO Auto-generated method stub
+		// take sample, feed back to MN
+		// for each edge, adjust all factors:
+		net.adjustPotentials(pBest_sample, epsilon);
+		// increase potentials corresponding to values from sample
+		// decrease potentials corresponding to all other values
+		// TODO: ask Shane - should this be for the combinations from the sample (i.e. A=1 AND B=0)
+		// or just the values from the sample (i.e. A=1, B=0)?
+		
+		print();
+		System.out.println("________________________ f");
 	}
 
 	private double[][] getAllPotentials(){

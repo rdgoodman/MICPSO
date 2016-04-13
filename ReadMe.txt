@@ -20,6 +20,12 @@ Less Urgent:
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
    over time for comparison's sake. This should be pretty easy.
    
+   
+   
+   
+   
+   
+   
  Done: 
  > Currently, a lot of our I/O stuff is hard-coded and inflexible (e.g. it breaks down if you try to
    have a node with more than 2 values). We can't test on more interesting/complex examples until

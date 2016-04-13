@@ -351,6 +351,15 @@ public class MarkovNetwork {
 	}
 
 	/**
+	 * Carries out adjustment using scaling factor
+	 * @param pBest_sample
+	 */
+	public void adjustPotentials(Sample pBest_sample, double epsilon) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
 	 * Performs position update
 	 */
 	public void updatePotentials() {
