@@ -68,23 +68,20 @@ public class MNParticle implements Particle {
 		
 		// 1) call getAllPotentials (P) and getAllVelocities (V)
 		double[][] P = net.getAllPotentials();
-		double[][] G = ((MNParticle) gBest).getAllPotentials();
+		double[][] globalBest = ((MNParticle) gBest).getAllPotentials();
+		double[][] personalBest = pBest_position.getAllPotentials();
 		double[][] V = net.getAllVelocities();
+		
 		// 2) update velocity [][] component-wise using V and P
 		for (int e = 0; e < V.length; e++){
 			for (int f = 0; f < V[e].length; f++){
-				// TODO 
+				V[e][f] = (omega * P[e][f]) + (cognitive * personalBest[e][f]) + (social * globalBest[e][f]);
 			}
 		}
 		// 3) call net.adjustAllVelocities(new velocity [][])
-		net.adjustAllVelocities(V); // TODO this might be unnecessary 
-		
+		net.adjustAllVelocities(V); // TODO this might be unnecessary, test		
 	}
 	
-	private double[][] getAllPotentials(){
-		return net.getAllPotentials();
-	}
-
 	@Override
 	public void updatePosition() {
 		net.updatePotentials();
@@ -114,13 +111,8 @@ public class MNParticle implements Particle {
 		
 	}
 
-	public double[][] getPotentials() {
-		// TODO This is used to get the position of gbest & pbest in velocity update
-		// frighteningly, I think this may involve extracting the FactorEntries from
-		// all the edges in the MN...or something
-		// TODO NO WAIT I THINK THIS NEEDS TO BASICALLY BE net.getAllPotentials 
-		// TODO This isn't necessary since we have the getAllPotentials() in MN class
-		return null;
+	private double[][] getAllPotentials(){
+		return net.getAllPotentials();
 	}
 	
 	@Override
