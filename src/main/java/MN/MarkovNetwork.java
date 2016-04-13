@@ -19,9 +19,6 @@ public class MarkovNetwork {
 	String[] stringEdges = null;
 	String[] stringValues = null;
 
-	// the largest number of values associated with any node
-	int numValues = 0;
-
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
 	int runs = 10;
@@ -151,22 +148,11 @@ public class MarkovNetwork {
 				for (int i = 0; i < stringValues.length; i++) {
 					// gets the information in format NODE: X, X
 					int startOfValues;
-					// assists in getting the largest number of values found for
-					// any node
-					int tempNumValues = 0;
 					startOfValues = stringValues[i].lastIndexOf(":");
 					stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
 					// trims extra whitespace from edge objects
 					if (stringValues[i].startsWith(" ")) {
 						stringValues[i] = stringValues[i].trim();
-					}
-
-					tempNumValues = stringValues[i].split(",").length;
-					// finds the largest number of values for any nodes (for use
-					// in
-					// initializing the Node objects)
-					if (tempNumValues > numValues) {
-						numValues = tempNumValues;
 					}
 				}
 			}
@@ -189,16 +175,29 @@ public class MarkovNetwork {
 		// initialize node and value objects from the string arrays
 		for (int i = 0; i < stringNodes.length; i++) {
 			String nodeName = stringNodes[i];
+			
+			// holds the number of values associated with any node
+			int numValues = 0;
+			
+			// determines the number of values for each nodes
+			for (int j = 0; j < stringValues[i].length(); j++) {
+				if (Character.isDigit(stringValues[i].charAt(j))) {
+			    	numValues++;
+			    }
+			}
+			
 			double[] values = new double[numValues];
 
 			int startIndex = 0;
 			int stopIndex = 1;
 
 			// gets values from the value array
+			System.out.println(stringValues[i]);
 			for (int n = 0; n < numValues; n++) {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
+				//handles the value and the comma
 				startIndex = startIndex + 2;
 				stopIndex = startIndex + 1;
 			}
