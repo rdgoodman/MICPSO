@@ -66,16 +66,23 @@ public class MNParticle implements Particle {
 		double cognitive = Math.random() * phi1;
 		double social = Math.random() * phi2;
 		
-		// update velocity for each prob dist
-//		for (int i = 0; i < probs.length; i++){
-//			// call update for each element
-//			probs[i].updateVelocity(omega, cognitive, social, ((ICParticle) gBest).getProbs()[i], pBest_position.getProbs()[i]);
-//		}	
-		
-		// TODO: update velocity for each FactorEntry...oy vay
-		// 1) call getAllPotentials (V) and getAllEntries (P)
-		// 2) create new velocity [][] component-wise using V and P
+		// 1) call getAllPotentials (P) and getAllVelocities (V)
+		double[][] P = net.getAllPotentials();
+		double[][] G = ((MNParticle) gBest).getAllPotentials();
+		double[][] V = net.getAllVelocities();
+		// 2) update velocity [][] component-wise using V and P
+		for (int e = 0; e < V.length; e++){
+			for (int f = 0; f < V[e].length; f++){
+				// TODO 
+			}
+		}
 		// 3) call net.adjustAllVelocities(new velocity [][])
+		net.adjustAllVelocities(V); // TODO this might be unnecessary 
+		
+	}
+	
+	private double[][] getAllPotentials(){
+		return net.getAllPotentials();
 	}
 
 	@Override
@@ -107,11 +114,12 @@ public class MNParticle implements Particle {
 		
 	}
 
-	public double[][] getProbs() {
+	public double[][] getPotentials() {
 		// TODO This is used to get the position of gbest & pbest in velocity update
 		// frighteningly, I think this may involve extracting the FactorEntries from
 		// all the edges in the MN...or something
 		// TODO NO WAIT I THINK THIS NEEDS TO BASICALLY BE net.getAllPotentials 
+		// TODO This isn't necessary since we have the getAllPotentials() in MN class
 		return null;
 	}
 	
