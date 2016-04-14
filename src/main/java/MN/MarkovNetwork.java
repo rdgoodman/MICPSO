@@ -22,7 +22,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
-	int runs = 10;
+	int runs = 0;
 
 	/**
 	 * Constructor when read in from file
@@ -303,7 +303,7 @@ public class MarkovNetwork {
 				if (r < i) {
 					sample.setSampledValue(n, vals[counter]);
 					break;
-				}
+				} 
 				counter++;
 			}
 		}
@@ -326,7 +326,6 @@ public class MarkovNetwork {
 
 				// Get all edges adjacent to N (there must be a better way to do
 				// this)
-				// TODO: refactor (if time)
 				// (gives a more limited list to search later on)
 				for (Edge e : edgesArray) {
 					if (e.getEndpoints().contains(N)) {
