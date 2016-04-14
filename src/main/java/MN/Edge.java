@@ -88,6 +88,28 @@ public class Edge {
 			return false;
 		}
 	}
+	
+	/**
+	 * Create a deep copy of this edge
+	 */
+	public Edge copy(){
+		Node A = endpoints.getFirst().copy();
+		Node B = endpoints.getLast().copy();
+		Edge e = new Edge(A, B);
+		
+		// TODO: USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
+		
+		FactorEntry[] f = new FactorEntry[factors.length];
+		for(int i = 0; i < f.length; i++){
+			// copy all the FactorEntries
+			f[i] = factors[i].copy(e.getEndpoints().getFirst(), e.getEndpoints().getLast());
+		}
+		e.setFactors(f);
+	
+		// don't need to copy velocity because copy's position will never be updated again		
+		return e;
+	}
+	
 
 	/**
 	 * Carries out adjustment using scaling factor

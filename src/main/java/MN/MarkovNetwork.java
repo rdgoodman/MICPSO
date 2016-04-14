@@ -24,6 +24,11 @@ public class MarkovNetwork {
 	// TODO: ultimately this should be tunable
 	int runs = 10;
 
+	/**
+	 * Constructor when read in from file
+	 * @param inputFile
+	 * @throws FileNotFoundException
+	 */
 	public MarkovNetwork(String inputFile) throws FileNotFoundException {
 		// The scanner for reading in the Markov net file
 		Scanner s = null;
@@ -165,6 +170,39 @@ public class MarkovNetwork {
 				s.close();
 			}
 		}
+	}
+	
+	/**
+	 * Only for copy constructor
+	 */
+	public MarkovNetwork(String problemType, int optimalNo, int runs){
+		this.problemType = problemType;
+		this.optimalNo = optimalNo;
+		this.runs = runs;
+	}
+	
+	
+	/**
+	 * Copy constructor
+	 */
+	public MarkovNetwork copy(){
+		MarkovNetwork mnCopy = new MarkovNetwork(problemType, optimalNo, runs);
+		
+		ArrayList<Edge> e = new ArrayList<Edge>();
+		// copies over all the edges
+		for (int i = 0; i < edgesArray.size(); i++){
+			e.add(edgesArray.get(i).copy());
+		}
+		
+		// pulls all the new copied nodes
+		ArrayList<Node> n = new ArrayList<Node>();
+		for (Edge edge : e){
+			n.addAll(edge.getEndpoints());
+		}
+		
+		mnCopy.setEdges(e);
+		mnCopy.setNodes(n);		
+		return mnCopy;
 	}
 
 	/**
