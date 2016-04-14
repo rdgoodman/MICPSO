@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MarkovNetwork {
@@ -352,12 +353,13 @@ public class MarkovNetwork {
 
 	/**
 	 * Carries out adjustment using scaling factor
-	 * @param pBest_sample
 	 */
-	public void adjustPotentials(Sample pBest_sample, double epsilon) {
-		// TODO Auto-generated method stub
-		
+	public void adjustPotentials(Sample s, double epsilon) {
+		for (Edge e : edgesArray){
+			e.adjustPotentials(s, epsilon);
+		}
 	}
+	
 
 	/**
 	 * Performs position update

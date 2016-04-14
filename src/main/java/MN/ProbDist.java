@@ -85,7 +85,6 @@ public class ProbDist {
 	 *            scaling factor
 	 */
 	public void bias(double valK, double epsilon) {
-		// TODO: sanity-check this
 		double delta = 0;
 		// adjust each probability in the distribution
 		for (int j = 0; j < probs.length; j++) {

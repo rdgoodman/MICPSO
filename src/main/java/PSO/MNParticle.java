@@ -109,15 +109,8 @@ public class MNParticle implements Particle {
 		System.out.println("Adjusting using sample: ");
 		pBest_sample.print();
 		print();
-		
-		// TODO Auto-generated method stub
-		// take sample, feed back to MN
-		// for each edge, adjust all factors:
+
 		net.adjustPotentials(pBest_sample, epsilon);
-		// increase potentials corresponding to values from sample
-		// decrease potentials corresponding to all other values
-		// TODO: ask Shane - should this be for the combinations from the sample (i.e. A=1 AND B=0)
-		// or just the values from the sample (i.e. A=1, B=0)?
 		
 		print();
 		System.out.println("________________________ f");
