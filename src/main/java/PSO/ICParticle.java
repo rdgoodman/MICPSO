@@ -107,11 +107,6 @@ public class ICParticle implements Particle {
 				// splits the string into an array of separate node objects
 				if (!potential.startsWith("%")) {
 					stringNodes = potential.split(",");
-					
-					System.out.println("Nodes:");
-					for (int i = 0; i < stringNodes.length; i++){
-						System.out.println(stringNodes[i]);
-					}
 				}
 
 				// trims extra whitespace from node objects
@@ -120,7 +115,12 @@ public class ICParticle implements Particle {
 						stringNodes[i] = stringNodes[i].trim();
 					}
 				}
-
+				
+				System.out.println("Nodes:");
+				for (int i = 0; i < stringNodes.length; i++){
+					System.out.println(stringNodes[i]);
+				}
+				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
 					potential = s.nextLine();
@@ -199,7 +199,7 @@ public class ICParticle implements Particle {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
-				// handles the value and the comma
+				//handles the value and the comma
 				startIndex = startIndex + 2;
 				stopIndex = startIndex + 1;
 			}
