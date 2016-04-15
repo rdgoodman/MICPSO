@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MarkovNetwork {
@@ -177,7 +176,6 @@ public class MarkovNetwork {
 	 * Sets the potentials for adjacent nodes' values being the same to zero
 	 */
 	private void handleConstraints() {
-		// TODO
 		if (problemType.equals("GC")) {
 			for (Edge e : edgesArray) {
 				e.handleGCConstraints();
@@ -396,7 +394,7 @@ public class MarkovNetwork {
 
 			}
 
-			// TODO: testing, remove
+			// testing, remove
 			//System.out.println("\n Final sample: ");
 			//sample.print();
 		}
@@ -410,7 +408,7 @@ public class MarkovNetwork {
 	public void adjustPotentials(Sample s, double epsilon) {
 		for (Edge e : edgesArray) {			
 			e.adjustPotentials(s, epsilon);		
-			// TODO: shouldn't need to-zero adjustment, but let's check
+			// shouldn't need to-zero adjustment, but let's check
 			if (problemType.equals("GC")) {
 				e.checkGCConstraints();
 			}
@@ -424,7 +422,7 @@ public class MarkovNetwork {
 		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
 			
-			// TODO: adjust to zero
+			// adjust to zero
 			if (problemType.equals("GC")) {
 				e.handleGCConstraints();
 			}

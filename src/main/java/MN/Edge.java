@@ -97,7 +97,7 @@ public class Edge {
 		Node B = endpoints.getLast().copy();
 		Edge e = new Edge(A, B);
 		
-		// TODO: USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
+		// USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
 		
 		FactorEntry[] f = new FactorEntry[factors.length];
 		for(int i = 0; i < f.length; i++){
@@ -152,7 +152,7 @@ public class Edge {
 				delta += (factors[i].getPotential() - factors[i].getPotential() * epsilon);
 
 			} else {
-				// TODO: check this only happens once
+				// should only happen once
 				kIndex = i;
 			}
 		}

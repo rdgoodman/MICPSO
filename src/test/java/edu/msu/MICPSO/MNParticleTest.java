@@ -14,7 +14,7 @@ public class MNParticleTest {
 	@Test
 	public void test() throws FileNotFoundException {		
 		String filename = ("src/main/resources/graphColor05Node.txt");
-		MNParticle p = new MNParticle(filename, new GCFitnessFunction(3), 5, .005); 
+		MNParticle p = new MNParticle(filename, new GCFitnessFunction(3), 5, .9); 
 		p.updatePosition();
 		System.out.println("\n POSITION UPDATE \n");
 		p.print();
