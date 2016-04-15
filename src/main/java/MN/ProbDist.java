@@ -8,14 +8,14 @@ public class ProbDist {
 	double[] velocity;
 	Node N;
 
-	public ProbDist(double[] possibleVals, Node N) {
-		probs = new ProbDistEntry[possibleVals.length];
+	public ProbDist(int[] js, Node N) {
+		probs = new ProbDistEntry[js.length];
 
 		this.N = N;
 
 		// create an empty ( == 1) entry for every possible value
 		for (int i = 0; i < probs.length; i++) {
-			probs[i] = new ProbDistEntry(possibleVals[i]);
+			probs[i] = new ProbDistEntry(js[i]);
 		}
 		
 		// randomly initialize velocity
@@ -50,7 +50,7 @@ public class ProbDist {
 	/**
 	 * Samples from this distribution, returns sampled value
 	 */
-	public double sample() {
+	public int sample() {
 		double p = Math.random();
 
 		// create upper and lower bounds

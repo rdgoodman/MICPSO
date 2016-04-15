@@ -2,19 +2,19 @@ package MN;
 
 public class ProbDistEntry {
 	
-	private double value;
+	private int value;
 	private double prob;
 	
-	public ProbDistEntry(double value){
+	public ProbDistEntry(int value){
 		this.value = value;
 		this.prob = 1; // because everything will be multiplied by it
 	}
 
-	public double getValue() {
+	public int getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 

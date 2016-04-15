@@ -237,7 +237,7 @@ public class MarkovNetwork {
 				}
 			}
 
-			double[] values = new double[numValues];
+			int[] values = new int[numValues];
 
 			int startIndex = 0;
 			int stopIndex = 1;
@@ -245,7 +245,7 @@ public class MarkovNetwork {
 			// gets values from the value array
 			for (int n = 0; n < numValues; n++) {
 				// reminder: values are comma separated
-				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
+				int thisVal = Integer.parseInt(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
 				// handles the value and the comma
 				startIndex = startIndex + 2;
@@ -306,7 +306,7 @@ public class MarkovNetwork {
 		// 1) generate an initial sample (probably randomly from vals(Vars)
 		for (Node n : nodesArray) {
 			// chosen uniformly - does that work?
-			double[] vals = n.getVals();
+			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
 			
@@ -353,7 +353,7 @@ public class MarkovNetwork {
 				ProbDist probs = new ProbDist(N.getVals(), N);
 
 				// for each value of N
-				double[] nVals = N.getVals();
+				int[] nVals = N.getVals();
 				for (int n = 0; n < nVals.length; n++) {
 					// System.out.println();
 					// System.out.print("\n P~ (" + N.getName() + " == " +

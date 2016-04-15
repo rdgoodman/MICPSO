@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Sample {
 	
-	private Hashtable<Node, Double> values;
+	private Hashtable<Node, Integer> values;
 	private double fitness;
 	
 	/**
@@ -13,14 +13,14 @@ public class Sample {
 	 * @param mn the Markov Network generating this sample
 	 */
 	public Sample(MarkovNetwork mn){
-		values = new Hashtable<Node, Double>();
+		values = new Hashtable<Node, Integer>();
 	}
 	
 	/**
 	 * For ICPSO
 	 */
 	public Sample(){
-		values = new Hashtable<Node, Double>();
+		values = new Hashtable<Node, Integer>();
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class Sample {
 	 * @param n Node which has been sampled
 	 * @param value Value sampled for the node's variable
 	 */
-	public void setSampledValue(Node n, Double value){	
+	public void setSampledValue(Node n, Integer value){	
 		values.put(n, value);
 	}
 	
@@ -37,7 +37,7 @@ public class Sample {
 	 * @param n
 	 * @return
 	 */
-	protected double getValue(Node n){
+	protected int getValue(Node n){
 		if (!values.containsKey(n))
 			System.out.println("Could not find key");
 		return values.get(n);
@@ -58,7 +58,7 @@ public class Sample {
 		this.fitness = fitness;
 	}
 	
-	public Hashtable<Node, Double> getTable(){
+	public Hashtable<Node, Integer> getTable(){
 		return values;
 	}
 	

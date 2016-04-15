@@ -189,7 +189,7 @@ public class ICParticle implements Particle {
 			    }
 			}
 			
-			double[] values = new double[numValues];
+			int[] values = new int[numValues];
 			
 			int startIndex = 0;
 			int stopIndex = 1;
@@ -197,7 +197,7 @@ public class ICParticle implements Particle {
 			// gets values from the value array
 			for (int n = 0; n < numValues; n++) {
 				// reminder: values are comma separated
-				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
+				int thisVal = Integer.parseInt(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
 				//handles the value and the comma
 				startIndex = startIndex + 2;
@@ -234,7 +234,7 @@ public class ICParticle implements Particle {
 		
 		// builds a sample by independently sampling every distribution
 		for (int i = 0; i < probs.length; i++){
-			double val = probs[i].sample();
+			int val = probs[i].sample();
 			s.setSampledValue(probs[i].getNode(), val);
 		}
 		

@@ -4,8 +4,8 @@ public class FactorEntry {
 	
 	private Node A;
 	private Node B;
-	private Double valA;
-	private Double valB;
+	private int valA;
+	private int valB;
 	private Double potential;
 	
 	/**
@@ -15,7 +15,7 @@ public class FactorEntry {
 	 * @param valA the value of A for this entry
 	 * @param valB the value of B for this entry
 	 */
-	public FactorEntry(Node A, Node B, Double valA, Double valB) {
+	public FactorEntry(Node A, Node B, int valA, int valB) {
 		this.A = A;
 		this.B = B;
 		this.valA = valA;
@@ -80,20 +80,20 @@ public class FactorEntry {
 		B = b;
 	}
 
-	public Double getValA() {
+	public int getValA() {
 		return valA;
 	}
 	
 
-	public void setValA(Double valA) {
+	public void setValA(int valA) {
 		this.valA = valA;
 	}
 
-	public Double getValB() {
+	public int getValB() {
 		return valB;
 	}
 
-	public void setValB(Double valB) {
+	public void setValB(int valB) {
 		this.valB = valB;
 	}	
 

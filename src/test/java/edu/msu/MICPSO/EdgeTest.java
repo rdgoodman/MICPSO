@@ -36,19 +36,19 @@ public class EdgeTest {
 	
 	@Test
 	public void testHashTable(){
-		Hashtable<Node, Double> ht = new Hashtable<Node,Double>();
-		double[] three = {1,2,3};
+		Hashtable<Node, Integer> ht = new Hashtable<Node,Integer>();
+		int[] three = {1,2,3};
 		Node A = new Node(three, "A");
 		Node B = new Node(three, "B");
-		ht.put(A, 4.0);
-		ht.put(B, 4.0);
+		ht.put(A, 4);
+		ht.put(B, 4);
 		System.out.println("A's value: " + ht.get(A));
 		System.out.println("B's value: " + ht.get(B));
-		ht.put(A, 2.0);
+		ht.put(A, 2);
 		System.out.println();
 		System.out.println("A's value: " + ht.get(A));
 		System.out.println("B's value: " + ht.get(B));
-		ht.put(A, 4.0);
+		ht.put(A, 4);
 		System.out.println();
 		System.out.println("A's value: " + ht.get(A));
 		System.out.println("B's value: " + ht.get(B));

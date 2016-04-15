@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class Node {
 	
 	private ArrayList<Node> MB; // TODO: Will need to build this
-	private double[] vals; // values this Node can take on (discrete problem)
+	private int[] vals; // values this Node can take on (discrete problem)
 	private String name;
 		
 	/**
 	 * Creates a new Node
 	 * @param vals the values this Node's variable can take on (must be a discrete problem, i.e. finite size)
 	 */
-	public Node(double[] vals, String name){
+	public Node(int[] vals, String name){
 		this.vals = vals;
 		MB = new ArrayList<Node>();
 		this.name = name;
@@ -33,11 +33,11 @@ public class Node {
 		this.MB = neighbors;
 	}
 
-	public double[] getVals() {
+	public int[] getVals() {
 		return vals;
 	}
 
-	public void setVals(double[] vals) {
+	public void setVals(int[] vals) {
 		this.vals = vals;
 	}
 

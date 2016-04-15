@@ -24,7 +24,7 @@ public class GCFitnessFunction implements FitnessFunction{
 		Set<Node> keys = s.getTable().keySet();
 		
 		// step 2: iterate with counter
-		ArrayList<Double> usedColors = new ArrayList<Double>();
+		ArrayList<Integer> usedColors = new ArrayList<Integer>();
 		
 		for (Node k : keys){
 			if (!usedColors.contains(s.getTable().get(k))){

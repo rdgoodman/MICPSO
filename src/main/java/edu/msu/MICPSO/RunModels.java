@@ -24,12 +24,8 @@ public class RunModels {
         MarkovNetwork MN = new MarkovNetwork(inputFile);
         
         // samples the above network using Gibbs sampling
-<<<<<<< HEAD
         //MN.sample();
-        
-=======
-        MN.sample();
->>>>>>> ab30d52e0d13d7a961ddd319ab5f58961adfffd1
+
 
 //		ICParticle p = new ICParticle(inputFile, new GCFitnessFunction(3), 5, .005);
 //		p.print();
