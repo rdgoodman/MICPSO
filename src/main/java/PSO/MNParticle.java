@@ -3,7 +3,6 @@ package PSO;
 import java.io.FileNotFoundException;
 
 import MN.MarkovNetwork;
-import MN.ProbDist;
 import MN.Sample;
 
 public class MNParticle implements Particle {
@@ -29,7 +28,6 @@ public class MNParticle implements Particle {
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 		
-		// TODO: I/O stuff? I think a lot of this is actually taken care of for us already, come to think of it
 		net = new MarkovNetwork(fileName);
 		
 	}
@@ -98,22 +96,8 @@ public class MNParticle implements Particle {
 
 
 	@Override
-	public MNParticle copy() {
-		// TODO: I think we'll need a copy() method for Markov Networks in order to
-		// make a copy constructor for the particle. Yikes.
-		
-//		ICParticle cp = new ICParticle(f, pBest_sample);
-//		
-//		ProbDist[] cpProbs = new ProbDist[probs.length];		
-//		for (int i = 0; i < cpProbs.length; i++){
-//			cpProbs[i] = probs[i].copy();
-//		}		
-//		cp.setDist(cpProbs);
-//		
-//		return cp;
-		
-		MNParticle cp = new MNParticle(f, pBest_sample, net);
-		
+	public MNParticle copy() {	
+		MNParticle cp = new MNParticle(f, pBest_sample, net);		
 		return cp;
 	}
 
@@ -124,7 +108,7 @@ public class MNParticle implements Particle {
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!
-		pBest_position = this.copy(); // TODO this needs to be overridden 		
+		pBest_position = this.copy(); 	
 	}
 
 	@Override
