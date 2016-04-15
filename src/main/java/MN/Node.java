@@ -49,4 +49,9 @@ public class Node {
 		this.name = name;
 	}
 
+	public Node copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -28,9 +28,18 @@ public class MNParticle implements Particle {
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 		
-		// TODO: I/O stuff? I think a lot of this is actually taken care of for us already, come to think of it
 		net = new MarkovNetwork(fileName);
 		
+	}
+	
+	/**
+	 * To be used only as a copy constructor
+	 */
+	public MNParticle(FitnessFunction f, Sample best, MarkovNetwork net){
+		this.f = f;
+		this.pBest_sample = best;
+		// copies the Markov Network
+		this.net = net.copy();
 	}
 
 	@Override
@@ -58,8 +67,6 @@ public class MNParticle implements Particle {
 		return particleFit / numSamples;
 	}
 
-
-
 	@Override
 	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
 		// decide on multipliers
@@ -79,7 +86,7 @@ public class MNParticle implements Particle {
 			}
 		}
 		// 3) call net.adjustAllVelocities(new velocity [][])
-		net.adjustAllVelocities(V); // TODO this might be unnecessary, test		
+		net.adjustAllVelocities(V); 	
 	}
 	
 	@Override
@@ -89,10 +96,9 @@ public class MNParticle implements Particle {
 
 
 	@Override
-	public MNParticle copy() {
-		// TODO: I think we'll need a copy() method for Markov Networks in order to
-		// make a copy constructor for the particle. Yikes.
-		return null;
+	public MNParticle copy() {	
+		MNParticle cp = new MNParticle(f, pBest_sample, net);		
+		return cp;
 	}
 
 
@@ -102,13 +108,20 @@ public class MNParticle implements Particle {
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!
-		pBest_position = this.copy();		
+		pBest_position = this.copy(); 	
 	}
 
 	@Override
 	public void adjustPBest() {
-		// TODO Auto-generated method stub
+		System.out.println("________________________ s");
+		System.out.println("Adjusting using sample: ");
+		pBest_sample.print();
+		print();
+
+		net.adjustPotentials(pBest_sample, epsilon);
 		
+		print();
+		System.out.println("________________________ f");
 	}
 
 	private double[][] getAllPotentials(){

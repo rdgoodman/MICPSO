@@ -24,6 +24,27 @@ public class FactorEntry {
 		this.potential = Math.random();
 	}
 	
+	/**
+	 * For use only with copy method
+	 */
+	public FactorEntry(Node A, Node B){
+		this.A = A;
+		this.B = B;
+	}
+	
+	
+	/**
+	 * Basically a copy constructor with same potentials/vals but different nodes
+	 * @param A
+	 * @param B
+	 */
+	public FactorEntry copy(Node A, Node B){
+		FactorEntry fe = new FactorEntry(A, B);
+		fe.setValA(valA);
+		fe.setValB(valB);
+		fe.setPotential(potential);		
+		return fe;
+	}	
 
 	public double getValue(Node n){
 		if (n.equals(A)){
@@ -74,8 +95,6 @@ public class FactorEntry {
 
 	public void setValB(Double valB) {
 		this.valB = valB;
-	}
-	
-	
+	}	
 
 }
