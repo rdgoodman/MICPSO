@@ -13,7 +13,7 @@ public class MNPSOTest {
 	@Test
 	public void test() throws FileNotFoundException {
 		String filename = ("src/main/resources/graphColorTestFile.txt");
-		ICPSO p = new ICPSO(filename, true, 2, 3, 0.9, 0.4, 0.6, 0.6);
+		ICPSO p = new ICPSO(filename, true, 2, 3, 0.99, 0.4, 0.6, 0.6);
 		p.run();
 	}
 
