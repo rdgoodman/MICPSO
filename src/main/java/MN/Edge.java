@@ -111,6 +111,16 @@ public class Edge {
 	}
 	
 
+	public void handleGCConstraints() {
+		for(int i = 0; i < factors.length; i++){
+			// for graph-coloring problems, adjacent vertices
+			// cannot have the same color
+			if (factors[i].getValA() == factors[i].getValB()){
+				factors[i].setPotential(0.0);
+			}
+		}
+	}
+
 	/**
 	 * Carries out adjustment using scaling factor
 	 */

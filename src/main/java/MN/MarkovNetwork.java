@@ -26,6 +26,7 @@ public class MarkovNetwork {
 
 	/**
 	 * Constructor when read in from file
+	 * 
 	 * @param inputFile
 	 * @throws FileNotFoundException
 	 */
@@ -171,37 +172,48 @@ public class MarkovNetwork {
 			}
 		}
 	}
-	
+
 	/**
-	 * Only for copy constructor
+	 * Sets the potentials for adjacent nodes' values being the same to zero
 	 */
-	public MarkovNetwork(String problemType, int optimalNo, int runs){
+	private void handleConstraints() {
+		// TODO
+		if (problemType.equals("GC")) {
+			for (Edge e : edgesArray) {
+				e.handleGCConstraints();
+			}
+		}
+	}
+
+	/**
+	 * Copy constructor
+	 */
+	public MarkovNetwork(String problemType, int optimalNo, int runs) {
 		this.problemType = problemType;
 		this.optimalNo = optimalNo;
 		this.runs = runs;
 	}
-	
-	
+
 	/**
 	 * Copy constructor
 	 */
-	public MarkovNetwork copy(){
+	public MarkovNetwork copy() {
 		MarkovNetwork mnCopy = new MarkovNetwork(problemType, optimalNo, runs);
-		
+
 		ArrayList<Edge> e = new ArrayList<Edge>();
 		// copies over all the edges
-		for (int i = 0; i < edgesArray.size(); i++){
+		for (int i = 0; i < edgesArray.size(); i++) {
 			e.add(edgesArray.get(i).copy());
 		}
-		
+
 		// pulls all the new copied nodes
 		ArrayList<Node> n = new ArrayList<Node>();
-		for (Edge edge : e){
+		for (Edge edge : e) {
 			n.addAll(edge.getEndpoints());
 		}
-		
+
 		mnCopy.setEdges(e);
-		mnCopy.setNodes(n);		
+		mnCopy.setNodes(n);
 		return mnCopy;
 	}
 
@@ -214,17 +226,17 @@ public class MarkovNetwork {
 		// initialize node and value objects from the string arrays
 		for (int i = 0; i < stringNodes.length; i++) {
 			String nodeName = stringNodes[i];
-			
+
 			// holds the number of values associated with any node
 			int numValues = 0;
-			
+
 			// determines the number of values for each nodes
 			for (int j = 0; j < stringValues[i].length(); j++) {
 				if (Character.isDigit(stringValues[i].charAt(j))) {
-			    	numValues++;
-			    }
+					numValues++;
+				}
 			}
-			
+
 			double[] values = new double[numValues];
 
 			int startIndex = 0;
@@ -236,7 +248,7 @@ public class MarkovNetwork {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
 				values[n] = thisVal;
-				//handles the value and the comma
+				// handles the value and the comma
 				startIndex = startIndex + 2;
 				stopIndex = startIndex + 1;
 			}
@@ -279,6 +291,7 @@ public class MarkovNetwork {
 		}
 
 		// for testing, can remove when finished
+		handleConstraints();
 		print();
 	}
 
@@ -303,7 +316,7 @@ public class MarkovNetwork {
 				if (r < i) {
 					sample.setSampledValue(n, vals[counter]);
 					break;
-				} 
+				}
 				counter++;
 			}
 		}
@@ -392,11 +405,10 @@ public class MarkovNetwork {
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		for (Edge e : edgesArray){
+		for (Edge e : edgesArray) {
 			e.adjustPotentials(s, epsilon);
 		}
 	}
-	
 
 	/**
 	 * Performs position update
@@ -443,11 +455,13 @@ public class MarkovNetwork {
 
 	/**
 	 * Should only be called with the output of a particle's velocity update
+	 * 
 	 * @param newV
 	 */
 	public void adjustAllVelocities(double[][] newV) {
-		// replaces the velocity vectors with the new ones, incoming from velocity update
-		for (int e = 0; e < newV.length; e++){
+		// replaces the velocity vectors with the new ones, incoming from
+		// velocity update
+		for (int e = 0; e < newV.length; e++) {
 			edgesArray.get(e).setVelocity(newV[e]);
 		}
 	}
