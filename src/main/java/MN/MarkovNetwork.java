@@ -408,8 +408,12 @@ public class MarkovNetwork {
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		for (Edge e : edgesArray) {
-			e.adjustPotentials(s, epsilon);
+		for (Edge e : edgesArray) {			
+			e.adjustPotentials(s, epsilon);		
+			// TODO: shouldn't need to-zero adjustment, but let's check
+			if (problemType.equals("GC")) {
+				e.checkGCConstraints();
+			}
 		}
 	}
 
@@ -419,6 +423,11 @@ public class MarkovNetwork {
 	public void updatePotentials() {
 		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
+			
+			// TODO: adjust to zero
+			if (problemType.equals("GC")) {
+				e.handleGCConstraints();
+			}
 		}
 	}
 

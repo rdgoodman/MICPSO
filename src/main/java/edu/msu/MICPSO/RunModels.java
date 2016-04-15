@@ -15,7 +15,7 @@ public class RunModels {
 	public static void main(String[] args) throws FileNotFoundException {	
 		// The filePath and fileName where the Markov net file is located
 		String filePath = "src/main/resources/";
-		String fileName = "graphColor38Node.txt";
+		String fileName = "graphColor05Node.txt";
 		
 		// for passing in to MarkovNetwork or ICParticle
 		String inputFile = filePath + fileName;
