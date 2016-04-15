@@ -112,11 +112,14 @@ public class Edge {
 	
 
 	public void handleGCConstraints() {
+		System.out.println("Checking constraints for edge " + endpoints.getFirst().getName() + endpoints.getLast().getName());
 		for(int i = 0; i < factors.length; i++){
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
+			System.out.println(factors[i].getValA() + " vs " + factors[i].getValB());
 			if (factors[i].getValA() == factors[i].getValB()){
 				factors[i].setPotential(0.0);
+				System.out.println("set to zero");
 			}
 		}
 	}

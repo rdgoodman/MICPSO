@@ -11,5 +11,5 @@ A, B, C, D
 A,B; B,C; C,D; D,A
 
 % Values for the variables in the Markov network (variable on left of colon)
-A: 0,1,2; B: 1,2,3,4,5,6; C: 2,3,4,5,6,7,8; D: 3,4
+A: 0,1,2; B: 1,2,5,6; C: 2,3,4,5,6; D: 3,4
 
