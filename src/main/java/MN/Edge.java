@@ -130,7 +130,7 @@ public class Edge {
 		for (int i = 0; i < factors.length; i++){
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
-			if (factors[i].getValA() == factors[i].getValB()){
+			if ((factors[i].getValA() == factors[i].getValB()) && (factors[i].getPotential() > 0.0)){
 				throw new RuntimeException("ERROR: graph-color constraints violated");
 			}
 		}		

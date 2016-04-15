@@ -50,8 +50,9 @@ public class Node {
 	}
 
 	public Node copy() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO remember, will never actually need the MB again
+		Node cp = new Node(this.vals, this.name);
+		return cp;
 	}
 
 }

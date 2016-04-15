@@ -22,7 +22,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
-	int runs = 0;
+	int runs = 100;
 
 	/**
 	 * Constructor when read in from file
@@ -323,8 +323,8 @@ public class MarkovNetwork {
 			}
 		}
 
-		System.out.println(" Initial sample: ");
-		sample.print();
+		//System.out.println(" Initial sample: ");
+		//sample.print();
 		
 		
 		for (int i = 0; i < runs; i++) {
@@ -334,7 +334,7 @@ public class MarkovNetwork {
 			// matter]...
 			for (Node N : nodesArray) {
 				
-				System.out.println(">>>>> Resampling Node " + N.getName());
+				//System.out.println(">>>>> Resampling Node " + N.getName());
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
@@ -397,8 +397,8 @@ public class MarkovNetwork {
 			}
 
 			// TODO: testing, remove
-			System.out.println("\n Final sample: ");
-			sample.print();
+			//System.out.println("\n Final sample: ");
+			//sample.print();
 		}
 
 		return sample;
