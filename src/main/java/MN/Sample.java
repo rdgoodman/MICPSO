@@ -28,7 +28,7 @@ public class Sample {
 	 * @param n Node which has been sampled
 	 * @param value Value sampled for the node's variable
 	 */
-	public void setSampledValue(Node n, Double value){
+	public void setSampledValue(Node n, Double value){	
 		values.put(n, value);
 	}
 	
@@ -38,6 +38,8 @@ public class Sample {
 	 * @return
 	 */
 	protected double getValue(Node n){
+		if (!values.containsKey(n))
+			System.out.println("Could not find key");
 		return values.get(n);
 	}
 	

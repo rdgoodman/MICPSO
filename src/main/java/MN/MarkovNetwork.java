@@ -243,7 +243,6 @@ public class MarkovNetwork {
 			int stopIndex = 1;
 
 			// gets values from the value array
-			System.out.println(stringValues[i]);
 			for (int n = 0; n < numValues; n++) {
 				// reminder: values are comma separated
 				double thisVal = Double.parseDouble(stringValues[i].substring(startIndex, stopIndex));
@@ -310,11 +309,14 @@ public class MarkovNetwork {
 			double[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
-
+			
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
 					sample.setSampledValue(n, vals[counter]);
+					break;
+				} else if (counter == vals.length - 2) {
+					sample.setSampledValue(n, vals[counter - 1]);
 					break;
 				}
 				counter++;
@@ -323,14 +325,15 @@ public class MarkovNetwork {
 
 		System.out.println(" Initial sample: ");
 		sample.print();
-
+		
+		
 		for (int i = 0; i < runs; i++) {
 
 			// 2) For each non-evidence variable (so, all of them) [order
 			// doesn't
 			// matter]...
 			for (Node N : nodesArray) {
-
+				
 				System.out.println(">>>>> Resampling Node " + N.getName());
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
@@ -356,7 +359,7 @@ public class MarkovNetwork {
 					// System.out.print("\n P~ (" + N.getName() + " == " +
 					// nVals[n]
 					// + ") \n");
-
+						
 					for (Node M : MB) {
 						Edge edge = null;
 						// pull the edge between N and M
@@ -365,7 +368,7 @@ public class MarkovNetwork {
 								edge = e;
 							}
 						}
-
+						
 						// get sample value of M
 						double mVal = sample.getValue(M);
 

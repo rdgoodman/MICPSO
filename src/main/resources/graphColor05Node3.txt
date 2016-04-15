@@ -1,0 +1,16 @@
+% Indicates whether the problem is Graph Coloring (GC) or Dominating Set (DS) 
+% http://www.math.uri.edu/~eaton/0131873814_MEb.pdf - figure 2.4
+GC
+
+% The number associated with the optimal solution of the above problem
+5
+
+% Names of all variables in Markov network (comma separated)
+A, B, C, D, E
+
+% Edges in Markov network (in format A,B to indicate edge between A & B) - order does not matter, semi-colon separated
+A,B; A,E; A,C; A,D; B,C; B,D; B,E; C,D; C,E; D,E;
+
+% Values for the variables in the Markov network (variable on left of colon)
+A: 0,1,2,3,4,5; B: 0,1,2,3,4,5; C: 0,3,4,5,6,7; D: 2,3,4,5,7,8,9; E: 0,1,2,3,4,5,6,7,8,9  
+
