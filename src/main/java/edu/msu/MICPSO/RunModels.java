@@ -15,14 +15,14 @@ public class RunModels {
 	public static void main(String[] args) throws FileNotFoundException {	
 		// The filePath and fileName where the Markov net file is located
 		String filePath = "src/main/resources/";
-		String fileName = "graphColor38Node.txt";
+		String fileName = "graphColor08Node.txt";
 		
 		// for passing in to MarkovNetwork or ICParticle
 		String inputFile = filePath + fileName;
 				
 		// creates a Markov network (read in from file)
         MarkovNetwork MN = new MarkovNetwork(inputFile);
-        
+              
         // samples the above network using Gibbs sampling
         //MN.sample();
 
