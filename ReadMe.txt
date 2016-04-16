@@ -7,9 +7,6 @@ More Urgent:
 
 > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
   the values make sense. 
-  
-> Deal with constraint-handling in ICPSO
-
 
 
 Less Urgent:

@@ -24,6 +24,11 @@ public class ProbDistEntry {
 
 	public void setProb(double prob) {
 		this.prob = prob;
+		if (this.prob > 1){
+			this.prob = 1;
+		} else if (this.prob < 0){
+			this.prob = 0;
+		}
 	}
 	
 	public ProbDistEntry copy(){
