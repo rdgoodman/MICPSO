@@ -17,8 +17,6 @@ public class ICPSO {
 	private Particle gBest;
 	// stores the best sample AND its fitness
 	private Sample bestSample;
-	// private double bestSampleFit; // probably better to have this as a
-	// property of the sample
 
 	// parameters:
 	// private int iterations;
@@ -179,7 +177,7 @@ public class ICPSO {
 
 		System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
-		// 2) set gBest (maybe pull a collections.sort?)
+		// 2) set gBest 
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
 		for (Particle p : pop) {				
 			p.calcFitness();
@@ -188,6 +186,8 @@ public class ICPSO {
 				maxFit = fit;
 				bestSample = p.getBestSample();
 				gBest = p.copy();
+				System.out.println("Global best:");
+				bestSample.print();
 			}
 		}
 		

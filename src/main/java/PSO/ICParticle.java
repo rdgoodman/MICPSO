@@ -305,10 +305,13 @@ public class ICParticle implements Particle {
 			if (!checkConstraints(s)){
 				// penalize if doesn't pass constraints
 				fit -= 100;
-			} else {			
+				s.setFitness(fit);
+			} else {		
+				// don't count toward overall particle fitness if penalized
 				particleFit += fit;
 			}
-			System.out.println("Sample fitness: " + fit);
+			
+			System.out.println("Sample fitness: " + fit);		
 			
 			// 2) Save this sample if it's the new pBest
 			if (pBest_sample == null || fit > pBest_sample.getFitness()){ 
@@ -368,10 +371,10 @@ public class ICParticle implements Particle {
 	@Override
 	public void adjustPBest() {
 		
-		System.out.println("________________________ s");
-		System.out.println("Adjusting using sample: ");
-		pBest_sample.print();
-		print();
+//		System.out.println("________________________ s");
+//		System.out.println("Adjusting using sample: ");
+//		pBest_sample.print();
+//		print();
 		
 		// call bias() method for each variable
 		for (int i = 0; i < probs.length; i++){
@@ -380,8 +383,8 @@ public class ICParticle implements Particle {
 			// calls bias() with that value
 			probs[i].bias(k, epsilon);
 		}
-		print();
-		System.out.println("________________________ f");
+//		print();
+//		System.out.println("________________________ f");
 	}
 
 	@Override
