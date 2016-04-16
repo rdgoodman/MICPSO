@@ -25,6 +25,9 @@ Less Urgent:
    in case.
    
 > Find a way to scale back factor potential values (maybe /10 every so many iterations?)
+
+> Move the constraint-checking (for ICPSO, not MICPSO) into the fitness function b/c they 
+  are problem-specific
    
    
    

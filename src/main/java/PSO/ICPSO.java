@@ -191,7 +191,7 @@ public class ICPSO {
 			}
 		}
 		
-		while (!terminated && runs < 100) {
+		while (!terminated && runs < 3) {
 			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
 			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");

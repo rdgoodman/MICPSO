@@ -23,6 +23,8 @@ public class ICParticle implements Particle {
 	
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
+	private ArrayList<Edge> edgesArray = new ArrayList<Edge>(); // TODO: this is only for constraint-checking
+
 
 	/**
 	 * Creates a new particle for ICPSO (no dependency handling)
@@ -42,6 +44,7 @@ public class ICParticle implements Particle {
 		// Arrays for storing the string values read in from file
 		String[] stringNodes = null;
 		String[] stringValues = null;
+		String[] stringEdges = null;
 		Scanner s = null;
 
 		// The entire file name, for retrieving the Markov net file
@@ -132,6 +135,19 @@ public class ICParticle implements Particle {
 				while (potential.startsWith("%")) {
 					potential = s.nextLine();
 				}
+				
+				// if the line is not a comment, per the file structure is the
+				// edges
+				if (!potential.startsWith("%")) {
+					stringEdges = potential.split(";");
+				}
+
+				// trims extra whitespace from edge objects
+				for (int i = 0; i < stringEdges.length; i++) {
+					if (stringEdges[i].startsWith(" ")) {
+						stringEdges[i] = stringEdges[i].trim();
+					}
+				}
 
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
@@ -215,6 +231,39 @@ public class ICParticle implements Particle {
 			probs[i].normalize();
 			
 		}
+		
+		// step 2: create edges
+		// makes temporary node objects to store the start/end of an edge
+		Node startingNode = null;
+		Node endingNode = null;
+		
+		// goes through each edge in the array of edges (from the file read in
+		// earlier)
+		for (int e = 0; e < stringEdges.length; e++) {
+			// for each node in the array of Nodes gets the starting and ending
+			// nodes
+			for (int n = 0; n < nodesArray.size(); n++) {
+				// gets the first node from the string array of edges
+				if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
+					startingNode = nodesArray.get(n);
+				}
+			}
+
+			for (int n = 0; n < nodesArray.size(); n++) {
+				// get the last node from the string array of edges
+				if (stringEdges[e].endsWith(nodesArray.get(n).getName())) {
+					endingNode = nodesArray.get(n);
+				}
+			}
+
+			Edge E = new Edge(startingNode, endingNode);
+			edgesArray.add(E);
+		}
+		
+//		System.out.println("Number of edges: " + edgesArray.size());
+//		for (Edge e: edgesArray){
+//			System.out.println(e.getEndpoints().getFirst().getName() + "-" + e.getEndpoints().getLast().getName());
+//		}
 
 	}
 	
@@ -251,7 +300,14 @@ public class ICParticle implements Particle {
 			// 1) generate a sample and calculate its fitness
 			Sample s = sample();
 			double fit = f.calcFitness(s);
-			particleFit += fit;
+			
+			// check constraints
+			if (!checkConstraints(s)){
+				// penalize if doesn't pass constraints
+				fit -= 100;
+			} else {			
+				particleFit += fit;
+			}
 			System.out.println("Sample fitness: " + fit);
 			
 			// 2) Save this sample if it's the new pBest
@@ -261,6 +317,23 @@ public class ICParticle implements Particle {
 			}
 		}	
 		return particleFit / numSamples;
+	}
+	
+	/**
+	 * TODO: move this into the fitness function class or something
+	 * Returns TRUE if all constraints are passed, FALSE otherwise
+	 * @return
+	 */
+	public boolean checkConstraints(Sample s){
+		// only graph coloring constraints, for now
+		for (Edge e: edgesArray){
+			// invalid if any neighboring nodes have the same color
+			if (s.getTable().get(e.getEndpoints().getFirst()) == s.getTable().get(e.getEndpoints().getLast())){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	@Override
