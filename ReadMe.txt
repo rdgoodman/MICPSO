@@ -2,10 +2,13 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
      
-> PSO termination criterion is still untested
+> PSO termination criterion is still untested, may need to change it for the "penalize invalid
+   solutions" issue
 
 > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
   the values make sense. 
+  
+> Deal with constraint-handling in ICPSO
 
 
 
@@ -20,6 +23,8 @@ Less Urgent:
 > Because the factors never really seem to decrease for MN and aren't re-normalized, they just keep getting
    bigger. This might not be an issue, but we should consider finding some way to mitigate this just
    in case.
+   
+> Find a way to scale back factor potential values (maybe /10 every so many iterations?)
    
    
    
