@@ -2,10 +2,6 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
-> Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
-  the values make sense. 
-
-
 Less Urgent:
    
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
@@ -34,3 +30,6 @@ Less Urgent:
 > We need some bigger test examples in a baaaaaaad way (or at least, we will very soon)-- Done. Added 
   12 examples of graph coloring problems, with sizes varying from 5 - 38 nodes. Also varied the examples
   to include different optimal colorings.     
+  
+  > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
+  the values make sense.  - Done! All double checked, values changed to appropriate values, and pushed.
