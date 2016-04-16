@@ -2,17 +2,14 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
      
-> The MN particle still needs to be fleshed out [Rollie is making this priority 1 for herself]
-
 > PSO termination criterion is still untested
 
 > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
   the values make sense. 
 
-Less Urgent:
 
-> We need to figure out how to (for the MICPSO variant) build/read in the constraints for GC problems.
-   Obviously, this can -- and has to -- wait until we get further along on the MICPSO particle
+
+Less Urgent:
    
 > We'll probably need some error/exception-checking to make sure probabilities stay within
    valid boundaries (none < 0 or > 1)

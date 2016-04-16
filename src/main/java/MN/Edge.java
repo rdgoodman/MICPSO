@@ -97,7 +97,7 @@ public class Edge {
 		Node B = endpoints.getLast().copy();
 		Edge e = new Edge(A, B);
 		
-		// TODO: USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
+		// USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
 		
 		FactorEntry[] f = new FactorEntry[factors.length];
 		for(int i = 0; i < f.length; i++){
@@ -110,18 +110,30 @@ public class Edge {
 		return e;
 	}
 	
-
+	/**
+	 * Enforces constraints of a graph-coloring problem
+	 */
 	public void handleGCConstraints() {
-		System.out.println("Checking constraints for edge " + endpoints.getFirst().getName() + endpoints.getLast().getName());
-		for(int i = 0; i < factors.length; i++){
+		for (int i = 0; i < factors.length; i++){
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
-			System.out.println(factors[i].getValA() + " vs " + factors[i].getValB());
 			if (factors[i].getValA() == factors[i].getValB()){
 				factors[i].setPotential(0.0);
-				System.out.println("set to zero");
 			}
 		}
+	}
+
+	/**
+	 * Throws an exception of the constraints of a graph-coloring problem are violated
+	 */
+	public void checkGCConstraints() {
+		for (int i = 0; i < factors.length; i++){
+			// for graph-coloring problems, adjacent vertices
+			// cannot have the same color
+			if ((factors[i].getValA() == factors[i].getValB()) && (factors[i].getPotential() > 0.0)){
+				throw new RuntimeException("ERROR: graph-color constraints violated");
+			}
+		}		
 	}
 
 	/**
@@ -140,7 +152,7 @@ public class Edge {
 				delta += (factors[i].getPotential() - factors[i].getPotential() * epsilon);
 
 			} else {
-				// TODO: check this only happens once
+				// should only happen once
 				kIndex = i;
 			}
 		}

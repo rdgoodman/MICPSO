@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MarkovNetwork {
@@ -22,7 +21,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
-	int runs = 0;
+	int runs = 1;
 
 	/**
 	 * Constructor when read in from file
@@ -177,7 +176,6 @@ public class MarkovNetwork {
 	 * Sets the potentials for adjacent nodes' values being the same to zero
 	 */
 	private void handleConstraints() {
-		// TODO
 		if (problemType.equals("GC")) {
 			for (Edge e : edgesArray) {
 				e.handleGCConstraints();
@@ -323,8 +321,8 @@ public class MarkovNetwork {
 			}
 		}
 
-		System.out.println(" Initial sample: ");
-		sample.print();
+		//System.out.println(" Initial sample: ");
+		//sample.print();
 		
 		
 		for (int i = 0; i < runs; i++) {
@@ -334,7 +332,7 @@ public class MarkovNetwork {
 			// matter]...
 			for (Node N : nodesArray) {
 				
-				System.out.println(">>>>> Resampling Node " + N.getName());
+				//System.out.println(">>>>> Resampling Node " + N.getName());
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
@@ -396,7 +394,7 @@ public class MarkovNetwork {
 
 			}
 
-			// TODO: testing, remove
+			// testing, remove
 			System.out.println("\n Final sample: ");
 			sample.print();
 		}
@@ -408,8 +406,12 @@ public class MarkovNetwork {
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		for (Edge e : edgesArray) {
-			e.adjustPotentials(s, epsilon);
+		for (Edge e : edgesArray) {			
+			e.adjustPotentials(s, epsilon);		
+			// shouldn't need to-zero adjustment, but let's check
+			if (problemType.equals("GC")) {
+				e.checkGCConstraints();
+			}
 		}
 	}
 
@@ -419,6 +421,11 @@ public class MarkovNetwork {
 	public void updatePotentials() {
 		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
+			
+			// adjust to zero
+			if (problemType.equals("GC")) {
+				e.handleGCConstraints();
+			}
 		}
 	}
 
