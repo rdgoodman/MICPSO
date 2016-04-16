@@ -5,10 +5,6 @@ More Urgent:
 > PSO termination criterion is still untested, may need to change it for the "penalize invalid
    solutions" issue
 
-> Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
-  the values make sense. 
-
-
 Less Urgent:
    
 > We'll probably need some error/exception-checking to make sure probabilities stay within
@@ -40,3 +36,6 @@ Less Urgent:
 > We need some bigger test examples in a baaaaaaad way (or at least, we will very soon)-- Done. Added 
   12 examples of graph coloring problems, with sizes varying from 5 - 38 nodes. Also varied the examples
   to include different optimal colorings.     
+  
+  > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
+  the values make sense.  - Done! All double checked, values changed to appropriate values, and pushed.
