@@ -1,18 +1,12 @@
 Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
-     
-> PSO termination criterion is still untested, may need to change it for the "penalize invalid
-   solutions" issue
 
 > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
   the values make sense. 
 
 
 Less Urgent:
-   
-> We'll probably need some error/exception-checking to make sure probabilities stay within
-   valid boundaries (none < 0 or > 1)
    
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
    over time for comparison's sake. This should be pretty easy.
@@ -23,7 +17,7 @@ Less Urgent:
    
 > Find a way to scale back factor potential values (maybe /10 every so many iterations?)
 
-> Move the constraint-checking (for ICPSO, not MICPSO) into the fitness function b/c they 
+> Move the constraint-checking things (for ICPSO, not MICPSO) into the fitness function b/c they 
   are problem-specific
    
    

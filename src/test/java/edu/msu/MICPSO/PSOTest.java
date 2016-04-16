@@ -17,7 +17,7 @@ public class PSOTest {
 		// String fileName, boolean Markov, int numParticles, int numSamples, double epsilon, double omega,
 		//double phi1, double phi2
 		
-		ICPSO p = new ICPSO(filename, false, 2, 3, 0.9, 0.4, 0.6, 0.6);
+		ICPSO p = new ICPSO(filename, false, 5, 3, 0.9, 0.4, 0.6, 0.6);
 		p.run();
 	}
 

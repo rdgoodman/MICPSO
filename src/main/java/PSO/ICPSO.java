@@ -28,7 +28,7 @@ public class ICPSO {
 	private double phi2;
 	// determines convergence
 	private double threshold = 0.01;
-	private double numToConsiderConverged = 50;
+	private double numToConsiderConverged = 20;
 
 	// type of problem
 	boolean graphColoring = false;
@@ -190,12 +190,13 @@ public class ICPSO {
 				bestSample.print();
 			}
 		}
-		
-		while (!terminated && runs < 3) {
+				
+		while (!terminated) {
 			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
 			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
+			
 			// iterate through all particles
 			for (Particle p : pop) {
 				System.out.println("\n >>>> Particle ");
