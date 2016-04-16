@@ -17,7 +17,9 @@ Less Urgent:
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
    over time for comparison's sake. This should be pretty easy.
    
-   
+> Because the factors never really seem to decrease for MN and aren't re-normalized, they just keep getting
+   bigger. This might not be an issue, but we should consider finding some way to mitigate this just
+   in case.
    
    
    
