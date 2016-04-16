@@ -12,7 +12,7 @@ public class PSOTest {
 
 	@Test
 	public void testICPSO() throws FileNotFoundException {
-		String filename = ("src/main/resources/markovNet.txt");
+		String filename = ("src/main/resources/graphColor05Node.txt");
 		
 		// String fileName, boolean Markov, int numParticles, int numSamples, double epsilon, double omega,
 		//double phi1, double phi2

@@ -21,7 +21,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
-	int runs = 100;
+	int runs = 1;
 
 	/**
 	 * Constructor when read in from file
@@ -395,8 +395,8 @@ public class MarkovNetwork {
 			}
 
 			// testing, remove
-			//System.out.println("\n Final sample: ");
-			//sample.print();
+			System.out.println("\n Final sample: ");
+			sample.print();
 		}
 
 		return sample;
