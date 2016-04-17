@@ -2,6 +2,8 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
+> Need to implement constraints on IPSO so particles stay in search space
+
 Less Urgent:
    
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
