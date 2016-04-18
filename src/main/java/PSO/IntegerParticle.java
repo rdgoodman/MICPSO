@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import MN.Edge;
@@ -285,18 +286,6 @@ public class IntegerParticle {
 		for (int i = 0; i < position.length; i++){
 			double move = position[i] + velocity[i];
 			
-			int smallestVal = Integer.MAX_VALUE;
-			int largestVal = Integer.MIN_VALUE;
-			
-			for (int j = 0; j < nodes.get(i).getVals().length; j++) {
-				
-				if (nodes.get(i).getSpecificVal(j) < smallestVal) {
-					smallestVal = nodes.get(i).getSpecificVal(j);
-				} else if (nodes.get(i).getSpecificVal(j) > largestVal)  {
-					largestVal = nodes.get(i).getSpecificVal(j);
-				}
-			}
-			
 			// snap to nearest integer
 			if (move - Math.floor(move) > 0.5){
 				position[i] = (int)Math.ceil(move);
@@ -304,11 +293,21 @@ public class IntegerParticle {
 				position[i] = (int)Math.floor(move);
 			}
 			
-			// snap position back to smallest or largest value, when gets too big
-			if (position[i] < smallestVal) {
-				position[i] = smallestVal;
-			} else if (position[i] > largestVal) {
-				position[i] = largestVal;
+			int[] possible = nodes.get(i).getVals();
+			boolean validValue = false;
+			for (int j = 0; j < possible.length; j++){
+				if (position[i] == possible[j]){
+					// checks that the position value is in fact in the list of valid values
+					validValue = true;
+				}
+			}
+			
+			// if the value is outside the acceptable range
+			if (!validValue){
+				// re-initialize to random value within range				
+			    Random rand = null;
+			    int randomNum = rand.nextInt(possible.length);			    
+			    position[i] = possible[randomNum];
 			}
 			
 		}
