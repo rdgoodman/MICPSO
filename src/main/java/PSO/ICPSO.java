@@ -132,10 +132,11 @@ public class ICPSO {
 			}
 		}
 
+		// create fitness function
 		if (graphColoring) {
 			f = new GCFitnessFunction(optimalSolution);
 		} else {
-			// TODO
+			
 		}
 
 		// loops to create population
