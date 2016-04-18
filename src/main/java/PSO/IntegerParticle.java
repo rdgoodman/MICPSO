@@ -11,7 +11,7 @@ import MN.Edge;
 import MN.Node;
 import MN.Sample;
 
-public class IntegerParticle {
+public class IntegerParticle implements Particle {
 
 	private int[] position; // build sample out of position for fitness eval
 	private double[] velocity;
@@ -31,7 +31,6 @@ public class IntegerParticle {
 	public IntegerParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
 		this.f = f;
 		
-		// TODO: fill out global set of Nodes that can hold values for building samples
 		// The entire file name, for retrieving the Markov net file
 				File file = new File(fileName);
 
@@ -64,8 +63,7 @@ public class IntegerParticle {
 						}
 						
 						
-						////////////////////////////////////
-						
+						////////////////////////////////////		
 						// all the stuff within this little section is read, but ignored/not used
 						// since the problem type/size is handled in the PSO class
 						
@@ -231,7 +229,7 @@ public class IntegerParticle {
 					Edge E = new Edge(startingNode, endingNode);
 					edgesArray.add(E);
 				}
-							
+				
 		initializeVelocityAndPosition();
 	}
 	
@@ -305,8 +303,8 @@ public class IntegerParticle {
 	public double calcFitness(){
 		// build a sample
 		Sample s = buildSampleFromPosition();
-		
 		double fit = f.calcFitness(s);
+		
 		
 		// check constraints
 		if (!checkConstraints(s)){
@@ -317,7 +315,7 @@ public class IntegerParticle {
 		
 		// set pBest
 		// TODO: refactor, this only works for a max problem
-		if (fit > pBest_fitness || pBest == null){
+		if (pBest == null || fit > pBest_fitness){
 			pBest_fitness = fit;
 			pBest = new int[position.length];
 			// copy this position
@@ -325,7 +323,7 @@ public class IntegerParticle {
 				pBest[i] = position[i];
 			}
 		}
-		
+
 		return fit;
 	}
 	
@@ -353,6 +351,54 @@ public class IntegerParticle {
 		this.position = position;
 	}
 	
+	@Override
+	public void print() {
+		System.out.println("NODES:");
+		for (Node n: nodes) {
+			System.out.println(n.getName());
+		}
+		
+		System.out.println("EDGES");
+		for (Edge e: edgesArray) {
+			e.printFactors();
+		}	
+	}
+
+	@Override
+	public Sample sample() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPBest(Sample s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void adjustPBest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Particle copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Sample getBestSample() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

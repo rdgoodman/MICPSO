@@ -1,13 +1,19 @@
 package PSO;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import MN.Edge;
+import MN.Node;
 import MN.Sample;
 
 public class IPSO {
 
-	private ArrayList<IntegerParticle> pop;
+	public ArrayList<IntegerParticle> pop;
 	int[] gBest;
 	double gBest_fitness;
 	private FitnessFunction f;
@@ -33,9 +39,79 @@ public class IPSO {
 		this.omega = omega;
 		this.phi1 = phi1;
 		this.phi2 = phi2;
+	
+		// based on info about problem type from file,
+		// create a fitness function
 
-		// TODO: i/o stuff
+		Scanner s = null;
+
+		// The entire file name, for retrieving the Markov net file
+		File file = new File(fileName);
+
+		// Reads in the nodes, edges and values in from a specifically formatted
+		// file
+		try {
+			s = new Scanner(new BufferedReader(new FileReader(file)));
+
+			String potential;
+
+			/*
+			 * Reads the file, ignoring lines with % (which are comment lines).
+			 * File is structured so that the nodes are first (comma separated),
+			 * followed by the edges (in form A, B semi-colon separated) and
+			 * then the values for the variables (in form A: 0, 1). The values
+			 * need to be in the same order as the node variables. At this
+			 * stage, the variables are read in as strings, and after the file
+			 * is closed they are converted to the appropriate object type
+			 * (i.e., Node or Edge objects).
+			 * 
+			 */
+			// Read the first line in the file
+			potential = s.nextLine();
+
+			// gets the node info first
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// TODO: only getting type of problem and optimal size
+
+			if (potential.equals("GC")) {
+				System.out.println("GRAPH COLORING");
+				graphColoring = true;
+			} else {
+				System.out.println("DOMINATING SET");
+				// graphcoloring already false
+			}
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				potential = s.nextLine();
+			}
+
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// gets optimal solution size
+			optimalSolution = Integer.valueOf(potential);
+			System.out.println("Size: " + optimalSolution);
+		} finally {
+			if (s != null) {
+				s.close();
+			}
+		}
+		
+		if (graphColoring) {
+			f = new GCFitnessFunction(optimalSolution);
+		} else {
+			// TODO
+		}
+		
 		initializePop(fileName);
+		
 	}
 
 	/**
@@ -58,21 +134,23 @@ public class IPSO {
 	 */
 	public Sample run() {
 		// TODO: make a method to build samples from double[]
-
+		
 		// termination criterion
 		int runsUnchanged = 0;
 		boolean terminated = false;
 		double prevBestSampleFit = 0; // TODO: remember to set this at some
 										// point
-		int runs = 0; // TODO: testing, remove
+		int runs = 1; // TODO: testing, remove
 
 		System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+		
 		for (IntegerParticle p : pop) {
 			p.calcFitness();
 			double fit = p.calcFitness();
+			
 			if (fit > maxFit) { // TODO: again, assuming max
 				maxFit = fit;
 				int[] b = p.getPosition();
@@ -86,6 +164,7 @@ public class IPSO {
 
 				System.out.println("Global best:");
 				// TODO: print method for IntegerParticle
+				p.print();
 			}
 		}
 
@@ -94,21 +173,23 @@ public class IPSO {
 			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
 			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
+			int particleNumber = 0; 
+			
 			// iterate through all particles
 			for (IntegerParticle p : pop) {
-				System.out.println("\n >>>> Particle ");
-				// TODO: print method
-				//p.print();
+				System.out.println("\n >>>> Particle " + particleNumber);
+				particleNumber++;
 
 				// 1) update velocity
 				System.out.println(">> Velocity Update");
 				p.updateVelocity(omega, phi1, phi2, gBest);
-
+				
 				// 2) update position
 				System.out.println(">> Position Update ");
 				// TODO: print method
-				//p.print();
-
+				// print for this particle
+				p.print();
+				
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = gBest_fitness;
 
@@ -149,4 +230,12 @@ public class IPSO {
 		return s;
 	}
 
+	public void print() {
+		for (int i = 0; i < gBest.length; i++) {
+			System.out.println(gBest[i]);
+		}
+	}
+	
+	
+	
 }

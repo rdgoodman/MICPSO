@@ -19,7 +19,6 @@ public class GCFitnessFunction implements FitnessFunction{
 	public double calcFitness(Sample s) {
 		// TODO Auto-generated method stub
 		// TODO count up number of colors/labels used and compare with optimal
-		
 		// step 1: get list of keys
 		Set<Node> keys = s.getTable().keySet();
 		

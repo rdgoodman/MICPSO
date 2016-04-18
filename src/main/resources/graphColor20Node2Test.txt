@@ -1,0 +1,15 @@
+% Indicates whether the problem is Graph Coloring (GC) or Dominating Set (DS) 
+% http://mathworld.wolfram.com/FractionalColoring.html
+GC
+
+% The number associated with the optimal solution of the above problem
+3
+
+% Names of all variables in Markov network (comma separated)
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T
+
+% Edges in Markov network (in format A,B to indicate edge between A & B) - order does not matter, semi-colon separated
+A,B; A,F; A,E; B,H; B,C; C,J; C,D; D,L; D,E; E,N; N,M; N,O; M,L; M,T; L,K; K,S; K,J; J,I; S,R; R,I; S,T; T,P; Q,R; I,H; Q,G; G,H; F,G; F,O; O,P; P,Q
+
+% Values for the variables in the Markov network (variable on left of colon)
+A: 0,1,2,3,4; B: 0,1,2,3; C: 0,3,4,5,6; D: 1,2,3,4; E: 0,1,2,3,4; F: 0,2,3,4; G: 0,1,2,3,4; H: 0,1,2,3,4; I: 0,1,3,4,5; J: 0,1,2,3,4; K: 0,1,2,3,4,5; L: 0,1,2,3,4; M: 0,1,2,4,5; N:0,1,2,3,4; O: 0,1,3,4,5; P: 0,1,2,3,5; Q: 0,1,2,3,4; R: 0,1,2,3,5; S: 0,1,2,3,5; T: 0,1,2,5,6

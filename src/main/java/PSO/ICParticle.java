@@ -293,7 +293,7 @@ public class ICParticle implements Particle {
 	}
 
 	@Override
-	public double calcFitness() {		
+	public double calcFitness() {
 		double particleFit = 0;
 		// average over a certain number of samples
 		for (int i = 0; i < numSamples; i++){
