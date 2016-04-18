@@ -146,11 +146,13 @@ public class IPSO {
 		// 1) evaluate all particles
 		// 2) set gBest
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+		System.out.println("MaxFit is " + maxFit);
 		
 		for (IntegerParticle p : pop) {
 			p.calcFitness();
 			double fit = p.calcFitness();
-			
+
+			System.out.println("Fit is " + fit);
 			if (fit > maxFit) { // TODO: again, assuming max
 				maxFit = fit;
 				int[] b = p.getPosition();
@@ -163,7 +165,6 @@ public class IPSO {
 				s = p.buildSampleFromPosition();
 
 				System.out.println("Global best:");
-				// TODO: print method for IntegerParticle
 				p.print();
 			}
 		}
@@ -186,7 +187,7 @@ public class IPSO {
 				
 				// 2) update position
 				System.out.println(">> Position Update ");
-				// TODO: print method
+				p.updatePosition();
 				// print for this particle
 				p.print();
 				
@@ -195,7 +196,6 @@ public class IPSO {
 
 				// 3) evaluate fitness
 				double fit = p.calcFitness(); 
-
 				// TODO: recall this is a max problem, refactor that later
 				if (fit > gBest_fitness) {
 					// set gBest
@@ -225,17 +225,13 @@ public class IPSO {
 			runs++;
 		}
 
+		
+		System.out.println("Final fitness: ");
+		System.out.println(gBest_fitness);
+		System.out.println();
 		System.out.println("Returning best sample:");
 		s.print();
 		return s;
-	}
-
-	public void print() {
-		for (int i = 0; i < gBest.length; i++) {
-			System.out.println(gBest[i]);
-		}
-	}
-	
-	
-	
+	}	
+		
 }

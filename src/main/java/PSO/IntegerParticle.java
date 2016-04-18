@@ -11,7 +11,7 @@ import MN.Edge;
 import MN.Node;
 import MN.Sample;
 
-public class IntegerParticle implements Particle {
+public class IntegerParticle {
 
 	private int[] position; // build sample out of position for fitness eval
 	private double[] velocity;
@@ -229,6 +229,17 @@ public class IntegerParticle implements Particle {
 					Edge E = new Edge(startingNode, endingNode);
 					edgesArray.add(E);
 				}
+		
+				System.out.println("NODES:");
+				for (Node n: nodes) {
+					System.out.println(n.getName());
+				}
+				
+				System.out.println("EDGES");
+				for (Edge e: edgesArray) {
+					e.printFactors();
+				}			
+				
 				
 		initializeVelocityAndPosition();
 	}
@@ -270,14 +281,36 @@ public class IntegerParticle implements Particle {
 	 * Updates particle position
 	 */
 	public void updatePosition(){
+		
 		for (int i = 0; i < position.length; i++){
 			double move = position[i] + velocity[i];
+			
+			int smallestVal = Integer.MAX_VALUE;
+			int largestVal = Integer.MIN_VALUE;
+			
+			for (int j = 0; j < nodes.get(i).getVals().length; j++) {
+				
+				if (nodes.get(i).getSpecificVal(j) < smallestVal) {
+					smallestVal = nodes.get(i).getSpecificVal(j);
+				} else if (nodes.get(i).getSpecificVal(j) > largestVal)  {
+					largestVal = nodes.get(i).getSpecificVal(j);
+				}
+			}
+			
 			// snap to nearest integer
 			if (move - Math.floor(move) > 0.5){
 				position[i] = (int)Math.ceil(move);
 			} else {
 				position[i] = (int)Math.floor(move);
 			}
+			
+			// snap position back to smallest or largest value, when gets too big
+			if (position[i] < smallestVal) {
+				position[i] = smallestVal;
+			} else if (position[i] > largestVal) {
+				position[i] = largestVal;
+			}
+			
 		}
 	}
 	
@@ -351,54 +384,7 @@ public class IntegerParticle implements Particle {
 		this.position = position;
 	}
 	
-	@Override
-	public void print() {
-		System.out.println("NODES:");
-		for (Node n: nodes) {
-			System.out.println(n.getName());
-		}
-		
-		System.out.println("EDGES");
-		for (Edge e: edgesArray) {
-			e.printFactors();
-		}	
+	public void print(){
+		System.out.println("Fitness: " + calcFitness());
 	}
-
-	@Override
-	public Sample sample() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateVelocity(double omega, double phi1, double phi2, Particle gBest) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setPBest(Sample s) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void adjustPBest() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Particle copy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Sample getBestSample() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 }
