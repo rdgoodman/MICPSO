@@ -2,13 +2,6 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
-> Need to implement constraints on IPSO so particles stay in search space - Done? MT - remember to ask Rollie about this, because
-changing this made IPSO worse in large problems (real bad, like -103 bad final fitness, although it does sometimes work well). I think 
-it is because it is violating the constraints? Is this ok/expected? Do I need to make changes here? This did not seem to happen as
-frequently before I snapped position to largest/smallest values. Make sure I am doing this correctly. OR, am I printing out the 
-wrong thing? Is it that easy?
-
-
 Less Urgent:
    
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends
@@ -41,3 +34,9 @@ Less Urgent:
   
   > Double check that all graph coloring examples are correct (in terms of nodes and edges), and that
   the values make sense.  - Done! All double checked, values changed to appropriate values, and pushed.
+  
+  > Need to implement constraints on IPSO so particles stay in search space - Done and tested. As now implemented,
+  once a particle goes outside of the range of values for that particular variable, it is randomly snapped back
+  to one of the possible values. 
+  
+  

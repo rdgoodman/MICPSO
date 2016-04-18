@@ -282,7 +282,6 @@ public class IntegerParticle {
 	 * Updates particle position
 	 */
 	public void updatePosition(){
-		
 		for (int i = 0; i < position.length; i++){
 			double move = position[i] + velocity[i];
 			
@@ -295,21 +294,22 @@ public class IntegerParticle {
 			
 			int[] possible = nodes.get(i).getVals();
 			boolean validValue = false;
+			
+			// checks to see if the value at position i is possible, given the list of valid values
 			for (int j = 0; j < possible.length; j++){
 				if (position[i] == possible[j]){
 					// checks that the position value is in fact in the list of valid values
 					validValue = true;
 				}
 			}
-			
+					
 			// if the value is outside the acceptable range
 			if (!validValue){
 				// re-initialize to random value within range				
-			    Random rand = null;
-			    int randomNum = rand.nextInt(possible.length);			    
+			    Random rand = new Random();
+			    int randomNum = rand.nextInt(possible.length);		    
 			    position[i] = possible[randomNum];
-			}
-			
+			}	
 		}
 	}
 	
