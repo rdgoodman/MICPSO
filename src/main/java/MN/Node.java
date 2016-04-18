@@ -37,6 +37,10 @@ public class Node {
 		return vals;
 	}
 
+	public int getSpecificVal(int i) {
+		return vals[i];
+	}
+	
 	public void setVals(int[] vals) {
 		this.vals = vals;
 	}

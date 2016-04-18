@@ -2,7 +2,12 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
-> Need to implement constraints on IPSO so particles stay in search space
+> Need to implement constraints on IPSO so particles stay in search space - Done? MT - remember to ask Rollie about this, because
+changing this made IPSO worse in large problems (real bad, like -103 bad final fitness, although it does sometimes work well). I think 
+it is because it is violating the constraints? Is this ok/expected? Do I need to make changes here? This did not seem to happen as
+frequently before I snapped position to largest/smallest values. Make sure I am doing this correctly. OR, am I printing out the 
+wrong thing? Is it that easy?
+
 
 Less Urgent:
    
@@ -18,7 +23,8 @@ Less Urgent:
 > Move the constraint-checking things (for ICPSO, not MICPSO) into the fitness function b/c they 
   are problem-specific
    
-   
+> Change some of the bad variable names (i.e. potential wrt the tempVal read in, or s for scanner). Got IntegerParticle
+  and IntegerParticle done.   
    
    
    
