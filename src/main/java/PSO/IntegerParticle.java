@@ -26,7 +26,7 @@ public class IntegerParticle {
 	String[] stringNodes = null;
 	String[] stringValues = null;
 	String[] stringEdges = null;
-	Scanner s = null;
+	Scanner scanner = null;
 	
 	public IntegerParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
 		this.f = f;
@@ -37,9 +37,9 @@ public class IntegerParticle {
 				// Reads in the nodes, edges and values in from a specifically formatted
 				// file
 				try {
-					s = new Scanner(new BufferedReader(new FileReader(file)));
+					scanner = new Scanner(new BufferedReader(new FileReader(file)));
 
-					String potential;
+					String tempVal;
 
 					/*
 					 * Reads the file, ignoring lines with % (which are comment lines).
@@ -52,14 +52,14 @@ public class IntegerParticle {
 					 * (i.e., Node or Edge objects).
 					 * 
 					 */
-					while (s.hasNext()) {
+					while (scanner.hasNext()) {
 						// Read the first line in the file
-						potential = s.nextLine();
+						tempVal = scanner.nextLine();
 
 						// gets the node info first
 						// checks for comments, when present, discards them
-						while (potential.startsWith("%")) {
-							potential = s.nextLine();
+						while (tempVal.startsWith("%")) {
+							tempVal = scanner.nextLine();
 						}
 						
 						
@@ -68,31 +68,31 @@ public class IntegerParticle {
 						// since the problem type/size is handled in the PSO class
 						
 						// keep scanning for the next non-empty line
-						if (s.nextLine().equals("")) {
-							potential = s.nextLine();
+						if (scanner.nextLine().equals("")) {
+							tempVal = scanner.nextLine();
 						}
 
 						// checks for comments, when present, discards them
-						while (potential.startsWith("%")) {
-							potential = s.nextLine();
+						while (tempVal.startsWith("%")) {
+							tempVal = scanner.nextLine();
 						}
 						
 						// keep scanning for the next non-empty line
-						if (s.nextLine().equals("")) {
-							potential = s.nextLine();
+						if (scanner.nextLine().equals("")) {
+							tempVal = scanner.nextLine();
 						}
 
 						// checks for comments, when present, discards them
-						while (potential.startsWith("%")) {
-							potential = s.nextLine();
+						while (tempVal.startsWith("%")) {
+							tempVal = scanner.nextLine();
 						}
 						
 						////////////////////////////////////
 
 
 						// splits the string into an array of separate node objects
-						if (!potential.startsWith("%")) {
-							stringNodes = potential.split(",");
+						if (!tempVal.startsWith("%")) {
+							stringNodes = tempVal.split(",");
 						}
 
 						// trims extra whitespace from node objects
@@ -103,21 +103,21 @@ public class IntegerParticle {
 						}
 						
 						// keep scanning for the next non-empty line
-						if (s.nextLine().equals("")) {
-							potential = s.nextLine();
+						if (scanner.nextLine().equals("")) {
+							tempVal = scanner.nextLine();
 						}
 
 						// reads the edge info, but we do not need it, so does not store
 						// them
 						// checks for comments, when present, discards them
-						while (potential.startsWith("%")) {
-							potential = s.nextLine();
+						while (tempVal.startsWith("%")) {
+							tempVal = scanner.nextLine();
 						}
 						
 						// if the line is not a comment, per the file structure is the
 						// edges
-						if (!potential.startsWith("%")) {
-							stringEdges = potential.split(";");
+						if (!tempVal.startsWith("%")) {
+							stringEdges = tempVal.split(";");
 						}
 
 						// trims extra whitespace from edge objects
@@ -128,19 +128,19 @@ public class IntegerParticle {
 						}
 
 						// keep scanning for the next non-empty line
-						if (s.nextLine().equals("")) {
-							potential = s.nextLine();
+						if (scanner.nextLine().equals("")) {
+							tempVal = scanner.nextLine();
 						}
 
 						// get variable info
 						// checks for comments, when present, discards them
-						while (potential.startsWith("%")) {
-							potential = s.nextLine();
+						while (tempVal.startsWith("%")) {
+							tempVal = scanner.nextLine();
 						}
 
 						// if the line is not a comment, per file structure is values
-						if (!potential.startsWith("%")) {
-							stringValues = potential.split(";");
+						if (!tempVal.startsWith("%")) {
+							stringValues = tempVal.split(";");
 						}
 
 						// trims the extra information and gets the (in node order)
@@ -161,8 +161,8 @@ public class IntegerParticle {
 					}
 
 				} finally {
-					if (s != null) {
-						s.close();
+					if (scanner != null) {
+						scanner.close();
 					}
 				}
 				

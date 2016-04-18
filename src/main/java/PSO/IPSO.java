@@ -43,7 +43,7 @@ public class IPSO {
 		// based on info about problem type from file,
 		// create a fitness function
 
-		Scanner s = null;
+		Scanner scanner = null;
 
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
@@ -51,9 +51,9 @@ public class IPSO {
 		// Reads in the nodes, edges and values in from a specifically formatted
 		// file
 		try {
-			s = new Scanner(new BufferedReader(new FileReader(file)));
+			scanner = new Scanner(new BufferedReader(new FileReader(file)));
 
-			String potential;
+			String tempVal;
 
 			/*
 			 * Reads the file, ignoring lines with % (which are comment lines).
@@ -67,17 +67,17 @@ public class IPSO {
 			 * 
 			 */
 			// Read the first line in the file
-			potential = s.nextLine();
+			tempVal = scanner.nextLine();
 
 			// gets the node info first
 			// checks for comments, when present, discards them
-			while (potential.startsWith("%")) {
-				potential = s.nextLine();
+			while (tempVal.startsWith("%")) {
+				tempVal = scanner.nextLine();
 			}
 
 			// TODO: only getting type of problem and optimal size
 
-			if (potential.equals("GC")) {
+			if (tempVal.equals("GC")) {
 				System.out.println("GRAPH COLORING");
 				graphColoring = true;
 			} else {
@@ -86,21 +86,21 @@ public class IPSO {
 			}
 
 			// keep scanning for the next non-empty line
-			if (s.nextLine().equals("")) {
-				potential = s.nextLine();
+			if (scanner.nextLine().equals("")) {
+				tempVal = scanner.nextLine();
 			}
 
 			// checks for comments, when present, discards them
-			while (potential.startsWith("%")) {
-				potential = s.nextLine();
+			while (tempVal.startsWith("%")) {
+				tempVal = scanner.nextLine();
 			}
 
 			// gets optimal solution size
-			optimalSolution = Integer.valueOf(potential);
+			optimalSolution = Integer.valueOf(tempVal);
 			System.out.println("Size: " + optimalSolution);
 		} finally {
-			if (s != null) {
-				s.close();
+			if (scanner != null) {
+				scanner.close();
 			}
 		}
 		

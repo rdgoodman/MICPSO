@@ -23,7 +23,8 @@ Less Urgent:
 > Move the constraint-checking things (for ICPSO, not MICPSO) into the fitness function b/c they 
   are problem-specific
    
-   
+> Change some of the bad variable names (i.e. potential wrt the tempVal read in, or s for scanner). Got IntegerParticle
+  and IntegerParticle done.   
    
    
    
