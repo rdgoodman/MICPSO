@@ -63,11 +63,11 @@ public class MTuningExperiment {
 					for (int i = 0; i < 10; i++) {
 
 						// TODO: are we doing multiple files?
-						ICPSO m1 = new ICPSO("src/main/resources/graphColor08Node.txt", true, numParticles, numSamples,
+						ICPSO m1 = new ICPSO("src/main/resources/graphColor08Node_10Values.txt", true, numParticles, numSamples,
 								epsilon, 0.7, 1.4, 1.4);
-						ICPSO m2 = new ICPSO("src/main/resources/graphColor10Node.txt", true, numParticles, numSamples,
+						ICPSO m2 = new ICPSO("src/main/resources/graphColor10Node_10Values.txt", true, numParticles, numSamples,
 								epsilon, 0.7, 1.4, 1.4);
-						ICPSO m3 = new ICPSO("src/main/resources/graphColor20Node.txt", true, numParticles, numSamples,
+						ICPSO m3 = new ICPSO("src/main/resources/graphColor20Node_10Values.txt", true, numParticles, numSamples,
 								epsilon, 0.7, 1.4, 1.4);
 
 						double fit1 = m1.run().getFitness();
@@ -157,11 +157,11 @@ public class MTuningExperiment {
 					for (int i = 0; i < 10; i++) {
 
 						// TODO: are we doing multiple files?
-						ICPSO m1 = new ICPSO("src/main/resources/graphColor08Node.txt", true, 10, 3,
+						ICPSO m1 = new ICPSO("src/main/resources/graphColor08Node_10Values.txt", true, 10, 3,
 								0.75, omega, phi1, phi2);
-						ICPSO m2 = new ICPSO("src/main/resources/graphColor10Node.txt", true, 10, 3,
+						ICPSO m2 = new ICPSO("src/main/resources/graphColor10Node_10Values.txt", true, 10, 3,
 								0.75, omega, phi1, phi2);
-						ICPSO m3 = new ICPSO("src/main/resources/graphColor20Node.txt", true, 10, 3,
+						ICPSO m3 = new ICPSO("src/main/resources/graphColor20Node_10Values.txt", true, 10, 3,
 								0.75, omega, phi1, phi2);
 
 						double fit1 = m1.run().getFitness();
