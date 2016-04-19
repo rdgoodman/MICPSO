@@ -11,6 +11,7 @@ import PSO.GCFitnessFunction;
 import PSO.ICPSO;
 import PSO.ICParticle;
 import PSO.IPSO;
+import tuning.MTuningExperiment;
 
 public class RunModels {
 
@@ -20,21 +21,21 @@ public class RunModels {
 		String fileName = "graphColor38Node.txt";
 		
 		// for passing in to MarkovNetwork or ICParticle
-		String inputFile = filePath + fileName;
-				
-		IPSO ipso = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
-		ipso.run();
-		
-		ICPSO icpso = new ICPSO(inputFile, false, 10, 3, 0.99, 0.4, 0.6, 0.6);
-		icpso.run();
-
-		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
-		micpso.run();
+//		String inputFile = filePath + fileName;
+//				
+//		IPSO ipso = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
+//		ipso.run();
+//		
+//		ICPSO icpso = new ICPSO(inputFile, false, 10, 3, 0.99, 0.4, 0.6, 0.6);
+//		icpso.run();
+//
+//		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
+//		micpso.run();
 		
 		tuneExperiments();	        
     }
 
-	private static void tuneExperiments() {
+	private static void tuneExperiments() throws FileNotFoundException {
 		ArrayList<Integer> pNums = new ArrayList<Integer>();
 		pNums.add(5);
 		pNums.add(10);
@@ -68,6 +69,8 @@ public class RunModels {
 		phi2s.add(0.2);
 		phi2s.add(0.6);
 		phi2s.add(1.0);
+		
+		MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
 		
 	}
 }
