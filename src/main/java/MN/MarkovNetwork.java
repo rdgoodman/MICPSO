@@ -225,29 +225,13 @@ public class MarkovNetwork {
 		for (int i = 0; i < stringNodes.length; i++) {
 			String nodeName = stringNodes[i];
 
-			// holds the number of values associated with any node
-			int numValues = 0;
+			String[] tempValues = stringValues[i].split(",");
 
-			// determines the number of values for each nodes
-			for (int j = 0; j < stringValues[i].length(); j++) {
-				if (Character.isDigit(stringValues[i].charAt(j))) {
-					numValues++;
-				}
-			}
-
+			int numValues = tempValues.length;
 			int[] values = new int[numValues];
-
-			int startIndex = 0;
-			int stopIndex = 1;
-
-			// gets values from the value array
-			for (int n = 0; n < numValues; n++) {
-				// reminder: values are comma separated
-				int thisVal = Integer.parseInt(stringValues[i].substring(startIndex, stopIndex));
-				values[n] = thisVal;
-				// handles the value and the comma
-				startIndex = startIndex + 2;
-				stopIndex = startIndex + 1;
+			
+			for (int j = 0; j < numValues; j++) {
+				values[j] = Integer.parseInt(tempValues[j]);
 			}
 
 			// creates a node with the appropriate values and node name

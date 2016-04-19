@@ -111,7 +111,6 @@ public class IPSO {
 		}
 		
 		initializePop(fileName);
-		
 	}
 
 	/**
