@@ -111,7 +111,6 @@ public class IPSO {
 		}
 		
 		initializePop(fileName);
-		
 	}
 
 	/**
@@ -146,13 +145,11 @@ public class IPSO {
 		// 1) evaluate all particles
 		// 2) set gBest
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
-		System.out.println("MaxFit is " + maxFit);
 		
 		for (IntegerParticle p : pop) {
 			p.calcFitness();
 			double fit = p.calcFitness();
 
-			System.out.println("Fit is " + fit);
 			if (fit > maxFit) { // TODO: again, assuming max
 				maxFit = fit;
 				int[] b = p.getPosition();
@@ -164,8 +161,7 @@ public class IPSO {
 				gBest_fitness = fit;
 				s = p.buildSampleFromPosition();
 
-				System.out.println("Global best:");
-				p.print();
+				System.out.println("Global Best " + gBest_fitness);
 			}
 		}
 

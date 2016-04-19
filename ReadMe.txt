@@ -2,6 +2,7 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
+
 Less Urgent:
    
 > Should build in a way to track the fitness at any given iteration so we can look at fitness trends

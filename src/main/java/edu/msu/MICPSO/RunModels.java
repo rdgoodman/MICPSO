@@ -22,19 +22,14 @@ public class RunModels {
 		// for passing in to MarkovNetwork or ICParticle
 		String inputFile = filePath + fileName;
 				
-//		// creates a Markov network (read in from file)
-//        MarkovNetwork MN = new MarkovNetwork(inputFile);
-//              
-//        // samples the above network using Gibbs sampling
-//        MN.sample();
-
-//		ICPSO p = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
-//		p.run();
-
-		IPSO p2 = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
-		p2.run();
+		IPSO ipso = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
+		ipso.run();
 		
-		
-        
+		ICPSO icpso = new ICPSO(inputFile, false, 10, 3, 0.99, 0.4, 0.6, 0.6);
+		icpso.run();
+
+		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
+		micpso.run();
+	        
     }
 }
