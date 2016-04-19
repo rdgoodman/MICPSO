@@ -30,6 +30,44 @@ public class RunModels {
 
 		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
 		micpso.run();
-	        
+		
+		tuneExperiments();	        
     }
+
+	private static void tuneExperiments() {
+		ArrayList<Integer> pNums = new ArrayList<Integer>();
+		pNums.add(5);
+		pNums.add(10);
+		pNums.add(15);
+
+		ArrayList<Integer> sNums = new ArrayList<Integer>();
+		sNums.add(1);
+		sNums.add(3);
+		
+		ArrayList<Double> epsilons = new ArrayList<Double>();
+		epsilons.add(0.6);
+		epsilons.add(0.75);
+		epsilons.add(0.9);
+		epsilons.add(0.95);
+		
+		ArrayList<Double> omegas = new ArrayList<Double>();
+		omegas.add(0.7);
+		omegas.add(0.2);
+		omegas.add(0.5);
+		omegas.add(0.8);
+		omegas.add(1.0);
+		
+		ArrayList<Double> phi1s = new ArrayList<Double>();
+		phi1s.add(1.4);
+		phi1s.add(0.2);
+		phi1s.add(0.6);
+		phi1s.add(1.0);
+
+		ArrayList<Double> phi2s = new ArrayList<Double>();
+		phi2s.add(1.4);
+		phi2s.add(0.2);
+		phi2s.add(0.6);
+		phi2s.add(1.0);
+		
+	}
 }
