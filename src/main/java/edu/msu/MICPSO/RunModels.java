@@ -33,8 +33,6 @@ public class RunModels {
 
 		IPSO p2 = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
 		p2.run();
-		
-		
-        
+		        
     }
 }
