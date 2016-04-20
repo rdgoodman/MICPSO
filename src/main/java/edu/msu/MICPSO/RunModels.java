@@ -95,6 +95,6 @@ public class RunModels {
 //		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
 			
-		MNExperiment m = new MNExperiment(5, experimentGraphs);
+		MNExperiment m = new MNExperiment(3, experimentGraphs);
 	}
 }

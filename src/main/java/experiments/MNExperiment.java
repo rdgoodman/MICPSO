@@ -17,9 +17,10 @@ public class MNExperiment {
 			// get graph name
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
-			String totalResults = "src/main/resources/OverallResults/rawResults_" + graph;
-			String fitnessEvals = "src/main/resources/OverallResults/fitEvals_" + graph;
-			String fitnessOverIterations = "src/main/resources/OverallResults/fitnesses_" + graph;
+			// TODO: make a specialized MN folder
+			String totalResults = "src/main/resources/OverallResults/MN_rawResults_" + graph;
+			String fitnessEvals = "src/main/resources/OverallResults/MN_fitEvals_" + graph;
+			String fitnessOverIterations = "src/main/resources/OverallResults/MN_fitnesses_" + graph;
 			
 			ArrayList<Double> averageFitnessOverIterations = new ArrayList<Double>();
 
@@ -99,6 +100,10 @@ public class MNExperiment {
 				if (averageFitnessOverIterations.size() == 0) {
 					averageFitnessOverIterations = eachIterationFitness;
 				} else {
+					
+					System.out.println("Aggregate: " + averageFitnessOverIterations.size());
+					System.out.println("This run: " + eachIterationFitness.size());
+					
 					double smallest = 0;
 					if (averageFitnessOverIterations.size() < eachIterationFitness.size()) {
 						smallest = averageFitnessOverIterations.size();
