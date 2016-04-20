@@ -89,12 +89,12 @@ public class RunModels {
 //		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
 			
-		MNExperiment m = new MNExperiment(3, experimentGraphs);
+		MNExperiment m = new MNExperiment(25, experimentGraphs);
 	}
 }

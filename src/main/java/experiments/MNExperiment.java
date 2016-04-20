@@ -14,6 +14,8 @@ public class MNExperiment {
 
 		for (String graphName : experimentGraphs) {
 			
+			ArrayList<ArrayList<Double>> fitnessesPerIteration = new ArrayList<ArrayList<Double>>();
+			
 			// get graph name
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
@@ -22,8 +24,6 @@ public class MNExperiment {
 			String fitnessEvals = "src/main/resources/OverallResults/MN_fitEvals_" + graph;
 			String fitnessOverIterations = "src/main/resources/OverallResults/MN_fitnesses_" + graph;
 			
-			ArrayList<Double> averageFitnessOverIterations = new ArrayList<Double>();
-
 			// create our files and writers
 			File rawResults = new File(totalResults);
 			if (!rawResults.exists()) {
@@ -94,41 +94,52 @@ public class MNExperiment {
 					f.printStackTrace();
 				}
 
-				// update average fitness over iterations
-				// TODO this is confusing
-				ArrayList<Double> eachIterationFitness = m.getFitnesses();
-				if (averageFitnessOverIterations.size() == 0) {
-					averageFitnessOverIterations = eachIterationFitness;
-				} else {
-					
-					System.out.println("Aggregate: " + averageFitnessOverIterations.size());
-					System.out.println("This run: " + eachIterationFitness.size());
-					
-					double smallest = 0;
-					if (averageFitnessOverIterations.size() < eachIterationFitness.size()) {
-						smallest = averageFitnessOverIterations.size();
-					} else {
-						smallest = eachIterationFitness.size();
-					}
-					
-					for (int j = 0; j < smallest; j++) {
-						averageFitnessOverIterations.set(j,
-								averageFitnessOverIterations.get(j) + eachIterationFitness.get(j));
-					}
-					System.out.println("New Aggregate: " + averageFitnessOverIterations.size());
+				// add datum to average fitness over iterations
+				fitnessesPerIteration.add(m.getFitnesses());
+//				System.out.println("Size: " + m.getFitnesses().size());
+//				System.out.println("Size it should be: " + m.getNumFitnessEvals());
+
+				
+			}
+			
+			// find longest ArrayList
+			int longest = 0;
+			for (int i = 0; i < fitnessesPerIteration.size(); i++){
+				if (fitnessesPerIteration.get(i).size() > longest){
+					longest = fitnessesPerIteration.get(i).size();
+				}
+			}
+			
+			// add zeros
+			for (int i = 0; i < fitnessesPerIteration.size(); i++){
+				int numToAdd = longest - fitnessesPerIteration.get(i).size();
+				for (int j = 0; j < numToAdd; j++){
+					fitnessesPerIteration.get(i).add(0.0);
 				}
 			}
 
-			// average fitness evaluations at each iteration
-			for (int i = 0; i < averageFitnessOverIterations.size(); i++) {
-				averageFitnessOverIterations.set(i, averageFitnessOverIterations.get(i) / numRuns);
+			// add all 
+			ArrayList<Double> average = new ArrayList<Double>();
+			for (int i = 0; i < longest; i++){
+				double e = 0;
+				for (int j = 0; j < numRuns; j++){
+					// get ith element of jth array and sum
+					e += fitnessesPerIteration.get(j).get(i);
+				}
+				average.add(e);
+			}		
+			
+			// divide to get average fitness evaluations at each iteration
+			for (int i = 0; i < average.size(); i++){
+				average.set(i, average.get(i)/numRuns);
 			}
+
 
 			// write average fitness evaluations at each iteration to file
 			try {
 				fitnessWriter = new FileWriter(fitnessCurve, true);
 
-				for (double d : averageFitnessOverIterations) {
+				for (double d : average) {
 					fitnessWriter.write("\n" + d);
 				}
 

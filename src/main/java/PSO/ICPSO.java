@@ -257,6 +257,7 @@ public class ICPSO {
 				terminated = true;
 			}
 			runs++;
+			System.out.println(">>>>>> RUNS: " + runs);
 		}
 
 		System.out.println("Returning best sample:");
