@@ -34,6 +34,11 @@ public class ICPSO {
 	boolean graphColoring = false;
 	int optimalSolution;
 
+	
+	// TODO: solution reporting
+	int numFitnessEvals = 0;
+	ArrayList<Double> fitnesses = new ArrayList<Double>();
+	
 	/**
 	 * Creates an instance of either ICPSO or MICPSO depending on the Markov
 	 * boolean argument
@@ -172,9 +177,9 @@ public class ICPSO {
 		// termination criterion
 		int runsUnchanged = 0;
 		boolean terminated = false;
-		double prevBestSampleFit = 0; // TODO: remember to set this at some
+		double prevBestSampleFit = 0; // remember to set this at some
 										// point
-		int runs = 0; // TODO: testing, remove
+		int runs = 0; // testing, remove
 
 		System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
@@ -182,6 +187,10 @@ public class ICPSO {
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
 		for (Particle p : pop) {				
 			p.calcFitness();
+			
+			// TODO: number of evals done is incremented by numSamples
+			numFitnessEvals += numSamples;
+			
 			double fit = p.getBestSample().getFitness();
 			if (fit > maxFit) { // TODO: again, assuming max
 				maxFit = fit;
@@ -217,6 +226,9 @@ public class ICPSO {
 
 				// 3) evaluate fitness
 				double fit = p.calcFitness(); // this is never used
+				// TODO: number of evals done is incremented by numSamples
+				numFitnessEvals += numSamples;
+				
 				double sampleFit = p.getBestSample().getFitness();
 
 				// TODO: recall this is a max problem, refactor that later
@@ -228,6 +240,9 @@ public class ICPSO {
 					setGBest(p);
 				}
 			}
+			
+			// TODO: updating fitness for evaluation
+			fitnesses.add(bestSample.getFitness());
 
 			// Next half-dozen or so lines used to determine convergence
 			if (Math.abs(prevBestSampleFit - bestSample.getFitness()) < threshold) {
@@ -273,6 +288,22 @@ public class ICPSO {
 	private void setGBest(Particle p) {
 		adjustGBest(p);
 		gBest = p.copy();
+	}
+
+	public int getNumFitnessEvals() {
+		return numFitnessEvals;
+	}
+
+	public void setNumFitnessEvals(int numFitnessEvals) {
+		this.numFitnessEvals = numFitnessEvals;
+	}
+
+	public ArrayList<Double> getFitnesses() {
+		return fitnesses;
+	}
+
+	public void setFitnesses(ArrayList<Double> fitnesses) {
+		this.fitnesses = fitnesses;
 	}
 
 }

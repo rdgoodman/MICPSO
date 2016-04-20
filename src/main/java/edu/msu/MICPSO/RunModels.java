@@ -11,6 +11,7 @@ import PSO.GCFitnessFunction;
 import PSO.ICPSO;
 import PSO.ICParticle;
 import PSO.IPSO;
+import experiments.MNExperiment;
 import tuning.ICTuningExperiment;
 import tuning.ITuningExperiment;
 import tuning.MTuningExperiment;
@@ -34,7 +35,8 @@ public class RunModels {
 //		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
 //		micpso.run();
 		
-		tuneExperiments();	        
+		//tuneExperiments();
+		testExperiments();
     }
 
 	private static void tuneExperiments() throws FileNotFoundException {
@@ -54,26 +56,45 @@ public class RunModels {
 		epsilons.add(0.95);
 		
 		ArrayList<Double> omegas = new ArrayList<Double>();
-		//omegas.add(0.7);
+		omegas.add(0.7);
 		omegas.add(0.2);
 		omegas.add(0.5);
 		omegas.add(0.8);
 		omegas.add(1.0);
 		
 		ArrayList<Double> phi1s = new ArrayList<Double>();
-		//phi1s.add(1.4);
+		phi1s.add(1.4);
 		phi1s.add(0.2);
 		phi1s.add(0.6);
 		phi1s.add(1.0);
 
 		ArrayList<Double> phi2s = new ArrayList<Double>();
-		//phi2s.add(1.4);
+		phi2s.add(1.4);
 		phi2s.add(0.2);
 		phi2s.add(0.6);
 		phi2s.add(1.0);
 		
 		//MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
 		//ICTuningExperiment exp2 = new ICTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);		
-		ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);		
+		//ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);		
+	}
+	
+	private static void testExperiments() throws FileNotFoundException{
+		
+		ArrayList<String> experimentGraphs = new ArrayList<String>();
+//		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
+			
+		MNExperiment m = new MNExperiment(5, experimentGraphs);
 	}
 }
