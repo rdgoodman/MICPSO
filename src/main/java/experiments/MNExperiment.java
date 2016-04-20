@@ -115,6 +115,7 @@ public class MNExperiment {
 						averageFitnessOverIterations.set(j,
 								averageFitnessOverIterations.get(j) + eachIterationFitness.get(j));
 					}
+					System.out.println("New Aggregate: " + averageFitnessOverIterations.size());
 				}
 			}
 
