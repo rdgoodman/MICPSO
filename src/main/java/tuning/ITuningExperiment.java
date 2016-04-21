@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import PSO.IPSO;
 
+//TODO: Figure out why avg not printing, fix in ITuning too. If possible, fix in MTuning
+
+
 public class ITuningExperiment {
 	public ITuningExperiment(ArrayList<Integer> pNums, ArrayList<Double> omegas, ArrayList<Double> phi1s, ArrayList<Double> phi2s) throws FileNotFoundException {
 		tuneGeneral(pNums);
@@ -62,12 +65,15 @@ public class ITuningExperiment {
 						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
 						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
 
-						double fit1 = i1.run().getFitness();
+						i1.run();
+						double fit1 = i1.getBestFitness();
 						System.out.println("i1 ran");
-						double fit2 = i2.run().getFitness();
-						System.out.println("i1 ran");
-						double fit3 = i3.run().getFitness();
-						System.out.println("i1 ran");
+						i2.run();
+						double fit2 = i2.getBestFitness();
+						System.out.println("i2 ran");
+						i3.run();
+						double fit3 = i3.getBestFitness();
+						System.out.println("i3 ran");
 
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
 						averageFitnessAcrossRuns += averageFitness;
@@ -94,17 +100,12 @@ public class ITuningExperiment {
 						// results
 						avgWriter.write("\n" + "#P = " + numParticles + " o = 0.7" + " p1 = 1.4" + " p2 = 1.4");
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
-						
-						avgWriter.close();
 					} catch (IOException f) {
 						f.printStackTrace();
 					}
 
 				}
 			}
-		
-
-	
 
 	/**
 	 * Tunes omega, phi1, phi2
@@ -114,7 +115,7 @@ public class ITuningExperiment {
 		// reports results of individual params (raw numbers)
 		String singleParamFilePath = "";
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/ICresults/multAverage.txt";
+		String averageFilePath = "src/main/resources/Iresults/multAverage.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -155,11 +156,14 @@ public class ITuningExperiment {
 						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", 10, omega, phi1, phi2);
 						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", 10, omega, phi1, phi2);
 
-						double fit1 = i1.run().getFitness();
+						i1.run();
+						double fit1 = i1.getBestFitness();
 						System.out.println("i1 ran");
-						double fit2 = i2.run().getFitness();
+						i2.run();
+						double fit2 = i2.getBestFitness();
 						System.out.println("i2 ran");
-						double fit3 = i3.run().getFitness();
+						i3.run();
+						double fit3 = i3.getBestFitness();
 						System.out.println("i3 ran");
 
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
@@ -185,8 +189,10 @@ public class ITuningExperiment {
 
 						// notes, in avg file, what parameter combo led to the
 						// results
-						avgWriter.write("\n" + "#P = 10 "  + " #S = 3 " + " e = 0.75 " + " o = " + omega + " p1 = " + phi1 + " p2 = " + phi2);
+						avgWriter.write("\n" + "#P = 10 " + " o = " + omega + " p1 = " + phi1 + " p2 = " + phi2);
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
+						avgWriter.close();
+		
 					} catch (IOException f) {
 						f.printStackTrace();
 					}
