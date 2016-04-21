@@ -29,6 +29,10 @@ public class IPSO {
 	private double threshold = 0.01;
 	private double numToConsiderConverged = 20;
 
+	// TODO: solution reporting
+	int numFitnessEvals = 0;
+	ArrayList<Double> fitnesses = new ArrayList<Double>();
+	
 	// type of problem
 	boolean graphColoring = false;
 	int optimalSolution;
@@ -148,8 +152,14 @@ public class IPSO {
 		
 		for (IntegerParticle p : pop) {
 			p.calcFitness();
-			double fit = p.calcFitness();
 
+			// for solution reporting
+			numFitnessEvals++;
+			
+			double fit = p.calcFitness();
+			// for solution reporting
+			numFitnessEvals++;			
+			
 			if (fit > maxFit) { // TODO: again, assuming max
 				maxFit = fit;
 				int[] b = p.getPosition();
@@ -192,6 +202,8 @@ public class IPSO {
 
 				// 3) evaluate fitness
 				double fit = p.calcFitness(); 
+				numFitnessEvals++;
+				
 				// TODO: recall this is a max problem, refactor that later
 				if (fit > gBest_fitness) {
 					// set gBest
@@ -206,6 +218,10 @@ public class IPSO {
 				}
 			}
 
+			// TODO: updating fitness for evaluation
+			fitnesses.add(gBest_fitness);
+			
+			
 			// Next half-dozen or so lines used to determine convergence
 			if (Math.abs(prevBestSampleFit - gBest_fitness) < threshold) {
 				runsUnchanged++;
@@ -227,7 +243,20 @@ public class IPSO {
 		System.out.println();
 		System.out.println("Returning best sample:");
 		s.print();
+		System.out.println("Number of fitness evaluations: " + numFitnessEvals);
 		return s;
 	}	
+	
+	public double getBestFitness() {
+		return gBest_fitness;
+	}
+	
+	public int getNumFitnessEvals() {
+		return numFitnessEvals;
+	}
+	
+	public ArrayList<Double> getFitnesses() {
+		return fitnesses;
+	}
 		
 }

@@ -11,7 +11,9 @@ import PSO.GCFitnessFunction;
 import PSO.ICPSO;
 import PSO.ICParticle;
 import PSO.IPSO;
+import experiments.ICExperiment;
 import experiments.MNExperiment;
+import experiments.IExperiment;
 import tuning.ICTuningExperiment;
 import tuning.ITuningExperiment;
 import tuning.MTuningExperiment;
@@ -20,22 +22,22 @@ public class RunModels {
 
 	public static void main(String[] args) throws FileNotFoundException {	
 		// The filePath and fileName where the Markov net file is located
-		String filePath = "src/main/resources/";
-		String fileName = "graphColor38Node.txt";
+//		String filePath = "src/main/resources/";
+//		String fileName = "graphColor05Node_30Values.txt";
 		
 		// for passing in to MarkovNetwork or ICParticle
 //		String inputFile = filePath + fileName;
-//				
+				
 //		IPSO ipso = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
 //		ipso.run();
-//		
+		
 //		ICPSO icpso = new ICPSO(inputFile, false, 10, 3, 0.99, 0.4, 0.6, 0.6);
 //		icpso.run();
 //
 //		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
 //		micpso.run();
 		
-		//tuneExperiments();
+//		tuneExperiments();
 		testExperiments();
     }
 
@@ -82,19 +84,21 @@ public class RunModels {
 	private static void testExperiments() throws FileNotFoundException{
 		
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
-//		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
-//		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
+		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
 			
-		MNExperiment m = new MNExperiment(25, experimentGraphs);
+		//MNExperiment m = new MNExperiment(25, experimentGraphs);
+		//ICExperiment ic = new ICExperiment(25, experimentGraphs);
+		IExperiment i = new IExperiment(25, experimentGraphs);
 	}
 }
