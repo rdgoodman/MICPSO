@@ -2,6 +2,10 @@ Current TODOs/issues (not necessarily in order of importance)
 
 More Urgent:
 
+Need tree width of graphs
+
+compare to specific GC algorithm & greedy
+
 
 Less Urgent:
    
