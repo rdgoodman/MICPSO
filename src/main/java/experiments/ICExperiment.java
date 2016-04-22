@@ -111,11 +111,11 @@ public class ICExperiment {
 				}
 			}
 			
-			// add zeros
+			// add previous number when arrays are uneven lengths
 			for (int i = 0; i < fitnessesPerIteration.size(); i++){
 				int numToAdd = longest - fitnessesPerIteration.get(i).size();
 				for (int j = 0; j < numToAdd; j++){
-					fitnessesPerIteration.get(i).add(0.0);
+					fitnessesPerIteration.get(i).add(fitnessesPerIteration.get(i).get(fitnessesPerIteration.get(i).size()-1));
 				}
 			}
 

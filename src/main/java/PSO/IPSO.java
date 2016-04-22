@@ -101,7 +101,7 @@ public class IPSO {
 
 			// gets optimal solution size
 			optimalSolution = Integer.valueOf(tempVal);
-			System.out.println("Size: " + optimalSolution);
+			//System.out.println("Size: " + optimalSolution);
 		} finally {
 			if (scanner != null) {
 				scanner.close();
@@ -238,12 +238,12 @@ public class IPSO {
 		}
 
 		
-		System.out.println("Final fitness: ");
-		System.out.println(gBest_fitness);
-		System.out.println();
-		System.out.println("Returning best sample:");
-		s.print();
-		System.out.println("Number of fitness evaluations: " + numFitnessEvals);
+//		System.out.println("Final fitness: ");
+//		System.out.println(gBest_fitness);
+//		System.out.println();
+//		System.out.println("Returning best sample:");
+//		s.print();
+//		System.out.println("Number of fitness evaluations: " + numFitnessEvals);
 		return s;
 	}	
 	

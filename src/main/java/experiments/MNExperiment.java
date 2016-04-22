@@ -110,7 +110,7 @@ public class MNExperiment {
 				}
 			}
 			
-			// add zeros
+			// add previous number when arrays are uneven lengths
 			for (int i = 0; i < fitnessesPerIteration.size(); i++){
 				int numToAdd = longest - fitnessesPerIteration.get(i).size();
 				for (int j = 0; j < numToAdd; j++){

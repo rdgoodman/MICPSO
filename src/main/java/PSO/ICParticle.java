@@ -119,10 +119,10 @@ public class ICParticle implements Particle {
 					}
 				}
 				
-				System.out.println("Nodes:");
-				for (int i = 0; i < stringNodes.length; i++){
-					System.out.println(stringNodes[i]);
-				}
+//				System.out.println("Nodes:");
+//				for (int i = 0; i < stringNodes.length; i++){
+//					System.out.println(stringNodes[i]);
+//				}
 				
 				// keep scanning for the next non-empty line
 				if (s.nextLine().equals("")) {
