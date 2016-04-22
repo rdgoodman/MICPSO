@@ -156,11 +156,11 @@ public class ICPSO {
 	 * @throws FileNotFoundException
 	 */
 	private void initializePop(String fileName, boolean markov) throws FileNotFoundException {
-		System.out.println("Creating population of size " + numParticles);
+		//System.out.println("Creating population of size " + numParticles);
 		
 		// creates the correct number of the correct type of particle
 		for (int i = 0; i < numParticles; i++) {
-			System.out.println(">> Particle " + i);
+			//System.out.println(">> Particle " + i);
 			
 			if (markov) {
 				pop.add(new MNParticle(fileName, f, numSamples, epsilon));
@@ -181,7 +181,7 @@ public class ICPSO {
 										// point
 		int runs = 0; // testing, remove
 
-		System.out.println("Evaluating Particles");
+		//System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest 
 		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
@@ -196,28 +196,28 @@ public class ICPSO {
 				maxFit = fit;
 				bestSample = p.getBestSample();
 				gBest = p.copy();
-				System.out.println("Global best:");
-				bestSample.print();
+				//System.out.println("Global best:");
+				//bestSample.print();
 			}
 		}
 				
 		while (!terminated) {
-			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+//			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			
 			// iterate through all particles
 			for (Particle p : pop) {
-				System.out.println("\n >>>> Particle ");
-				p.print();
+//				System.out.println("\n >>>> Particle ");
+//				p.print();
 
 				// 1) update velocity
-				System.out.println(">> Velocity Update");
+//				System.out.println(">> Velocity Update");
 				p.updateVelocity(omega, phi1, phi2, gBest);
 
 				// 2) update position
-				System.out.println(">> Position Update ");
+//				System.out.println(">> Position Update ");
 				p.updatePosition();
 				p.print();
 
@@ -232,7 +232,7 @@ public class ICPSO {
 				double sampleFit = p.getBestSample().getFitness();
 
 				// TODO: recall this is a max problem, refactor that later
-				System.out.println("Sample fitness: " + sampleFit + " >? Best fitness: " + bestSample.getFitness());
+//				System.out.println("Sample fitness: " + sampleFit + " >? Best fitness: " + bestSample.getFitness());
 				
 				if (sampleFit > bestSample.getFitness()) {
 					setBestSample(p.getBestSample());
@@ -257,11 +257,19 @@ public class ICPSO {
 				terminated = true;
 			}
 			runs++;
-			System.out.println(">>>>>> RUNS: " + runs);
+			//System.out.println(">>>>>> RUNS: " + runs);
 		}
 
 		System.out.println("Returning best sample:");
 		bestSample.print();
+		System.out.println("Fitness: " + bestSample.getFitness());
+		
+		System.out.println("Fitness Aross Evals:");
+		for (Double d : fitnesses){
+			System.out.print(d + " ");
+		}
+		System.out.println();
+		
 		return bestSample;
 	}
 
@@ -269,8 +277,8 @@ public class ICPSO {
 	 * Creates a copy of the best sample
 	 */
 	private void setBestSample(Sample s) {
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!! New best sample with fitness " + s.getFitness() + "!!!");
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//		System.out.println("!!! New best sample with fitness " + s.getFitness() + "!!!");
 		bestSample = s;
 	}
 

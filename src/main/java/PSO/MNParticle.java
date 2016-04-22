@@ -56,7 +56,7 @@ public class MNParticle implements Particle {
 			Sample s = sample();
 			double fit = f.calcFitness(s);
 			particleFit += fit;
-			System.out.println("Sample fitness: " + fit);
+			//System.out.println("Sample fitness: " + fit);
 			
 			// 2) Save this sample if it's the new pBest
 			if (pBest_sample == null || fit > pBest_sample.getFitness()){ 
@@ -104,7 +104,7 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void setPBest(Sample s) {
-		System.out.println(" ^ new ^ personal ^ best");
+//		System.out.println(" ^ new ^ personal ^ best");
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!
@@ -113,15 +113,15 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void adjustPBest() {
-		System.out.println("________________________ s");
-		System.out.println("Adjusting using sample: ");
-		pBest_sample.print();
-		print();
+//		System.out.println("________________________ s");
+//		System.out.println("Adjusting using sample: ");
+//		pBest_sample.print();
+//		print();
 
 		net.adjustPotentials(pBest_sample, epsilon);
 		
 		print();
-		System.out.println("________________________ f");
+//		System.out.println("________________________ f");
 	}
 
 	private double[][] getAllPotentials(){

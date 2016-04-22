@@ -273,7 +273,7 @@ public class MarkovNetwork {
 
 		// for testing, can remove when finished
 		handleConstraints();
-		print();
+		//print();
 	}
 
 	/**
@@ -379,8 +379,8 @@ public class MarkovNetwork {
 			}
 
 			// testing, remove
-			System.out.println("\n Final sample: ");
-			sample.print();
+//			System.out.println("\n Final sample: ");
+//			sample.print();
 		}
 
 		return sample;
@@ -461,13 +461,15 @@ public class MarkovNetwork {
 	}
 
 	public void print() {
-		System.out.println("NODES");
-		for (int i = 0; i < nodesArray.size(); i++) {
-			System.out.println("> " + nodesArray.get(i).getName());
-		}
-		System.out.println("EDGES");
-		for (int i = 0; i < edgesArray.size(); i++) {
-			edgesArray.get(i).printFactors();
-		}
+		
+		// TODO: uncomment some time
+//		System.out.println("NODES");
+//		for (int i = 0; i < nodesArray.size(); i++) {
+//			System.out.println("> " + nodesArray.get(i).getName());
+//		}
+//		System.out.println("EDGES");
+//		for (int i = 0; i < edgesArray.size(); i++) {
+//			edgesArray.get(i).printFactors();
+//		}
 	}
 }

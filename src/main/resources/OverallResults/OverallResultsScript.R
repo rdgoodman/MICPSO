@@ -24,7 +24,7 @@ IC_12_01 <- read.csv("IC_rawResults_graphColor12Node_30Values.txt", header = FAL
 IC_16_01 <- read.csv("IC_rawResults_graphColor16Node_30Values.txt", header = FALSE, sep = "")
 IC_20_01 <- read.csv("IC_rawResults_graphColor20Node_30Values.txt", header = FALSE, sep = "")
 IC_24_01 <- read.csv("IC_rawResults_graphColor24Node_30Values.txt", header = FALSE, sep = "")
-MN_38_01 <- read.csv("IC_rawResults_graphColor38Node_30Values.txt", header = FALSE, sep = "")
+IC_38_01 <- read.csv("IC_rawResults_graphColor38Node_30Values.txt", header = FALSE, sep = "")
 
 # reads in IPSO raw data
 I_05_01 <- read.csv("I_rawResults_graphColor05Node_30Values.txt", header = FALSE, sep = "")
@@ -87,3 +87,4 @@ t.test(MN_16_01, IC_16_01)
 t.test(MN_20_01, IC_20_01)
 t.test(MN_24_01, IC_24_01)
 t.test(MN_38_01, IC_38_01)
+
