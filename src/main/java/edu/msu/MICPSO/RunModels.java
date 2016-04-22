@@ -84,9 +84,9 @@ public class RunModels {
 	private static void testExperiments() throws FileNotFoundException{
 		
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
-		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
+		//experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values.txt");
+		//experimentGraphs.add("src/main/resources/graphColor05Node3_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
@@ -97,7 +97,7 @@ public class RunModels {
 		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
 			
-		MNExperiment m = new MNExperiment(25, experimentGraphs);
+		MNExperiment m = new MNExperiment(50, experimentGraphs);
 		//ICExperiment ic = new ICExperiment(25, experimentGraphs);
 		//IExperiment i = new IExperiment(25, experimentGraphs);
 	}

@@ -20,9 +20,9 @@ public class MNExperiment {
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
 			// TODO: make a specialized MN folder
-			String totalResults = "src/main/resources/OverallResults/retryMN_rawResults_" + graph;
-			String fitnessEvals = "src/main/resources/OverallResults/retryMN_fitEvals_" + graph;
-			String fitnessOverIterations = "src/main/resources/OverallResults/retryMN_fitnesses_" + graph;
+			String totalResults = "src/main/resources/OverallResults/MN_rawResults_" + graph;
+			String fitnessEvals = "src/main/resources/OverallResults/MN_fitEvals_" + graph;
+			String fitnessOverIterations = "src/main/resources/OverallResults/MN_fitnesses_" + graph;
 			
 			// create our files and writers
 			File rawResults = new File(totalResults);
@@ -129,11 +129,9 @@ public class MNExperiment {
 				average.add(e);
 			}		
 			
-			System.out.println("Averages:");
 			// divide to get average fitness evaluations at each iteration
 			for (int i = 0; i < average.size(); i++){
 				average.set(i, average.get(i)/numRuns);
-				System.out.print(average.get(i) + " ");
 			}
 			
 
