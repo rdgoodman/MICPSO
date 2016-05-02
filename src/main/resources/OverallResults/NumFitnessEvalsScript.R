@@ -1,7 +1,7 @@
 # reads in MNPSO raw data
-MN_05_01 <- read.csv("MN_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
+#MN_05_01 <- read.csv("MN_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
 MN_05_02 <- read.csv("MN_fitEvals_graphColor05Node2_30Values.txt", header = FALSE, sep = "")
-MN_05_03 <- read.csv("MN_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
+#MN_05_03 <- read.csv("MN_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
 MN_08_01 <- read.csv("MN_fitEvals_graphColor08Node_30Values.txt", header = FALSE, sep = "")
 MN_08_02 <- read.csv("MN_fitEvals_graphColor08Node2_30Values.txt", header = FALSE, sep = "")
 MN_10_01 <- read.csv("MN_fitEvals_graphColor10Node_30Values.txt", header = FALSE, sep = "")
@@ -13,9 +13,9 @@ MN_24_01 <- read.csv("MN_fitEvals_graphColor24Node_30Values.txt", header = FALSE
 MN_38_01 <- read.csv("MN_fitEvals_graphColor38Node_30Values.txt", header = FALSE, sep = "")
 
 # reads in ICPSO raw data
-IC_05_01 <- read.csv("IC_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
+#IC_05_01 <- read.csv("IC_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
 IC_05_02 <- read.csv("IC_fitEvals_graphColor05Node2_30Values.txt", header = FALSE, sep = "")
-IC_05_03 <- read.csv("IC_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
+#IC_05_03 <- read.csv("IC_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
 IC_08_01 <- read.csv("IC_fitEvals_graphColor08Node_30Values.txt", header = FALSE, sep = "")
 IC_08_02 <- read.csv("IC_fitEvals_graphColor08Node2_30Values.txt", header = FALSE, sep = "")
 IC_10_01 <- read.csv("IC_fitEvals_graphColor10Node_30Values.txt", header = FALSE, sep = "")
@@ -27,9 +27,9 @@ IC_24_01 <- read.csv("IC_fitEvals_graphColor24Node_30Values.txt", header = FALSE
 IC_38_01 <- read.csv("IC_fitEvals_graphColor38Node_30Values.txt", header = FALSE, sep = "")
 
 # reads in IPSO raw data
-I_05_01 <- read.csv("I_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
+#I_05_01 <- read.csv("I_fitEvals_graphColor05Node_30Values.txt", header = FALSE, sep = "")
 I_05_02 <- read.csv("I_fitEvals_graphColor05Node2_30Values.txt", header = FALSE, sep = "")
-I_05_03 <- read.csv("I_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
+#I_05_03 <- read.csv("I_fitEvals_graphColor05Node3_30Values.txt", header = FALSE, sep = "")
 I_08_01 <- read.csv("I_fitEvals_graphColor08Node_30Values.txt", header = FALSE, sep = "")
 I_08_02 <- read.csv("I_fitEvals_graphColor08Node2_30Values.txt", header = FALSE, sep = "")
 I_10_01 <- read.csv("I_fitEvals_graphColor10Node_30Values.txt", header = FALSE, sep = "")
