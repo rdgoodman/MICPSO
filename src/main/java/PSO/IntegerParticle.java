@@ -11,6 +11,7 @@ import java.util.Scanner;
 import MN.Edge;
 import MN.Node;
 import MN.Sample;
+import applicationProblems.ApplicationProblem;
 
 public class IntegerParticle {
 
@@ -19,6 +20,7 @@ public class IntegerParticle {
 	private ArrayList<Node> nodes = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 	private FitnessFunction f;
+	private ApplicationProblem problem;
 	
 	private int[] pBest;
 	private double pBest_fitness;
@@ -29,8 +31,9 @@ public class IntegerParticle {
 	String[] stringEdges = null;
 	Scanner scanner = null;
 	
-	public IntegerParticle(String fileName, FitnessFunction f) throws FileNotFoundException {
-		this.f = f;
+	public IntegerParticle(String fileName, ApplicationProblem problem) throws FileNotFoundException {
+		this.f = problem.getFitnessFunction();
+		this.problem = problem;
 		
 		// The entire file name, for retrieving the Markov net file
 				File file = new File(fileName);
@@ -323,7 +326,7 @@ public class IntegerParticle {
 		
 		
 		// check constraints
-		if (!checkConstraints(s)){
+		if (!problem.satisfiesConstraints(s, edgesArray)){
 			// penalize if doesn't pass constraints
 			fit -= 100;
 			s.setFitness(fit);
@@ -342,22 +345,7 @@ public class IntegerParticle {
 
 		return fit;
 	}
-	
-	/**
-	 * TODO: move this into the fitness function class or something
-	 * Returns TRUE if all constraints are passed, FALSE otherwise
-	 * @return
-	 */
-	public boolean checkConstraints(Sample s){
-		// only graph coloring constraints, for now
-		for (Edge e: edgesArray){
-			// invalid if any neighboring nodes have the same color
-			if (s.getTable().get(e.getEndpoints().getFirst()) == s.getTable().get(e.getEndpoints().getLast())){
-				return false;
-			}
-		}		
-		return true;
-	}
+
 
 	public int[] getPosition() {
 		return position;

@@ -10,13 +10,15 @@ import java.util.Scanner;
 import MN.Edge;
 import MN.Node;
 import MN.Sample;
+import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
 
 public class IPSO {
 
 	public ArrayList<IntegerParticle> pop;
 	int[] gBest;
 	double gBest_fitness;
-	private FitnessFunction f;
+	//private FitnessFunction f;
 	Sample s; // constructed from gBest
 
 	// tunables
@@ -34,9 +36,8 @@ public class IPSO {
 	ArrayList<Double> fitnesses = new ArrayList<Double>();
 	
 	// type of problem
-	boolean graphColoring = false;
-	int optimalSolution;
-
+	ApplicationProblem problem;
+	
 	public IPSO(String fileName, int numParticles, double omega, double phi1, double phi2)
 			throws FileNotFoundException {
 		this.numParticles = numParticles;
@@ -54,6 +55,10 @@ public class IPSO {
 
 		// Reads in the nodes, edges and values in from a specifically formatted
 		// file
+		
+		String problemType;
+		int optimal;
+		
 		try {
 			scanner = new Scanner(new BufferedReader(new FileReader(file)));
 
@@ -79,15 +84,8 @@ public class IPSO {
 				tempVal = scanner.nextLine();
 			}
 
-			// TODO: only getting type of problem and optimal size
-
-			if (tempVal.equals("GC")) {
-				System.out.println("GRAPH COLORING");
-				graphColoring = true;
-			} else {
-				System.out.println("DOMINATING SET");
-				// graphcoloring already false
-			}
+			// only getting type of problem
+			problemType = tempVal;
 
 			// keep scanning for the next non-empty line
 			if (scanner.nextLine().equals("")) {
@@ -100,18 +98,18 @@ public class IPSO {
 			}
 
 			// gets optimal solution size
-			optimalSolution = Integer.valueOf(tempVal);
-			//System.out.println("Size: " + optimalSolution);
+			optimal = Integer.valueOf(tempVal);
+			System.out.println("Size: " + optimal);
+			
+			// TODO: create problem type
+			if (problemType.equals("GC")){
+				problem = new GraphColoringProblem(optimal);
+			}
+			
 		} finally {
 			if (scanner != null) {
 				scanner.close();
 			}
-		}
-		
-		if (graphColoring) {
-			f = new GCFitnessFunction(optimalSolution);
-		} else {
-			// TODO
 		}
 		
 		initializePop(fileName);
@@ -126,7 +124,7 @@ public class IPSO {
 	private void initializePop(String fileName) throws FileNotFoundException {
 		pop = new ArrayList<IntegerParticle>();
 		for (int i = 0; i < numParticles; i++) {
-			pop.add(new IntegerParticle(fileName, f));
+			pop.add(new IntegerParticle(fileName, problem));
 		}
 	}
 

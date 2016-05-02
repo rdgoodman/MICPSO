@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import MN.Sample;
+import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
 
 public class ICPSO {
 
 	private ArrayList<Particle> pop; // population
-	private FitnessFunction f;
+	//private FitnessFunction f;
 	// global best position stored in the position of this particle
 	private Particle gBest;
 	// stores the best sample AND its fitness
@@ -31,8 +33,7 @@ public class ICPSO {
 	private double numToConsiderConverged = 20;
 
 	// type of problem
-	boolean graphColoring = false;
-	int optimalSolution;
+	ApplicationProblem problem; // TODO: this
 
 	
 	// TODO: solution reporting
@@ -83,6 +84,9 @@ public class ICPSO {
 
 		// Reads in the nodes, edges and values in from a specifically formatted
 		// file
+		// as well as problem type
+		int optimal;
+		String probType;
 		try {
 			s = new Scanner(new BufferedReader(new FileReader(file)));
 
@@ -108,15 +112,8 @@ public class ICPSO {
 				potential = s.nextLine();
 			}
 
-			// TODO: only getting type of problem and optimal size
-
-			if (potential.equals("GC")) {
-				System.out.println("GRAPH COLORING");
-				graphColoring = true;
-			} else {
-				System.out.println("DOMINATING SET");
-				// graphcoloring already false
-			}
+			// only getting type of problem and optimal size			
+			probType = potential;
 
 			// keep scanning for the next non-empty line
 			if (s.nextLine().equals("")) {
@@ -129,20 +126,22 @@ public class ICPSO {
 			}
 
 			// gets optimal solution size
-			optimalSolution = Integer.valueOf(potential);
-			System.out.println("Size: " + optimalSolution);
+			optimal = Integer.valueOf(potential);
+			System.out.println("Size: " + optimal);
+			
+			
+			// TODO: create problem 
+			if (probType.equals("GC")){
+				problem = new GraphColoringProblem(optimal);
+			}
+			
 		} finally {
 			if (s != null) {
 				s.close();
 			}
 		}
 
-		// create fitness function
-		if (graphColoring) {
-			f = new GCFitnessFunction(optimalSolution);
-		} else {
-			
-		}
+
 
 		// loops to create population
 		initializePop(fileName, Markov);
@@ -163,9 +162,9 @@ public class ICPSO {
 			//System.out.println(">> Particle " + i);
 			
 			if (markov) {
-				pop.add(new MNParticle(fileName, f, numSamples, epsilon));
+				pop.add(new MNParticle(fileName, problem, numSamples, epsilon));
 			} else {
-				pop.add(new ICParticle(fileName, f, numSamples, epsilon));
+				pop.add(new ICParticle(fileName, problem, numSamples, epsilon));
 			}
 		}
 	}

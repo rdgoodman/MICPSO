@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import MN.MarkovNetwork;
 import MN.Sample;
+import applicationProblems.ApplicationProblem;
 
 public class MNParticle implements Particle {
 	
@@ -23,8 +24,8 @@ public class MNParticle implements Particle {
 	 * @param epsilon scaling factor
 	 * @throws FileNotFoundException
 	 */
-	public MNParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
-		this.f = f;
+	public MNParticle(String fileName, ApplicationProblem problem, int numSamples, double epsilon) throws FileNotFoundException {
+		this.f = problem.getFitnessFunction();
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 		

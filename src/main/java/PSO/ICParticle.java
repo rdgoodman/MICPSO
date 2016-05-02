@@ -11,6 +11,7 @@ import MN.Edge;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
+import applicationProblems.ApplicationProblem;
 
 public class ICParticle implements Particle {
 
@@ -20,6 +21,7 @@ public class ICParticle implements Particle {
 	private FitnessFunction f;
 	private int numSamples;
 	private double epsilon;
+	private ApplicationProblem problem;
 	
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
@@ -34,8 +36,9 @@ public class ICParticle implements Particle {
 	 * @param epsilon scaling factor
 	 * @throws FileNotFoundException
 	 */
-	public ICParticle(String fileName, FitnessFunction f, int numSamples, double epsilon) throws FileNotFoundException {
-		this.f = f;
+	public ICParticle(String fileName, ApplicationProblem problem, int numSamples, double epsilon) throws FileNotFoundException {
+		this.f = problem.getFitnessFunction();
+		this.problem = problem;
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 		
@@ -286,7 +289,7 @@ public class ICParticle implements Particle {
 			double fit = f.calcFitness(s);
 			
 			// check constraints
-			if (!checkConstraints(s)){
+			if (!problem.satisfiesConstraints(s, edgesArray)){
 				// penalize if doesn't pass constraints
 				fit -= 100;
 				s.setFitness(fit);
@@ -304,23 +307,6 @@ public class ICParticle implements Particle {
 			}
 		}	
 		return particleFit / numSamples;
-	}
-	
-	/**
-	 * TODO: move this into the fitness function class or something
-	 * Returns TRUE if all constraints are passed, FALSE otherwise
-	 * @return
-	 */
-	public boolean checkConstraints(Sample s){
-		// only graph coloring constraints, for now
-		for (Edge e: edgesArray){
-			// invalid if any neighboring nodes have the same color
-			if (s.getTable().get(e.getEndpoints().getFirst()) == s.getTable().get(e.getEndpoints().getLast())){
-				return false;
-			}
-		}
-		
-		return true;
 	}
 
 	@Override
