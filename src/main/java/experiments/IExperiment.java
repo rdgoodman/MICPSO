@@ -21,9 +21,9 @@ public class IExperiment {
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
 			// TODO: make a specialized I folder
-			String totalResults = "src/main/resources/OverallResults/I_rawResults_" + graph;
-			String fitnessEvals = "src/main/resources/OverallResults/I_fitEvals_" + graph;
-			String fitnessOverIterations = "src/main/resources/OverallResults/I_fitnesses_" + graph;
+			String totalResults = "src/main/resources/RefactorTestExperiments/I_rawResults_" + graph;
+			String fitnessEvals = "src/main/resources/RefactorTestExperiments/I_fitEvals_" + graph;
+			String fitnessOverIterations = "src/main/resources/RefactorTestExperiments/I_fitnesses_" + graph;
 			
 			// create our files and writers
 			File rawResults = new File(totalResults);

@@ -47,6 +47,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 	public int compare(double current, double compared) {
 		if (isMaxProblem()) {
 			if (current < compared) {
+				// for a max problem, compared is better if it's greater than current
 				return 1;
 			} else if (current > compared) {
 				return -1;
@@ -55,6 +56,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 			if (current < compared) {
 				return -1;
 			} else if (current > compared) {
+				// for a min problem, compared is better if it's less than current
 				return 1;
 			}
 		}
