@@ -15,7 +15,7 @@ public interface ApplicationProblem {
 	public double getWorstValue();
 	
 	/**
-	 * Returns -1 if current fitness is better than compared, 1 if current fitness is worse than compared, 0 otherwise
+	 * Returns -1 if compared fitness is worse than current, 1 if compared fitness is better than current, 0 otherwise
 	 * @param current
 	 * @param compared
 	 * @return
