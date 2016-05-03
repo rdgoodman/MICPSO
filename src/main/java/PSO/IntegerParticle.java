@@ -21,219 +21,216 @@ public class IntegerParticle {
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 	private FitnessFunction f;
 	private ApplicationProblem problem;
-	
+
 	private int[] pBest;
 	private double pBest_fitness;
-	
+
 	// Arrays for storing the string values read in from file
 	String[] stringNodes = null;
 	String[] stringValues = null;
 	String[] stringEdges = null;
 	Scanner scanner = null;
-	
+
 	public IntegerParticle(String fileName, ApplicationProblem problem) throws FileNotFoundException {
 		this.f = problem.getFitnessFunction();
 		this.problem = problem;
-		
+
 		// The entire file name, for retrieving the Markov net file
-				File file = new File(fileName);
-				
-				// Reads in the nodes, edges and values in from a specifically formatted
-				// file
-				try {
-					scanner = new Scanner(new BufferedReader(new FileReader(file)));
+		File file = new File(fileName);
 
-					String tempVal;
+		// Reads in the nodes, edges and values in from a specifically formatted
+		// file
+		try {
+			scanner = new Scanner(new BufferedReader(new FileReader(file)));
 
-					/*
-					 * Reads the file, ignoring lines with % (which are comment lines).
-					 * File is structured so that the nodes are first (comma separated),
-					 * followed by the edges (in form A, B semi-colon separated) and
-					 * then the values for the variables (in form A: 0, 1). The values
-					 * need to be in the same order as the node variables. At this
-					 * stage, the variables are read in as strings, and after the file
-					 * is closed they are converted to the appropriate object type
-					 * (i.e., Node or Edge objects).
-					 * 
-					 */
-					while (scanner.hasNext()) {
-						// Read the first line in the file
-						tempVal = scanner.nextLine();
+			String tempVal;
 
-						// gets the node info first
-						// checks for comments, when present, discards them
-						while (tempVal.startsWith("%")) {
-							tempVal = scanner.nextLine();
-						}
-						
-						
-						////////////////////////////////////		
-						// all the stuff within this little section is read, but ignored/not used
-						// since the problem type/size is handled in the PSO class
-						
-						// keep scanning for the next non-empty line
-						if (scanner.nextLine().equals("")) {
-							tempVal = scanner.nextLine();
-						}
+			/*
+			 * Reads the file, ignoring lines with % (which are comment lines).
+			 * File is structured so that the nodes are first (comma separated),
+			 * followed by the edges (in form A, B semi-colon separated) and
+			 * then the values for the variables (in form A: 0, 1). The values
+			 * need to be in the same order as the node variables. At this
+			 * stage, the variables are read in as strings, and after the file
+			 * is closed they are converted to the appropriate object type
+			 * (i.e., Node or Edge objects).
+			 * 
+			 */
+			while (scanner.hasNext()) {
+				// Read the first line in the file
+				tempVal = scanner.nextLine();
 
-						// checks for comments, when present, discards them
-						while (tempVal.startsWith("%")) {
-							tempVal = scanner.nextLine();
-						}
-						
-						// keep scanning for the next non-empty line
-						if (scanner.nextLine().equals("")) {
-							tempVal = scanner.nextLine();
-						}
-
-						// checks for comments, when present, discards them
-						while (tempVal.startsWith("%")) {
-							tempVal = scanner.nextLine();
-						}
-						
-						////////////////////////////////////
-
-
-						// splits the string into an array of separate node objects
-						if (!tempVal.startsWith("%")) {
-							stringNodes = tempVal.split(",");
-						}
-
-						// trims extra whitespace from node objects
-						for (int i = 0; i < stringNodes.length; i++) {
-							if (stringNodes[i].startsWith(" ")) {
-								stringNodes[i] = stringNodes[i].trim();
-							}
-						}
-						
-						// keep scanning for the next non-empty line
-						if (scanner.nextLine().equals("")) {
-							tempVal = scanner.nextLine();
-						}
-
-						// reads the edge info, but we do not need it, so does not store
-						// them
-						// checks for comments, when present, discards them
-						while (tempVal.startsWith("%")) {
-							tempVal = scanner.nextLine();
-						}
-						
-						// if the line is not a comment, per the file structure is the
-						// edges
-						if (!tempVal.startsWith("%")) {
-							stringEdges = tempVal.split(";");
-						}
-
-						// trims extra whitespace from edge objects
-						for (int i = 0; i < stringEdges.length; i++) {
-							if (stringEdges[i].startsWith(" ")) {
-								stringEdges[i] = stringEdges[i].trim();
-							}
-						}
-
-						// keep scanning for the next non-empty line
-						if (scanner.nextLine().equals("")) {
-							tempVal = scanner.nextLine();
-						}
-
-						// get variable info
-						// checks for comments, when present, discards them
-						while (tempVal.startsWith("%")) {
-							tempVal = scanner.nextLine();
-						}
-
-						// if the line is not a comment, per file structure is values
-						if (!tempVal.startsWith("%")) {
-							stringValues = tempVal.split(";");
-						}
-
-						// trims the extra information and gets the (in node order)
-						// values
-						for (int i = 0; i < stringValues.length; i++) {
-							// gets the information in format NODE: X, X
-							int startOfValues;
-							// assists in getting the largest number of values found for
-							// any node
-							startOfValues = stringValues[i].lastIndexOf(":");
-							stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
-							// trims extra whitespace from edge objects
-							if (stringValues[i].startsWith(" ")) {
-								stringValues[i] = stringValues[i].trim();
-							}
-						}						
-
-					}					
-				} finally {
-					if (scanner != null) {
-						scanner.close();
-					}
+				// gets the node info first
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = scanner.nextLine();
 				}
-				
-				// create nodes
-				// initialize node and value objects from the string arrays
+
+				////////////////////////////////////
+				// all the stuff within this little section is read, but
+				//////////////////////////////////// ignored/not used
+				// since the problem type/size is handled in the PSO class
+
+				// keep scanning for the next non-empty line
+				if (scanner.nextLine().equals("")) {
+					tempVal = scanner.nextLine();
+				}
+
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = scanner.nextLine();
+				}
+
+				// keep scanning for the next non-empty line
+				if (scanner.nextLine().equals("")) {
+					tempVal = scanner.nextLine();
+				}
+
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = scanner.nextLine();
+				}
+
+				////////////////////////////////////
+
+				// splits the string into an array of separate node objects
+				if (!tempVal.startsWith("%")) {
+					stringNodes = tempVal.split(",");
+				}
+
+				// trims extra whitespace from node objects
 				for (int i = 0; i < stringNodes.length; i++) {
-					String nodeName = stringNodes[i];
-
-					String[] tempValues = stringValues[i].split(",");
-
-					int numValues = tempValues.length;
-					int[] values = new int[numValues];
-					
-					for (int j = 0; j < numValues; j++) {
-						values[j] = Integer.parseInt(tempValues[j]);
+					if (stringNodes[i].startsWith(" ")) {
+						stringNodes[i] = stringNodes[i].trim();
 					}
-																			
-					// creates a node with the appropriate values and node name
-					Node thisNode = new Node(values, nodeName);
-					nodes.add(thisNode);	
 				}
-				
-				// step 2: create edges
-				// makes temporary node objects to store the start/end of an edge
-				Node startingNode = null;
-				Node endingNode = null;
-				
-				// goes through each edge in the array of edges (from the file read in
-				// earlier)
-				for (int e = 0; e < stringEdges.length; e++) {
-					// for each node in the array of Nodes gets the starting and ending
-					// nodes
-					for (int n = 0; n < nodes.size(); n++) {
-						// gets the first node from the string array of edges
-						if (stringEdges[e].startsWith(nodes.get(n).getName())) {
-							startingNode = nodes.get(n);
-						}
-					}
 
-					for (int n = 0; n < nodes.size(); n++) {
-						// get the last node from the string array of edges
-						if (stringEdges[e].endsWith(nodes.get(n).getName())) {
-							endingNode = nodes.get(n);
-						}
-					}
+				// keep scanning for the next non-empty line
+				if (scanner.nextLine().equals("")) {
+					tempVal = scanner.nextLine();
+				}
 
-					Edge E = new Edge(startingNode, endingNode);
-					edgesArray.add(E);
+				// reads the edge info, but we do not need it, so does not store
+				// them
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = scanner.nextLine();
 				}
-		
-				System.out.println("NODES:");
-				for (Node n: nodes) {
-					System.out.println(n.getName());
+
+				// if the line is not a comment, per the file structure is the
+				// edges
+				if (!tempVal.startsWith("%")) {
+					stringEdges = tempVal.split(";");
 				}
-				
-				System.out.println("EDGES");
-				for (Edge e: edgesArray) {
-					e.printFactors();
-				}			
-				
-				
-				
-				
+
+				// trims extra whitespace from edge objects
+				for (int i = 0; i < stringEdges.length; i++) {
+					if (stringEdges[i].startsWith(" ")) {
+						stringEdges[i] = stringEdges[i].trim();
+					}
+				}
+
+				// keep scanning for the next non-empty line
+				if (scanner.nextLine().equals("")) {
+					tempVal = scanner.nextLine();
+				}
+
+				// get variable info
+				// checks for comments, when present, discards them
+				while (tempVal.startsWith("%")) {
+					tempVal = scanner.nextLine();
+				}
+
+				// if the line is not a comment, per file structure is values
+				if (!tempVal.startsWith("%")) {
+					stringValues = tempVal.split(";");
+				}
+
+				// trims the extra information and gets the (in node order)
+				// values
+				for (int i = 0; i < stringValues.length; i++) {
+					// gets the information in format NODE: X, X
+					int startOfValues;
+					// assists in getting the largest number of values found for
+					// any node
+					startOfValues = stringValues[i].lastIndexOf(":");
+					stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
+					// trims extra whitespace from edge objects
+					if (stringValues[i].startsWith(" ")) {
+						stringValues[i] = stringValues[i].trim();
+					}
+				}
+
+			}
+		} finally {
+			if (scanner != null) {
+				scanner.close();
+			}
+		}
+
+		// create nodes
+		// initialize node and value objects from the string arrays
+		for (int i = 0; i < stringNodes.length; i++) {
+			String nodeName = stringNodes[i];
+
+			String[] tempValues = stringValues[i].split(",");
+
+			int numValues = tempValues.length;
+			int[] values = new int[numValues];
+
+			for (int j = 0; j < numValues; j++) {
+				values[j] = Integer.parseInt(tempValues[j]);
+			}
+
+			// creates a node with the appropriate values and node name
+			Node thisNode = new Node(values, nodeName);
+			nodes.add(thisNode);
+		}
+
+		// step 2: create edges
+		// makes temporary node objects to store the start/end of an edge
+		Node startingNode = null;
+		Node endingNode = null;
+
+		// goes through each edge in the array of edges (from the file read in
+		// earlier)
+		for (int e = 0; e < stringEdges.length; e++) {
+			// for each node in the array of Nodes gets the starting and ending
+			// nodes
+			for (int n = 0; n < nodes.size(); n++) {
+				// gets the first node from the string array of edges
+				if (stringEdges[e].startsWith(nodes.get(n).getName())) {
+					startingNode = nodes.get(n);
+				}
+			}
+
+			for (int n = 0; n < nodes.size(); n++) {
+				// get the last node from the string array of edges
+				if (stringEdges[e].endsWith(nodes.get(n).getName())) {
+					endingNode = nodes.get(n);
+				}
+			}
+
+			Edge E = new Edge(startingNode, endingNode);
+			edgesArray.add(E);
+		}
+
+		System.out.println("NODES:");
+		for (Node n : nodes) {
+			System.out.println(n.getName());
+		}
+
+		System.out.println("EDGES");
+		for (Edge e : edgesArray) {
+			e.printFactors();
+		}
+
 		initializeVelocityAndPosition();
 	}
-	
+
 	/**
 	 * Updates particle velocity
+	 * 
 	 * @param omega
 	 * @param phi1
 	 * @param phi2
@@ -243,109 +240,108 @@ public class IntegerParticle {
 		// decide on multipliers
 		double cognitive = Math.random() * phi1;
 		double social = Math.random() * phi2;
-		
-		for (int i = 0; i < velocity.length; i++){
+
+		for (int i = 0; i < velocity.length; i++) {
 			velocity[i] = (omega * velocity[i]) + (cognitive * pBest[i]) + (social * gBest[i]);
 		}
 	}
 
-	
 	/**
 	 * Randomly initializes velocity and position vectors
 	 */
-	private void initializeVelocityAndPosition(){
-		
-		velocity = new double[nodes.size()] ;
-		position = new int[nodes.size()] ;		
-		
-		for (int i = 0; i < velocity.length; i++){
-			position[i] = (int)(Math.random()*10);
+	private void initializeVelocityAndPosition() {
+
+		velocity = new double[nodes.size()];
+		position = new int[nodes.size()];
+
+		for (int i = 0; i < velocity.length; i++) {
+			position[i] = (int) (Math.random() * 10);
 			velocity[i] = Math.random();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Updates particle position
 	 */
-	public void updatePosition(){
-		for (int i = 0; i < position.length; i++){
+	public void updatePosition() {
+		for (int i = 0; i < position.length; i++) {
 			double move = position[i] + velocity[i];
-			
+
 			// snap to nearest integer
-			if (move - Math.floor(move) > 0.5){
-				position[i] = (int)Math.ceil(move);
+			if (move - Math.floor(move) > 0.5) {
+				position[i] = (int) Math.ceil(move);
 			} else {
-				position[i] = (int)Math.floor(move);
+				position[i] = (int) Math.floor(move);
 			}
-			
+
 			int[] possible = nodes.get(i).getVals();
 			boolean validValue = false;
-			
-			// checks to see if the value at position i is possible, given the list of valid values
-			for (int j = 0; j < possible.length; j++){
-				if (position[i] == possible[j]){
-					// checks that the position value is in fact in the list of valid values
+
+			// checks to see if the value at position i is possible, given the
+			// list of valid values
+			for (int j = 0; j < possible.length; j++) {
+				if (position[i] == possible[j]) {
+					// checks that the position value is in fact in the list of
+					// valid values
 					validValue = true;
 				}
 			}
-					
+
 			// if the value is outside the acceptable range
-			if (!validValue){
-				// re-initialize to random value within range				
-			    Random rand = new Random();
-			    int randomNum = rand.nextInt(possible.length);		    
-			    position[i] = possible[randomNum];
-			}	
+			if (!validValue) {
+				// re-initialize to random value within range
+				Random rand = new Random();
+				int randomNum = rand.nextInt(possible.length);
+				position[i] = possible[randomNum];
+			}
 		}
 	}
-	
+
 	/**
 	 * Builds a sample using the current particle position
+	 * 
 	 * @return
 	 */
-	public Sample buildSampleFromPosition(){
+	public Sample buildSampleFromPosition() {
 		Sample s = new Sample();
-		
-		for (int i = 0; i < nodes.size(); i++){
+
+		for (int i = 0; i < nodes.size(); i++) {
 			s.setSampledValue(nodes.get(i), position[i]);
 		}
-		
+
 		return s;
 	}
-	
-	
+
 	/**
 	 * Calculates particle's fitness
+	 * 
 	 * @return
 	 */
-	public double calcFitness(){
+	public double calcFitness() {
 		// build a sample
 		Sample s = buildSampleFromPosition();
 		double fit = f.calcFitness(s);
-		
-		
+
 		// check constraints
-		if (!problem.satisfiesConstraints(s, edgesArray)){
+		if (!problem.satisfiesConstraints(s, edgesArray)) {
 			// penalize if doesn't pass constraints
 			fit -= 100;
 			s.setFitness(fit);
-		} 
-		
+		}
+
 		// set pBest
-		// TODO: refactor, this only works for a max problem
-		if (pBest == null || fit > pBest_fitness){
+		if (pBest == null || problem.compare(pBest_fitness, fit) == 1) {
 			pBest_fitness = fit;
 			pBest = new int[position.length];
 			// copy this position
-			for (int i = 0; i < pBest.length; i++){
+			for (int i = 0; i < pBest.length; i++) {
 				pBest[i] = position[i];
 			}
 		}
 
 		return fit;
 	}
-
 
 	public int[] getPosition() {
 		return position;
@@ -354,8 +350,8 @@ public class IntegerParticle {
 	public void setPosition(int[] position) {
 		this.position = position;
 	}
-	
-	public void print(){
+
+	public void print() {
 		System.out.println("Fitness: " + calcFitness());
 	}
 }
