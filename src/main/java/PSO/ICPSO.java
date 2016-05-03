@@ -183,11 +183,11 @@ public class ICPSO {
 		//System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest 
-		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+		double maxFit = problem.getWorstValue();
 		for (Particle p : pop) {				
 			p.calcFitness();
 			
-			// TODO: number of evals done is incremented by numSamples
+			// number of evals done is incremented by numSamples
 			numFitnessEvals += numSamples;
 			
 			double fit = p.getBestSample().getFitness();

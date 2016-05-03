@@ -37,4 +37,10 @@ public class GraphColoringProblem implements ApplicationProblem {
 		return f;
 	}
 
+	@Override
+	public double getWorstValue() {
+		// recall, this is a maximization problem
+		return -Double.MAX_VALUE;
+	}
+
 }

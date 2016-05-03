@@ -145,7 +145,7 @@ public class IPSO {
 		System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest
-		double maxFit = -Double.MAX_VALUE; // TODO: this is dangerous
+		double maxFit = problem.getWorstValue();
 		
 		for (IntegerParticle p : pop) {
 			p.calcFitness();

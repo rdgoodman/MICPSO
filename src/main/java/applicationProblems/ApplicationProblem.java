@@ -12,5 +12,6 @@ public interface ApplicationProblem {
 	public void createFitnessFunction(int optimal);
 	public boolean isMaxProblem();
 	public FitnessFunction getFitnessFunction();
+	public double getWorstValue();
 
 }
