@@ -134,7 +134,6 @@ public class IPSO {
 	 * @return
 	 */
 	public Sample run() {
-		// TODO: make a method to build samples from double[]
 		
 		// termination criterion
 		int runsUnchanged = 0;
@@ -239,8 +238,8 @@ public class IPSO {
 //		System.out.println("Final fitness: ");
 //		System.out.println(gBest_fitness);
 //		System.out.println();
-//		System.out.println("Returning best sample:");
-//		s.print();
+		System.out.println("Returning best sample:");
+		s.print();
 //		System.out.println("Number of fitness evaluations: " + numFitnessEvals);
 		return s;
 	}	
