@@ -13,5 +13,13 @@ public interface ApplicationProblem {
 	public boolean isMaxProblem();
 	public FitnessFunction getFitnessFunction();
 	public double getWorstValue();
+	
+	/**
+	 * Returns -1 if current fitness is better than compared, 1 if current fitness is worse than compared, 0 otherwise
+	 * @param current
+	 * @param compared
+	 * @return
+	 */
+	public int compare(double current, double compared);
 
 }
