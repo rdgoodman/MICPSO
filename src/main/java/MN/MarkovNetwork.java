@@ -275,6 +275,35 @@ public class MarkovNetwork {
 		handleConstraints();
 		//print();
 	}
+	
+	/**
+	 * Creates a sample from a uniform distribution
+	 * @return
+	 */
+	public Sample createRandomSample(){
+		Sample sample = new Sample(this);
+
+		// 1) generate an initial sample (probably randomly from vals(Vars)
+		for (Node n : nodesArray) {
+			// chosen uniformly - does that work?
+			int[] vals = n.getVals();
+			double r = Math.random();
+			double interval = (double) 1 / vals.length;
+			
+			int counter = 0;
+			for (double i = interval; i <= 1; i += interval) {
+				if (r < i) {
+					sample.setSampledValue(n, vals[counter]);
+					break;
+				} else if (counter == vals.length - 2) {
+					sample.setSampledValue(n, vals[counter - 1]);
+					break;
+				}
+				counter++;
+			}
+		}
+		return sample;
+	}
 
 	/**
 	 * Returns the result of Gibbs sampling this distribution

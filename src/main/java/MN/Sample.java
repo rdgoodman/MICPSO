@@ -3,7 +3,7 @@ package MN;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class Sample {
+public class Sample implements Comparable{
 	
 	private Hashtable<Node, Integer> values;
 	private double fitness;
@@ -60,6 +60,15 @@ public class Sample {
 	
 	public Hashtable<Node, Integer> getTable(){
 		return values;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o.equals(null)){
+			return 0;
+		} else {
+			return Double.compare(this.getFitness(), ((Sample) o).getFitness());
+		}
 	}
 	
 }
