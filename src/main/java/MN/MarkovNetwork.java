@@ -367,6 +367,7 @@ public class MarkovNetwork {
 					// probs.print();
 
 					// re-normalize
+					// TODO: does this need to move?
 					probs.normalize();
 
 					// System.out.println("Normalized");

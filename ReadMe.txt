@@ -7,6 +7,7 @@ Current TODOs/issues (not necessarily in order of importance)
 > Compare to specific GC algorithm & greedy
 
 > Test on another problem (note: for 3-sat, will we need clique potentials...?)
+   ideas: 3-SAT, MAX-SAT, scheduling
    
 > Because the factors never really seem to decrease for MN and aren't re-normalized, they just keep getting
    bigger. This might not be an issue, but we should consider finding some way to mitigate this just
