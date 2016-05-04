@@ -17,17 +17,18 @@ public class MOA {
 	private double cr; // cooling rate for gibbs sampling
 	private ArrayList<Sample> pop;
 	private int numIterations; // I think this is for Gibbs sampling? (their version)
-	private int numToSelect;
+	private double percentToSelect;
 	
 	private ApplicationProblem problem;
 	
-	public MOA(String filename, double cr, int numIterations, int popSize, int numToSelect) throws FileNotFoundException{
+	public MOA(String filename, double cr, int numIterations, int popSize, double percentToSelect) throws FileNotFoundException{
 		// TODO: new MN constructor?		
 		mn = new MarkovNetwork(filename);
 		pop = new ArrayList<Sample>();
 		this.cr = cr;
+		// TODO: this is apparently calculated...
 		this.numIterations = numIterations;
-		this.numToSelect = numToSelect;
+		this.percentToSelect = percentToSelect;
 		
 		createPopulation(popSize);
 	}
@@ -55,12 +56,21 @@ public class MOA {
 		
 		while (!terminated){
 			
-			// select a set of solutions
-			ArrayList<Sample> selected = new ArrayList<Sample>();
+			// sort the population
+			Collections.sort(pop);
 			
+			// select a set of solutions
+			ArrayList<Sample> selected = truncationSelect();
+			
+			// parameterize MN
+			// TODO: what does this even look like in this case?!
+			
+			// sample repeatedly
+			// TODO: figure out number to generate/replace
+			// are the last two the same thing...?
 		}
 		
-		// TODO: sort population by fitness
+		// sort population by fitness
 		Collections.sort(pop);
 		// note: ascending
 		
@@ -70,5 +80,24 @@ public class MOA {
 			return pop.get(pop.size()-1);
 		}
 	}
+
+	/**
+	 * Uses truncation selection to select a proportion of the population
+	 * @return
+	 */
+	private ArrayList<Sample> truncationSelect() {
+		// TODO The original authors used truncation selection, so...
+		int numToSelect = (int) (pop.size() * percentToSelect);
+		System.out.println("Selecting " + numToSelect);
+		
+		ArrayList<Sample> selected = new ArrayList<Sample>();
+		for (int i = 0; i < numToSelect; i++){
+			// TODO: does not remove parents, as this could mess with their weird excuse for Gibbs sampling
+			selected.add(pop.get((pop.size() - 1) - i));
+		}		
+		return selected;
+	}
+
+
 
 }

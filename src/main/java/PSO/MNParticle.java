@@ -67,6 +67,8 @@ public class MNParticle implements Particle {
 			double fit = f.calcFitness(s);
 			particleFit += fit;
 			// System.out.println("Sample fitness: " + fit);
+			s.setFitness(fit);
+			
 
 			// 2) Save this sample if it's the new pBest
 			if (pBest_sample == null || problem.compare(pBest_sample.getFitness(), fit) == 1) {
