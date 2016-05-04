@@ -22,4 +22,4 @@ Current TODOs/issues (not necessarily in order of importance)
 
 > (Maybe) find a non-evolutionary alternative to test against
 
-  
+> Change so that all Gibbs sampling methods use a random ordering of nodes

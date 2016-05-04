@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import MN.MarkovNetwork;
+import MN.Node;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
 
@@ -26,7 +27,7 @@ public class MOA {
 		mn = new MarkovNetwork(filename);
 		pop = new ArrayList<Sample>();
 		this.cr = cr;
-		// TODO: this is apparently calculated...
+		// TODO: this is apparently calculated in the paper...
 		this.numIterations = numIterations;
 		this.percentToSelect = percentToSelect;
 		
@@ -98,6 +99,31 @@ public class MOA {
 		return selected;
 	}
 
+	/**
+	 * Returns the result of Gibbs sampling
+	 * @return
+	 */
+	private Sample sample(){
+		// TODO: set values of factors as you go?
+		
+		for (int i = 0; i < numIterations; i++){
+			
+			// TODO: change to choose at random, also reflect in MN class?
+			ArrayList<Node> nodes = mn.getNodes();
+			Collections.shuffle(nodes);			
+			
+			for (Node n : nodes){
+				// calculate p(n|MB(n))
+				ArrayList<Node> mb = n.getMB();
+				
+				// TODO: set value of factor?
+			}
+			
+			
+		}
+		
+		return null;
+	}
 
 
 }
