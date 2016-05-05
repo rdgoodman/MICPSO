@@ -1,5 +1,6 @@
 % Indicates whether the problem is Graph Coloring (GC) or Dominating Set (DS) 
 % problem from en.wikipedia.org/wiki/Graph_coloring - Petersen graph
+% NON PLANAR GRAPH
 GC
 
 % The number associated with the optimal solution of the above problem
