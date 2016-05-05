@@ -141,7 +141,7 @@ public class IPSO {
 		double prevBestSampleFit = 0; // remember to set this
 		int runs = 1; // TODO: testing, remove
 
-		System.out.println("Evaluating Particles");
+		//System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest
 		double maxFit = problem.getWorstValue();
@@ -173,9 +173,9 @@ public class IPSO {
 		}
 
 		while (!terminated) {
-			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			//System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			//System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+			//System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			int particleNumber = 0;
 
@@ -192,7 +192,7 @@ public class IPSO {
 				System.out.println(">> Position Update ");
 				p.updatePosition();
 				// print for this particle
-				p.print();
+				//p.print();
 
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = gBest_fitness;
@@ -236,7 +236,7 @@ public class IPSO {
 		// System.out.println("Final fitness: ");
 		// System.out.println(gBest_fitness);
 		// System.out.println();
-		System.out.println("Returning best sample:");
+		//System.out.println("Returning best sample:");
 		s.print();
 		// System.out.println("Number of fitness evaluations: " +
 		// numFitnessEvals);

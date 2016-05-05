@@ -22,11 +22,12 @@ public class RunModels {
 
 	public static void main(String[] args) throws FileNotFoundException {	
 		// The filePath and fileName where the Markov net file is located
-//		String filePath = "src/main/resources/";
-//		String fileName = "graphColor05Node_30Values.txt";
+		//TODO: MT: Change this so is a bit cleaner
+		String filePath = "src/main/resources/DIMACSFiles/";
+		String fileName = "DIMACS_DSJC250.5_28ColorBenchMark.txt";
 		
 		// for passing in to MarkovNetwork or ICParticle
-//		String inputFile = filePath + fileName;
+		String inputFile = filePath + fileName;
 				
 //		IPSO ipso = new IPSO(inputFile, 10, 0.4, 0.6, 0.6);
 //		ipso.run();
@@ -39,7 +40,10 @@ public class RunModels {
 		
 //		tuneExperiments();
 		testExperiments();
-    }
+		
+		// TODO: Move this to a DIMACS converter method
+		//DIMACSConverter d = new DIMACSConverter(inputFile);
+	}
 
 	private static void tuneExperiments() throws FileNotFoundException {
 		ArrayList<Integer> pNums = new ArrayList<Integer>();
@@ -94,13 +98,17 @@ public class RunModels {
 //		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
 //		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
-			
-		MNExperiment m = new MNExperiment(10, experimentGraphs);
-		ICExperiment ic = new ICExperiment(10, experimentGraphs);
-		IExperiment i = new IExperiment(10, experimentGraphs);
+//		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
+//		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
+//			
+//		MNExperiment m = new MNExperiment(10, experimentGraphs);
+//		ICExperiment ic = new ICExperiment(10, experimentGraphs);
+//		IExperiment i = new IExperiment(10, experimentGraphs);
+		experimentGraphs.add("src/main/resources/BenchMarks/benchMark_28color.txt");
 
+		IExperiment i = new IExperiment(2, experimentGraphs);
+		ICExperiment ic = new ICExperiment(2, experimentGraphs);			
+		MNExperiment m = new MNExperiment(2, experimentGraphs);
 	}
 }

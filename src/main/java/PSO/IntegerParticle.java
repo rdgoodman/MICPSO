@@ -215,15 +215,15 @@ public class IntegerParticle {
 			edgesArray.add(E);
 		}
 
-		System.out.println("NODES:");
-		for (Node n : nodes) {
-			System.out.println(n.getName());
-		}
-
-		System.out.println("EDGES");
-		for (Edge e : edgesArray) {
-			e.printFactors();
-		}
+//		System.out.println("NODES:");
+//		for (Node n : nodes) {
+//			System.out.println(n.getName());
+//		}
+//
+//		System.out.println("EDGES");
+//		for (Edge e : edgesArray) {
+//			e.printFactors();
+//		}
 
 		initializeVelocityAndPosition();
 	}
