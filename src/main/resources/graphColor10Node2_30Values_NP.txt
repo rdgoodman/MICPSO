@@ -1,5 +1,6 @@
 % Indicates whether the problem is Graph Coloring (GC) or Dominating Set (DS) 
 % http://www.math.uri.edu/~eaton/0131873814_MEb.pdf  - Figure 2.7
+% NON PLANAR GRAPH
 GC
 
 % The number associated with the optimal solution of the above problem
