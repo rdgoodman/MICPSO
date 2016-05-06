@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MarkovNetwork {
@@ -343,6 +344,9 @@ public class MarkovNetwork {
 			// 2) For each non-evidence variable (so, all of them) [order
 			// doesn't
 			// matter]...
+			
+			Collections.shuffle(nodesArray);
+			
 			for (Node N : nodesArray) {
 				
 				//System.out.println(">>>>> Resampling Node " + N.getName());
