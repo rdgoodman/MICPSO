@@ -111,15 +111,21 @@ public class MOA {
 	 * 
 	 * @return
 	 */
-	private Sample sample(int g) {
+	public Sample sample(int g) {
 
 		// calculate temperature
 		double T = 1 / ((g+1) * cr);
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
+		s.print();
+		System.out.println("- - - - - - - - - - ");
 
 		for (int i = 0; i < numIterations; i++) {
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println("%%%%%%% Iteration " + i);
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
 
 			// chooses nodes at random
 			ArrayList<Node> nodes = mn.getNodes();
@@ -163,6 +169,11 @@ public class MOA {
 					}
 
 				}
+				
+				System.out.println("Counts:");
+				for (int q = 0; q < counts.length; q++){
+					System.out.println(counts[q]);
+				}
 
 				// for each value of N
 				for (int n = 0; n < nVals.length; n++) {
@@ -181,18 +192,26 @@ public class MOA {
 
 					// update Probs
 					double prob = numerator / denominator;
-					probs.setProb(nVals[n], probs.getProb(nVals[n] * prob));
+					System.out.println(prob);
+					probs.setProb(nVals[n], probs.getProb(nVals[n]) * prob);
+					System.out.println(probs.getProb(nVals[n]));
+
 				}
 
 				// renormalize (should already be handled by the sampler,
 				// but...check?)
 				probs.normalize();
+				probs.print();
 
 				// TODO: set value of factor?
 				
 				// resample
 				s.setSampledValue(N, probs.sample());
+				
+//				System.out.println("Final prob dist:");
+//				probs.print();
 			}
+			
 
 		}
 
