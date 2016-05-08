@@ -30,6 +30,10 @@ public class MOA {
 		// TODO: this is apparently calculated in the paper...
 		this.numIterations = numIterations;
 		this.percentToSelect = percentToSelect;
+		
+		if (percentToSelect > 1.0){
+			throw new RuntimeException("Invalid selection percentage for MOA: must be in (0,1]");
+		}
 
 		createPopulation(popSize);
 	}
