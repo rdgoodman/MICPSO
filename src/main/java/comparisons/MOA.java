@@ -111,7 +111,7 @@ public class MOA {
 	 * 
 	 * @return
 	 */
-	public Sample sample(int g) {
+	public Sample sample(int g, ArrayList<Sample> selected) {
 
 		// calculate temperature
 		double T = 1 / ((g+1) * cr);
@@ -145,7 +145,7 @@ public class MOA {
 				double[] counts = new double[nVals.length];
 
 				for (int n = 0; n < nVals.length; n++) {
-					for (Sample a : pop) {
+					for (Sample a : selected) {
 						Hashtable<Node, Integer> t = a.getTable();
 						if (t.get(N) == nVals[n]) { // nCount
 							boolean increment = true;
@@ -181,12 +181,12 @@ public class MOA {
 					double numerator = 0;
 					double denominator = 0;									
 
-					numerator = Math.exp((counts[n] / pop.size()) / T);
+					numerator = Math.exp((counts[n] / selected.size()) / T);
 
 					// getting the denominator. ugh.
 					for (int prime = 0; prime < nVals.length; prime++) {
 						if (prime != n) { // don't double-count
-							denominator += Math.exp((counts[prime] / pop.size()) / T);
+							denominator += Math.exp((counts[prime] / selected.size()) / T);
 						}
 					}
 
@@ -221,6 +221,10 @@ public class MOA {
 		}
 
 		return s;
+	}
+
+	public ArrayList<Sample> getPop() {
+		return pop;
 	}
 
 }
