@@ -163,10 +163,10 @@ public class MOA {
 						}
 					}
 					
-					// TODO: use of pseudoexamples
-					if (counts[n] == 0){
-						counts[n] = 1;
-					}
+//					// TODO: use of pseudoexamples
+//					if (counts[n] == 0){
+//						counts[n] = 1;
+//					}
 
 				}
 				
@@ -190,6 +190,11 @@ public class MOA {
 						}
 					}
 
+					
+					if (denominator == 0.0){
+						denominator = 1.0; // avoid divide-by-zero
+					}
+					
 					// update Probs
 					double prob = numerator / denominator;
 					System.out.println(prob);
