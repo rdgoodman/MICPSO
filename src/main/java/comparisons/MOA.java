@@ -110,7 +110,7 @@ public class MOA {
 	private Sample sample(int g) {
 
 		// calculate temperature
-		double T = 1 / (g * cr);
+		double T = 1 / ((g+1) * cr);
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
