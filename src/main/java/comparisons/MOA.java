@@ -117,7 +117,20 @@ public class MOA {
 	private void createPopulation(int n) {
 		// creates n randomly (uniformly) initialized samples
 		for (int i = 0; i < n; i++) {
-			pop.add(mn.createRandomSample());
+			Sample s = mn.createRandomSample();	
+			
+			while(!problem.satisfiesConstraints(s, mn.getEdges())){
+				System.out.println("tried");
+				s = mn.createRandomSample();
+			}
+			
+			pop.add(s);
+		}
+		System.out.println("Pop size:" + pop.size());
+		for (Sample s: pop){
+			if (!problem.satisfiesConstraints(s, mn.getEdges())){
+				throw new RuntimeException("Invalid individual in population");
+			}
 		}
 	}
 
