@@ -20,6 +20,8 @@ public class MoaTest {
 		
 		Sample s = m.sample(1, m.getPop());
 		s.print();
+				
+		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
 	}
 
 }

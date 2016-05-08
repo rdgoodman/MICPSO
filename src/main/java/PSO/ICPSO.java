@@ -75,7 +75,6 @@ public class ICPSO {
 
 		// based on info about problem type from file,
 		// create a fitness function
-
 		Scanner s = null;
 
 		// The entire file name, for retrieving the Markov net file

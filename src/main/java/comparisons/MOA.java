@@ -1,15 +1,20 @@
 package comparisons;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 import MN.MarkovNetwork;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
 
 public class MOA {
 
@@ -22,17 +27,83 @@ public class MOA {
 
 	private ApplicationProblem problem;
 
-	public MOA(String filename, double cr, int numIterations, int popSize, double percentToSelect)
+	public MOA(String fileName, double cr, int numIterations, int popSize, double percentToSelect)
 			throws FileNotFoundException {
-		mn = new MarkovNetwork(filename);
+		mn = new MarkovNetwork(fileName);
 		pop = new ArrayList<Sample>();
 		this.cr = cr;
 		// TODO: this is apparently calculated in the paper...
 		this.numIterations = numIterations;
 		this.percentToSelect = percentToSelect;
-		
-		if (percentToSelect > 1.0){
+
+		if (percentToSelect > 1.0) {
 			throw new RuntimeException("Invalid selection percentage for MOA: must be in (0,1]");
+		}
+
+		// TODO: create problem
+		// based on info about problem type from file,
+		// create a fitness function
+		Scanner s = null;
+
+		// The entire file name, for retrieving the Markov net file
+		File file = new File(fileName);
+
+		// Reads in the nodes, edges and values in from a specifically formatted
+		// file
+		// as well as problem type
+		int optimal;
+		String probType;
+		try {
+			s = new Scanner(new BufferedReader(new FileReader(file)));
+
+			String potential;
+
+			/*
+			 * Reads the file, ignoring lines with % (which are comment lines).
+			 * File is structured so that the nodes are first (comma separated),
+			 * followed by the edges (in form A, B semi-colon separated) and
+			 * then the values for the variables (in form A: 0, 1). The values
+			 * need to be in the same order as the node variables. At this
+			 * stage, the variables are read in as strings, and after the file
+			 * is closed they are converted to the appropriate object type
+			 * (i.e., Node or Edge objects).
+			 * 
+			 */
+			// Read the first line in the file
+			potential = s.nextLine();
+
+			// gets the node info first
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// only getting type of problem and optimal size
+			probType = potential;
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				potential = s.nextLine();
+			}
+
+			// checks for comments, when present, discards them
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
+			}
+
+			// gets optimal solution size
+			optimal = Integer.valueOf(potential);
+			System.out.println("Size: " + optimal);
+
+			// TODO: create problem
+			if (probType.equals("GC")) {
+				problem = new GraphColoringProblem(optimal);
+			}
+
+		} finally {
+			if (s != null) {
+				s.close();
+			}
 		}
 
 		createPopulation(popSize);
@@ -114,7 +185,7 @@ public class MOA {
 	public Sample sample(int g, ArrayList<Sample> selected) {
 
 		// calculate temperature
-		double T = 1 / ((g+1) * cr);
+		double T = 1 / ((g + 1) * cr);
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
@@ -125,7 +196,6 @@ public class MOA {
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			System.out.println("%%%%%%% Iteration " + i);
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-
 
 			// chooses nodes at random
 			ArrayList<Node> nodes = mn.getNodes();
@@ -162,16 +232,16 @@ public class MOA {
 							}
 						}
 					}
-					
-//					// TODO: use of pseudoexamples
-//					if (counts[n] == 0){
-//						counts[n] = 1;
-//					}
+
+					// // TODO: use of pseudoexamples
+					// if (counts[n] == 0){
+					// counts[n] = 1;
+					// }
 
 				}
-				
+
 				System.out.println("Counts:");
-				for (int q = 0; q < counts.length; q++){
+				for (int q = 0; q < counts.length; q++) {
 					System.out.println(counts[q]);
 				}
 
@@ -179,7 +249,7 @@ public class MOA {
 				for (int n = 0; n < nVals.length; n++) {
 					// calc p (n | MB(N))
 					double numerator = 0;
-					double denominator = 0;									
+					double denominator = 0;
 
 					numerator = Math.exp((counts[n] / selected.size()) / T);
 
@@ -190,11 +260,10 @@ public class MOA {
 						}
 					}
 
-					
-					if (denominator == 0.0){
+					if (denominator == 0.0) {
 						denominator = 1.0; // avoid divide-by-zero
 					}
-					
+
 					// update Probs
 					double prob = numerator / denominator;
 					System.out.println(prob);
@@ -209,14 +278,13 @@ public class MOA {
 				probs.print();
 
 				// TODO: set value of factor?
-				
+
 				// resample
 				s.setSampledValue(N, probs.sample());
-				
-//				System.out.println("Final prob dist:");
-//				probs.print();
+
+				// System.out.println("Final prob dist:");
+				// probs.print();
 			}
-			
 
 		}
 
@@ -225,6 +293,14 @@ public class MOA {
 
 	public ArrayList<Sample> getPop() {
 		return pop;
+	}
+
+	public ApplicationProblem getProblem() {
+		return problem;
+	}
+
+	public MarkovNetwork getMN() {
+		return mn;
 	}
 
 }
