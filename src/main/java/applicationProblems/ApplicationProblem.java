@@ -21,5 +21,6 @@ public interface ApplicationProblem {
 	 * @return
 	 */
 	public int compare(double current, double compared);
+	public Sample generateNeighbor(Sample s);
 
 }

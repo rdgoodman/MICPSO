@@ -13,14 +13,14 @@ public class GreedyVCTest {
 
 	@Test
 	public void test() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor38Node_30Values.txt");
+		String filename = ("src/main/resources/graphColor10Node2_30Values_NP.txt");
 		GreedyVC g = new GreedyVC(filename);
 
 		double avg = 0;
 
 		for (int i = 0; i < 50; i++) {
 			Sample s = g.run();
-			s.print();
+			//s.print();
 
 			assertEquals(true, g.getProblem().satisfiesConstraints(s, g.getMN().getEdges()));
 			System.out.println("Fitness: " + g.getProblem().getFitnessFunction().calcFitness(s));

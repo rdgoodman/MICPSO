@@ -1,8 +1,10 @@
 package applicationProblems;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import MN.Edge;
+import MN.Node;
 import MN.Sample;
 import PSO.FitnessFunction;
 import PSO.GCFitnessFunction;
@@ -61,6 +63,36 @@ public class GraphColoringProblem implements ApplicationProblem {
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public Sample generateNeighbor(Sample s) {
+		// TODO Define a neighbor as a graph with one vertex color changed
+		
+		Sample r = new Sample();
+		ArrayList<Node> a = Collections.list(s.getTable().keys());
+		
+		// copies current sample
+		for (Node k: a){
+			r.setSampledValue(k, s.getTable().get(k));
+		}
+		
+		// picks node to change color of
+		int r1 = (int) Math.floor(Math.random() * a.size());
+		System.out.println("element: " + r1);
+		Node c = a.get(r1);
+		
+		// picks color to change it to
+		int r2 = (int) Math.floor(Math.random() * c.getVals().length);
+		
+		// ensure we didn't pick same color as it already was
+		while (c.getVals()[r2] == r.getTable().get(c)){
+			r2 = (int) Math.floor(Math.random() * c.getVals().length);
+		}	
+		System.out.println("color: " + r2);
+		r.setSampledValue(c, c.getVals()[r2]);
+				
+		return r;
 	}
 
 }

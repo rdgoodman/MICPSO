@@ -18,8 +18,7 @@ public class GCFitnessFunction implements FitnessFunction{
 
 	@Override
 	public double calcFitness(Sample s) {
-		// TODO Auto-generated method stub
-		// TODO count up number of colors/labels used and compare with optimal
+		// count up number of colors/labels used and compare with optimal
 		// step 1: get list of keys
 		Set<Node> keys = s.getTable().keySet();
 		
@@ -33,7 +32,6 @@ public class GCFitnessFunction implements FitnessFunction{
 			}
 		}
 				
-		// TODO: maximization problem
 		// TODO: throw an exception if this is > 0
 		double fit = optimal - usedColors.size();
 		s.setFitness(fit);
