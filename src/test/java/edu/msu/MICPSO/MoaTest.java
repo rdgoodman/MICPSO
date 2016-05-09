@@ -16,9 +16,9 @@ public class MoaTest {
 		String filename = ("src/main/resources/graphColor05Node_10Values.txt");
 		
 		// TODO: set according to paper
-		MOA m = new MOA(filename, 0.5, 3, 500, 0.5);
+		MOA m = new MOA(filename, 0.5, 100, 50, 0.5);
 		
-		Sample s = m.sample(1, m.getPop());
+		Sample s = m.sample(10, m.getPop());
 		s.print();
 				
 		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
