@@ -17,21 +17,25 @@ public class HillclimbTest {
 		Hillclimb h = new Hillclimb(filename);
 
 		double avg = 0;
-		for (int i = 0; i < 50; i++) {
+		int validCount = 0;
+		for (int i = 0; i < 500; i++) {
 
 			Sample s = h.run();
 			// System.out.println("\n");
 			 //s.print();
 
-			 System.out.println("Fitness: " + s.getFitness());
+			 System.out.println( i + ": fitness: " + s.getFitness());
 
 			if (s.getFitness() > -100) {
 				avg += s.getFitness();
+				validCount++;
 			}
 		}
 
 		System.out.println("\n *** Average: ");
-		System.out.println(avg / 50);
+		System.out.println(avg / 500);
+		System.out.println("\n *** Valid %: ");
+		System.out.println((double)validCount/500);
 
 	}
 
