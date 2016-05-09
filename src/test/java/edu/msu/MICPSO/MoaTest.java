@@ -13,10 +13,10 @@ public class MoaTest {
 
 	@Test
 	public void testSample() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor10Node_10Values.txt");
+		String filename = ("src/main/resources/graphColor05Node_10Values.txt");
 		
 		// TODO: set according to paper
-		MOA m = new MOA(filename, 0.5, 3, 100, 0.5);
+		MOA m = new MOA(filename, 0.5, 3, 500, 0.5);
 		
 		Sample s = m.sample(1, m.getPop());
 		s.print();

@@ -120,18 +120,21 @@ public class MOA {
 			Sample s = mn.createRandomSample();	
 			
 			while(!problem.satisfiesConstraints(s, mn.getEdges())){
-				System.out.println("tried");
 				s = mn.createRandomSample();
 			}
 			
 			pop.add(s);
 		}
-		System.out.println("Pop size:" + pop.size());
+		
+		// TODO: testing, remove
+		System.out.println(">>>>> Population size:" + pop.size());
 		for (Sample s: pop){
 			if (!problem.satisfiesConstraints(s, mn.getEdges())){
 				throw new RuntimeException("Invalid individual in population");
 			}
+			s.print();
 		}
+		
 	}
 
 	/**
@@ -202,6 +205,8 @@ public class MOA {
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
+		System.out.println("- - - - - - - - - - ");
+		System.out.println("Initial sample:");
 		s.print();
 		System.out.println("- - - - - - - - - - ");
 
@@ -216,6 +221,7 @@ public class MOA {
 
 			// resample each node
 			for (Node N : nodes) {
+				System.out.println("\n Resampling Node " + N.getName());
 				// calculate p ( n | MB(n) )
 				ArrayList<Node> MB = N.getMB();
 
@@ -230,6 +236,7 @@ public class MOA {
 				for (int n = 0; n < nVals.length; n++) {
 					for (Sample a : selected) {
 						Hashtable<Node, Integer> t = a.getTable();
+						
 						if (t.get(N) == nVals[n]) { // nCount
 							boolean increment = true;
 							for (Node m : MB) {
@@ -245,17 +252,11 @@ public class MOA {
 							}
 						}
 					}
-
-					// // TODO: use of pseudoexamples
-					// if (counts[n] == 0){
-					// counts[n] = 1;
-					// }
-
 				}
 
-				System.out.println("Counts:");
+				System.out.println("Counts: (given MB)");
 				for (int q = 0; q < counts.length; q++) {
-					System.out.println(counts[q]);
+					System.out.println(nVals[q] + ": " + counts[q]);
 				}
 
 				// for each value of N
@@ -268,9 +269,9 @@ public class MOA {
 
 					// getting the denominator. ugh.
 					for (int prime = 0; prime < nVals.length; prime++) {
-						if (prime != n) { // don't double-count
+						//if (prime != n) { // don't double-count
 							denominator += Math.exp((counts[prime] / selected.size()) / T);
-						}
+						//}
 					}
 
 					if (denominator == 0.0) {
@@ -279,9 +280,10 @@ public class MOA {
 
 					// update Probs
 					double prob = numerator / denominator;
-					System.out.println(prob);
+					//System.out.println(prob);
 					probs.setProb(nVals[n], probs.getProb(nVals[n]) * prob);
-					System.out.println(probs.getProb(nVals[n]));
+					//System.out.println(probs.getProb(nVals[n]));
+					System.out.println("Prob == " + nVals[n] + ": " + probs.getProb(nVals[n]));
 
 				}
 
