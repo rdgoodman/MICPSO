@@ -68,7 +68,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 	@Override
 	public Sample generateNeighbor(Sample s) {
 		// TODO Define a neighbor as a graph with one vertex color changed
-		
+				
 		Sample r = new Sample();
 		ArrayList<Node> a = Collections.list(s.getTable().keys());
 		
@@ -79,7 +79,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 		
 		// picks node to change color of
 		int r1 = (int) Math.floor(Math.random() * a.size());
-		System.out.println("element: " + r1);
+		//System.out.println("element: " + r1);
 		Node c = a.get(r1);
 		
 		// picks color to change it to
@@ -89,9 +89,9 @@ public class GraphColoringProblem implements ApplicationProblem {
 		while (c.getVals()[r2] == r.getTable().get(c)){
 			r2 = (int) Math.floor(Math.random() * c.getVals().length);
 		}	
-		System.out.println("color: " + r2);
+		//System.out.println("color: " + r2);
 		r.setSampledValue(c, c.getVals()[r2]);
-				
+						
 		return r;
 	}
 

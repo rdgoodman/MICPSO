@@ -12,13 +12,14 @@ import PSO.FitnessFunction;
 import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
 
-// TODO: penalize solutions with low fitness
-
 public class Hillclimb {
 
 	private MarkovNetwork mn; // just to store the nodes/edges of graph
 	ApplicationProblem problem;
 	// TODO: will need a termination criterion, same as anything else
+	private double numToConsiderConverged = 20;
+	private double threshold = 0.01;
+
 	FitnessFunction f;
 
 	public Hillclimb(String fileName) throws FileNotFoundException {
@@ -89,46 +90,71 @@ public class Hillclimb {
 				s.close();
 			}
 		}
-		
+
 		f = problem.getFitnessFunction();
 	}
-	
-	public Sample run(){
+
+	public Sample run() {
+		// termination criterion
+		int runsUnchanged = 0;
+		boolean terminated = false;
+
 		// start with a randomly generated sample
 		Sample s = mn.createRandomSample();
-		
-//		if (!problem.satisfiesConstraints(s, mn.getEdges())){
-//			throw new RuntimeException("Started with an invalid solution");
-//			// TODO: can probably get rid of this, might not make sense
-//			// for all applications
-//		}
-		
-		// TODO: change term. crit.
-		for (int i = 0; i < 100; i++){
+
+		f.calcFitness(s);
+		if (!problem.satisfiesConstraints(s, mn.getEdges())) {
+			s.setFitness(-100.0);
+		}
+		double prevBestSampleFit = s.getFitness();
+
+		// if (!problem.satisfiesConstraints(s, mn.getEdges())){
+		// throw new RuntimeException("Started with an invalid solution");
+		// // TODO: can probably get rid of this, might not make sense
+		// // for all applications
+		// }
+
+		while (!terminated) {
 			Sample n = problem.generateNeighbor(s);
-			
+
 			double currentFit = f.calcFitness(s);
 			double neighborFit = f.calcFitness(n);
-			
+
 			// penalizes
 			// TODO: ensure this is consistent across applications
 			// maybe move into problem class, honestly
-			if (!problem.satisfiesConstraints(s, mn.getEdges())){
+			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 				currentFit = -100;
 				s.setFitness(currentFit);
-			} 
-			
-			if (!problem.satisfiesConstraints(n, mn.getEdges())){
+			}
+
+			if (!problem.satisfiesConstraints(n, mn.getEdges())) {
 				neighborFit = -100;
 				n.setFitness(neighborFit);
-			} 
+			}
 			
-			if (problem.compare(currentFit, neighborFit) == 1){
+			prevBestSampleFit = currentFit;
+
+			//System.out.println("Current: " + currentFit + ", Neighbor: " + neighborFit);
+			if (problem.compare(currentFit, neighborFit) == 1) {
 				// accept neighbor if better than current
 				s = n;
-			}			
+			}
+			
+			// Next half-dozen or so lines used to determine convergence
+			if (Math.abs(prevBestSampleFit - s.getFitness()) < threshold) {
+				runsUnchanged++;
+			} else {
+				runsUnchanged = 0;
+			}
+			if (runsUnchanged >= numToConsiderConverged) {
+				// return if the solution hasn't significantly changed in a
+				// certain
+				// number of iterations
+				terminated = true;
+			}
 		}
-		
+
 		return s;
 	}
 
