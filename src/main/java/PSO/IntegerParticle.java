@@ -326,8 +326,7 @@ public class IntegerParticle {
 		// check constraints
 		if (!problem.satisfiesConstraints(s, edgesArray)) {
 			// penalize if doesn't pass constraints
-			fit -= 100;
-			s.setFitness(fit);
+			s.setFitness(fit + problem.getInvalidSolutionPenalty());
 		}
 
 		// set pBest

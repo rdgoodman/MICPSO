@@ -22,5 +22,10 @@ public interface ApplicationProblem {
 	 */
 	public int compare(double current, double compared);
 	public Sample generateNeighbor(Sample s);
+	/**
+	 * Returns the penalty to be added to a solution that violates the constraints of the problem
+	 * @return
+	 */
+	public double getInvalidSolutionPenalty(); 
 
 }

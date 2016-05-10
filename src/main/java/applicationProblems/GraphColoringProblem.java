@@ -95,4 +95,9 @@ public class GraphColoringProblem implements ApplicationProblem {
 		return r;
 	}
 
+	@Override
+	public double getInvalidSolutionPenalty() {
+		return -100;
+	}
+
 }

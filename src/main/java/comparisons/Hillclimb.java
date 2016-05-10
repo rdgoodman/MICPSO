@@ -108,12 +108,6 @@ public class Hillclimb {
 		}
 		double prevBestSampleFit = s.getFitness();
 
-		// if (!problem.satisfiesConstraints(s, mn.getEdges())){
-		// throw new RuntimeException("Started with an invalid solution");
-		// // TODO: can probably get rid of this, might not make sense
-		// // for all applications
-		// }
-
 		while (!terminated) {
 			Sample n = problem.generateNeighbor(s);
 
@@ -121,16 +115,12 @@ public class Hillclimb {
 			double neighborFit = f.calcFitness(n);
 
 			// penalizes
-			// TODO: ensure this is consistent across applications
-			// maybe move into problem class, honestly
 			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
-				currentFit = -100;
-				s.setFitness(currentFit);
+				s.setFitness(currentFit + problem.getInvalidSolutionPenalty());
 			}
 
 			if (!problem.satisfiesConstraints(n, mn.getEdges())) {
-				neighborFit = -100;
-				n.setFitness(neighborFit);
+				n.setFitness(neighborFit + problem.getInvalidSolutionPenalty());
 			}
 			
 			prevBestSampleFit = currentFit;
@@ -155,6 +145,12 @@ public class Hillclimb {
 			}
 		}
 
+		// calculates fitness of returned solution
+		s.setFitness(problem.getFitnessFunction().calcFitness(s));
+		if (!problem.satisfiesConstraints(s, mn.getEdges())){
+			s.setFitness(s.getFitness() + problem.getInvalidSolutionPenalty());
+		}
+		
 		return s;
 	}
 

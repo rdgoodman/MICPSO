@@ -122,6 +122,11 @@ public class GreedyVC {
 			}
 		}
 
+		// calculates fitness of returned solution
+		s.setFitness(problem.getFitnessFunction().calcFitness(s));
+		if (!problem.satisfiesConstraints(s, mn.getEdges())){
+			s.setFitness(s.getFitness() + problem.getInvalidSolutionPenalty());
+		}
 		return s;
 	}
 

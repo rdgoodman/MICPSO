@@ -298,8 +298,7 @@ public class ICParticle implements Particle {
 			// check constraints
 			if (!problem.satisfiesConstraints(s, edgesArray)) {
 				// penalize if doesn't pass constraints
-				fit -= 100;
-				s.setFitness(fit);
+				s.setFitness(fit + problem.getInvalidSolutionPenalty());
 			} else {
 				// don't count toward overall particle fitness if penalized
 				particleFit += fit;
