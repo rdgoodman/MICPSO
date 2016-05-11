@@ -152,7 +152,8 @@ public class IPSO {
 			// for solution reporting
 			numFitnessEvals++;
 
-			double fit = p.calcFitness();
+			double fit = p.getFitness();			
+			
 			// for solution reporting
 			numFitnessEvals++;
 
@@ -173,32 +174,33 @@ public class IPSO {
 		}
 
 		while (!terminated) {
-			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+//			System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			int particleNumber = 0;
 
 			// iterate through all particles
 			for (IntegerParticle p : pop) {
-				System.out.println("\n >>>> Particle " + particleNumber);
+				//System.out.println("\n >>>> Particle " + particleNumber);
 				particleNumber++;
 
 				// 1) update velocity
-				System.out.println(">> Velocity Update");
+				//System.out.println(">> Velocity Update");
 				p.updateVelocity(omega, phi1, phi2, gBest);
 
 				// 2) update position
 				System.out.println(">> Position Update ");
 				p.updatePosition();
 				// print for this particle
-				p.print();
+				//p.print();
 
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = gBest_fitness;
 
 				// 3) evaluate fitness
-				double fit = p.calcFitness();
+				p.calcFitness();
+				double fit = p.getFitness();	
 				numFitnessEvals++;
 
 				// compare and update gBest
@@ -243,7 +245,7 @@ public class IPSO {
 		return s;
 	}
 
-	public double getBestFitness() {
+	public double getBestFitness() {		
 		return gBest_fitness;
 	}
 

@@ -24,6 +24,7 @@ public class IntegerParticle {
 
 	private int[] pBest;
 	private double pBest_fitness;
+	private double fitness; // TODO: this contains the penalty
 
 	// Arrays for storing the string values read in from file
 	String[] stringNodes = null;
@@ -338,7 +339,15 @@ public class IntegerParticle {
 				pBest[i] = position[i];
 			}
 		}
-
+		
+		fitness = s.getFitness();
+		
+		if (fitness > 0){
+			s.print();
+			System.out.println("Constraints: " + problem.satisfiesConstraints(s, edgesArray));
+			throw new RuntimeException("Invalid fitness");
+		}
+		
 		return fit;
 	}
 
@@ -352,5 +361,9 @@ public class IntegerParticle {
 
 	public void print() {
 		System.out.println("Fitness: " + calcFitness());
+	}
+
+	public double getFitness() {
+		return fitness;
 	}
 }
