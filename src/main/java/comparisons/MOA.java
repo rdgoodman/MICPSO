@@ -117,12 +117,7 @@ public class MOA {
 	private void createPopulation(int n) {
 		// creates n randomly (uniformly) initialized samples
 		for (int i = 0; i < n; i++) {
-			Sample s = mn.createRandomSample();	
-			
-			while(!problem.satisfiesConstraints(s, mn.getEdges())){
-				s = mn.createRandomSample();
-			}
-			
+			Sample s = mn.createRandomValidSample();				
 			pop.add(s);
 		}
 		

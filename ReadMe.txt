@@ -11,15 +11,16 @@ Current TODOs/issues (not necessarily in order of importance)
    
 > Because the factors never really seem to decrease for MN and aren't re-normalized, they just keep getting
    bigger. This might not be an issue, but we should consider finding some way to mitigate this just
-   in case.
-   
-> Find a way to scale back factor potential values (maybe /10 every so many iterations?)
+   in case. Find a way to scale back factor potential values (maybe /10 every so many iterations?)
    
 > Change some of the bad variable names (i.e. potential wrt the tempVal read in, or s for scanner). Got IntegerParticle
   and IntegerParticle done.   
   
-> Implement another evolutionary alternative (e.g. MOA)
-
 > (Maybe) find a non-evolutionary alternative to test against
 
-> Change so that all Gibbs sampling methods use a random ordering of nodes
+> Refactor MN and Edge classes so constraint handling (along with constraint checking) can live 
+   in ApplicationProblem class
+   
+ > Try using just base probabilities instead of the Boltzmann dist in MOA Gibbs sampling
+ 
+ > Try checking to see if constraints are violated and then re-sampling in MOA Gibbs sampling

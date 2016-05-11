@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
+
 public class MarkovNetwork {
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
@@ -19,6 +22,8 @@ public class MarkovNetwork {
 	String[] stringNodes = null;
 	String[] stringEdges = null;
 	String[] stringValues = null;
+	
+	ApplicationProblem problem;
 
 	// number of runs for Gibbs sampling
 	// TODO: ultimately this should be tunable
@@ -165,6 +170,11 @@ public class MarkovNetwork {
 			}
 			// creates the Markov network
 			createNetworkStructure();
+			
+			// TODO: create problem
+			if (problemType.equals("GC")) {
+				problem = new GraphColoringProblem(optimalNo);
+			}
 
 		} finally {
 			if (s != null) {
@@ -275,6 +285,40 @@ public class MarkovNetwork {
 		// for testing, can remove when finished
 		handleConstraints();
 		//print();
+	}
+	
+	/**
+	 * Creates a VALID sample from a uniform distribution
+	 * @return
+	 */
+	public Sample createRandomValidSample(){
+		Sample sample = new Sample(this);
+
+		// 1) generate an initial sample (probably randomly from vals(Vars)
+		for (Node n : nodesArray) {
+			// chosen uniformly - does that work?
+			int[] vals = n.getVals();
+			double r = Math.random();
+			double interval = (double) 1 / vals.length;
+			
+			int counter = 0;
+			for (double i = interval; i <= 1; i += interval) {
+				if (r < i) {
+					sample.setSampledValue(n, vals[counter]);
+					break;
+				} else if (counter == vals.length - 2) {
+					sample.setSampledValue(n, vals[counter - 1]);
+					break;
+				}
+				counter++;
+			}
+		}
+		
+		if (!problem.satisfiesConstraints(sample, edgesArray)){
+			sample = createRandomValidSample();
+		}		
+		
+		return sample;
 	}
 	
 	/**
