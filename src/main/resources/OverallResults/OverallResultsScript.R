@@ -11,6 +11,17 @@ MN_16_01 <- read.csv("MN_rawResults_graphColor16Node_30Values.txt", header = FAL
 MN_20_01 <- read.csv("MN_rawResults_graphColor20Node_30Values.txt", header = FALSE, sep = "")
 MN_24_01 <- read.csv("MN_rawResults_graphColor24Node_30Values.txt", header = FALSE, sep = "")
 MN_38_01 <- read.csv("MN_rawResults_graphColor38Node_30Values.txt", header = FALSE, sep = "")
+# averages
+summary(MN_05_02)
+summary(MN_08_01)
+summary(MN_08_02)
+summary(MN_10_01)
+summary(MN_10_02)
+summary(MN_12_01)
+summary(MN_16_01)
+summary(MN_20_01)
+summary(MN_24_01)
+summary(MN_38_01)
 
 # reads in ICPSO raw data
 #IC_05_01 <- read.csv("IC_rawResults_graphColor05Node_30Values.txt", header = FALSE, sep = "")
@@ -25,6 +36,17 @@ IC_16_01 <- read.csv("IC_rawResults_graphColor16Node_30Values.txt", header = FAL
 IC_20_01 <- read.csv("IC_rawResults_graphColor20Node_30Values.txt", header = FALSE, sep = "")
 IC_24_01 <- read.csv("IC_rawResults_graphColor24Node_30Values.txt", header = FALSE, sep = "")
 IC_38_01 <- read.csv("IC_rawResults_graphColor38Node_30Values.txt", header = FALSE, sep = "")
+# averages
+summary(IC_05_02)
+summary(IC_08_01)
+summary(IC_08_02)
+summary(IC_10_01)
+summary(IC_10_02)
+summary(IC_12_01)
+summary(IC_16_01)
+summary(IC_20_01)
+summary(IC_24_01)
+summary(IC_38_01)
 
 # reads in IPSO raw data
 #I_05_01 <- read.csv("I_rawResults_graphColor05Node_30Values.txt", header = FALSE, sep = "")
@@ -39,6 +61,17 @@ I_16_01 <- read.csv("I_rawResults_graphColor16Node_30Values.txt", header = FALSE
 I_20_01 <- read.csv("I_rawResults_graphColor20Node_30Values.txt", header = FALSE, sep = "")
 I_24_01 <- read.csv("I_rawResults_graphColor24Node_30Values.txt", header = FALSE, sep = "")
 I_38_01 <- read.csv("I_rawResults_graphColor38Node_30Values.txt", header = FALSE, sep = "")
+# averages
+summary(I_05_02)
+summary(I_08_01)
+summary(I_08_02)
+summary(I_10_01)
+summary(I_10_02)
+summary(I_12_01)
+summary(I_16_01)
+summary(I_20_01)
+summary(I_24_01)
+summary(I_38_01)
 
 
 # pairwise tests: ICPSO and IPSO
