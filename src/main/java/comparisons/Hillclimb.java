@@ -100,7 +100,7 @@ public class Hillclimb {
 		boolean terminated = false;
 
 		// start with a randomly generated sample
-		Sample s = mn.createRandomSample();
+		Sample s = mn.createRandomValidSample();
 
 		f.calcFitness(s);
 		if (!problem.satisfiesConstraints(s, mn.getEdges())) {
@@ -114,6 +114,7 @@ public class Hillclimb {
 			double currentFit = f.calcFitness(s);
 			double neighborFit = f.calcFitness(n);
 
+			
 			// penalizes
 			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 				s.setFitness(currentFit + problem.getInvalidSolutionPenalty());
@@ -123,9 +124,8 @@ public class Hillclimb {
 				n.setFitness(neighborFit + problem.getInvalidSolutionPenalty());
 			}
 			
-			prevBestSampleFit = currentFit;
-
-			//System.out.println("Current: " + currentFit + ", Neighbor: " + neighborFit);
+			prevBestSampleFit = s.getFitness();
+			
 			if (problem.compare(currentFit, neighborFit) == 1) {
 				// accept neighbor if better than current
 				s = n;
