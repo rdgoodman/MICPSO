@@ -12,34 +12,48 @@ import comparisons.MOA;
 
 public class MoaTest {
 	
+//	@Test
+//	public void testValidInit() throws FileNotFoundException {
+//		String filename = ("src/main/resources/graphColor05Node_10Values.txt");	
+//		MOA m = new MOA(filename, 0.5, 100, 50, 0.5);
+//		
+//		ArrayList<Sample> samples = m.getPop();
+//		
+//		for (Sample s : samples){
+//			assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
+//		}
+//		
+//	}
+//
+//	@Test
+//	public void testSample() throws FileNotFoundException {
+//		String filename = ("src/main/resources/graphColor38Node_30Values.txt");
+//		
+//		// TODO: set according to paper
+//		MOA m = new MOA(filename, 0.5, 100, 50, 0.5);
+//		
+//		ArrayList<Sample> samples = m.getPop();	
+//		
+//		Sample s = m.sample(10, m.getPop());
+//		System.out.println("\n Final sample:");
+//		s.print();
+//		System.out.println("Fitness: " + m.getProblem().getFitnessFunction().calcFitness(s));
+//				
+//		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
+//	}
+	
 	@Test
-	public void testValidInit() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor05Node_10Values.txt");	
+	public void testRun() throws FileNotFoundException{
+		String filename = ("src/main/resources/graphColor20Node_30Values.txt");	
 		MOA m = new MOA(filename, 0.5, 100, 50, 0.5);
 		
-		ArrayList<Sample> samples = m.getPop();
-		
-		for (Sample s : samples){
-			assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
-		}
-		
-	}
-
-	@Test
-	public void testSample() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor38Node_30Values.txt");
-		
-		// TODO: set according to paper
-		MOA m = new MOA(filename, 0.5, 100, 50, 0.5);
-		
-		ArrayList<Sample> samples = m.getPop();	
-		
-		Sample s = m.sample(10, m.getPop());
-		System.out.println("\n Final sample:");
+		Sample s = m.run();
 		s.print();
 		System.out.println("Fitness: " + m.getProblem().getFitnessFunction().calcFitness(s));
-				
+		System.out.println("Fitness: " + s.getFitness());
+		
 		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
+		
 	}
 
 }

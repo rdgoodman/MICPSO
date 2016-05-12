@@ -26,6 +26,10 @@ public class MOA {
 	private double percentToSelect;
 
 	private ApplicationProblem problem;
+	
+	// termination criteria
+	private double numToConsiderConverged = 20;
+	private double threshold = 0.01;
 
 	public MOA(String fileName, double cr, int numIterations, int popSize, double percentToSelect)
 			throws FileNotFoundException {
@@ -119,19 +123,18 @@ public class MOA {
 		for (int i = 0; i < n; i++) {
 			Sample s = mn.createRandomValidSample();
 			pop.add(s);
+			// evaluates samples as they're created
+			problem.getFitnessFunction().calcFitness(s);
 		}
 
 		// TODO: testing, remove
-		System.out.println(">>>>> Population size:" + pop.size());
+		//System.out.println(">>>>> Population size:" + pop.size());
 		for (Sample s : pop) {
 			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 				throw new RuntimeException("Invalid individual in population");
 			}
 			// s.print();
 		}
-
-		Collections.sort(pop);
-
 	}
 
 	/**
@@ -142,18 +145,34 @@ public class MOA {
 	@SuppressWarnings("unchecked")
 	public Sample run() {
 		// termination criterion
-		// TODO: set this up
 		int runsUnchanged = 0;
 		boolean terminated = false;
-		int iteration = 0;
+		double bestFitness = problem.getWorstValue(); // initial best
+		double prevBestFitness = problem.getWorstValue();
 
+		int iteration = 0;
 		while (!terminated) {
+			
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println("%%%%%% Iteration " + iteration);
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+
 
 			// sort the population
 			Collections.sort(pop);
 
+			// update previous best fitness
+			if (!problem.isMaxProblem()) {
+				prevBestFitness = pop.get(0).getFitness();
+			} else {
+				prevBestFitness = pop.get(pop.size() - 1).getFitness();
+			}
+			System.out.println("Previous best fitness: " + prevBestFitness);
+			System.out.println("Worst fitness: " + pop.get(0).getFitness());
+					
 			// select a set of solutions
 			ArrayList<Sample> selected = truncationSelect();
+			
 
 			// generate the correct number of samples
 			ArrayList<Sample> newSamples = new ArrayList<Sample>();
@@ -161,20 +180,73 @@ public class MOA {
 				newSamples.add(sample(iteration, selected));
 			}
 
+			// evaluate childrens' fitness
+			for (Sample s : newSamples){
+				problem.getFitnessFunction().calcFitness(s);
+			}
+			
 			// remove parents from population
-			pop.removeAll(selected);
+			//pop.removeAll(selected);
+			
+			// TODO: remove worst instead of parents
+			removeWorst(newSamples.size());
+			
+			// TODO: testing, remove
+			Collections.sort(newSamples);
+			System.out.println("New Samples: ");
+			String str = "";
+			for (Sample sa: newSamples){
+				str += sa.getFitness();
+				str += " ";
+			}
+			System.out.println(str);
+			
 			// replace with children
 			pop.addAll(newSamples);
+			
+			// sort the population
+			Collections.sort(pop);
+			
+			// TODO: testing, remove
+			System.out.println("Population: ");
+			String string = "";
+			for (Sample sa: pop){
+				string += sa.getFitness();
+				string += " ";
+			}
+			System.out.println(string);
+			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
+			pop.get(pop.size() - 1).print();
+			
+			// update best
+			if (!problem.isMaxProblem()) {
+				bestFitness = problem.getFitnessFunction().calcFitness(pop.get(0));
+			} else {
+				bestFitness = problem.getFitnessFunction().calcFitness(pop.get(pop.size() - 1));
+			}
+			System.out.println("Best fitness: " + bestFitness);
 
+			// checks termination criterion
+			if (Math.abs(bestFitness - prevBestFitness) < threshold){
+				runsUnchanged++;
+			} else {
+				runsUnchanged = 0;
+			}
+			if (runsUnchanged >= numToConsiderConverged) {
+				// return if the solution hasn't significantly changed in a
+				// certain
+				// number of iterations
+				terminated = true;
+			}
+			System.out.println("Unchanged: " + runsUnchanged);
+				
 			iteration++;
-
 		}
 
 		// sort population by fitness
 		Collections.sort(pop);
 		// note: ascending
-
-		if (problem.isMaxProblem()) {
+		if (!problem.isMaxProblem()) {
 			return pop.get(0);
 		} else {
 			return pop.get(pop.size() - 1);
@@ -189,7 +261,7 @@ public class MOA {
 	private ArrayList<Sample> truncationSelect() {
 		// the original authors used truncation selection, so...
 		int numToSelect = (int) (pop.size() * percentToSelect);
-		System.out.println("Selecting " + numToSelect);
+		//System.out.println("Selecting " + numToSelect);
 
 		ArrayList<Sample> selected = new ArrayList<Sample>();
 
@@ -209,6 +281,24 @@ public class MOA {
 			}
 		}
 		return selected;
+	}
+	
+	/**
+	 * Removes the worst solutions in the population
+	 */
+	private void removeWorst(int numToRemove){
+		
+		if (!problem.isMaxProblem()) {
+			// recall: sorted in ascending order
+			for (int i = 0; i < numToRemove; i++) {
+				pop.remove(pop.get((pop.size() - 1) - i));
+			}
+		} else {
+			// recall: sorted in ascending order
+			for (int i = 0; i < numToRemove; i++) {
+				pop.remove(pop.get(i));
+			}
+		}
 	}
 
 	/**
