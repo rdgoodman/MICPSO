@@ -127,7 +127,7 @@ public class MOA {
 			if (!problem.satisfiesConstraints(s, mn.getEdges())){
 				throw new RuntimeException("Invalid individual in population");
 			}
-			s.print();
+			//s.print();
 		}
 		
 	}
@@ -194,21 +194,23 @@ public class MOA {
 	 * @return
 	 */
 	public Sample sample(int g, ArrayList<Sample> selected) {
+		
+		int numAttempted = 0;
 
 		// calculate temperature
 		double T = 1 / ((g + 1) * cr);
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
-		System.out.println("- - - - - - - - - - ");
-		System.out.println("Initial sample:");
-		s.print();
-		System.out.println("- - - - - - - - - - ");
+//		System.out.println("- - - - - - - - - - ");
+//		System.out.println("Initial sample:");
+//		s.print();
+//		System.out.println("- - - - - - - - - - ");
 
 		for (int i = 0; i < numIterations; i++) {
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println("%%%%%%% Iteration " + i);
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%%% Iteration " + i);
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// chooses nodes at random
 			ArrayList<Node> nodes = mn.getNodes();
@@ -216,7 +218,7 @@ public class MOA {
 
 			// resample each node
 			for (Node N : nodes) {
-				System.out.println("\n Resampling Node " + N.getName());
+//				System.out.println("\n Resampling Node " + N.getName());
 				// calculate p ( n | MB(n) )
 				ArrayList<Node> MB = N.getMB();
 
@@ -249,10 +251,10 @@ public class MOA {
 					}
 				}
 
-				System.out.println("Counts: (given MB)");
-				for (int q = 0; q < counts.length; q++) {
-					System.out.println(nVals[q] + ": " + counts[q]);
-				}
+//				System.out.println("Counts: (given MB)");
+//				for (int q = 0; q < counts.length; q++) {
+//					System.out.println(nVals[q] + ": " + counts[q]);
+//				}
 
 				// for each value of N
 				for (int n = 0; n < nVals.length; n++) {
@@ -278,14 +280,14 @@ public class MOA {
 					//System.out.println(prob);
 					probs.setProb(nVals[n], probs.getProb(nVals[n]) * prob);
 					//System.out.println(probs.getProb(nVals[n]));
-					System.out.println("Prob == " + nVals[n] + ": " + probs.getProb(nVals[n]));
+//					System.out.println("Prob == " + nVals[n] + ": " + probs.getProb(nVals[n]));
 
 				}
 
 				// renormalize (should already be handled by the sampler,
 				// but...check?)
 				probs.normalize();
-				probs.print();
+//				probs.print();
 
 				// TODO: set value of factor?
 
@@ -296,6 +298,17 @@ public class MOA {
 				// probs.print();
 			}
 
+		}
+		
+		// deals with the fact that this can't handle constraints
+		if (!problem.satisfiesConstraints(s, mn.getEdges())){
+			s = sample(g, selected);
+			numAttempted++;
+		}
+		
+		if (numAttempted > 1000){
+			throw new RuntimeException("Tried too many");
+			// TODO: restart
 		}
 
 		return s;

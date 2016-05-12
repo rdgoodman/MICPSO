@@ -22,8 +22,6 @@ Current TODOs/issues (not necessarily in order of importance)
    in ApplicationProblem class
    
  > Try using just base probabilities instead of the Boltzmann dist in MOA Gibbs sampling
- 
- > Try checking to see if constraints are violated and then re-sampling in MOA Gibbs sampling
- 
+  
  > Ensure that the penalized fitness is reflected in choosing global/local bests, but not recorded
     as results, for all non-MICPSO methods (this was/is a problem with IPSO)
