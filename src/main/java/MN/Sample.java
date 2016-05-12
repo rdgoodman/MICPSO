@@ -68,7 +68,7 @@ public class Sample implements Comparable{
 			return 0;
 		} else {
 			return Double.compare(this.getFitness(), ((Sample) o).getFitness());
-		}
+		}		
 	}
 	
 }

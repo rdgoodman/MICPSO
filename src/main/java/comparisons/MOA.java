@@ -117,19 +117,21 @@ public class MOA {
 	private void createPopulation(int n) {
 		// creates n randomly (uniformly) initialized samples
 		for (int i = 0; i < n; i++) {
-			Sample s = mn.createRandomValidSample();				
+			Sample s = mn.createRandomValidSample();
 			pop.add(s);
 		}
-		
+
 		// TODO: testing, remove
 		System.out.println(">>>>> Population size:" + pop.size());
-		for (Sample s: pop){
-			if (!problem.satisfiesConstraints(s, mn.getEdges())){
+		for (Sample s : pop) {
+			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 				throw new RuntimeException("Invalid individual in population");
 			}
-			//s.print();
+			// s.print();
 		}
-		
+
+		Collections.sort(pop);
+
 	}
 
 	/**
@@ -137,11 +139,13 @@ public class MOA {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public Sample run() {
 		// termination criterion
 		// TODO: set this up
 		int runsUnchanged = 0;
 		boolean terminated = false;
+		int iteration = 0;
 
 		while (!terminated) {
 
@@ -151,12 +155,19 @@ public class MOA {
 			// select a set of solutions
 			ArrayList<Sample> selected = truncationSelect();
 
-			// parameterize MN
-			// TODO: what does this even look like in this case?!
+			// generate the correct number of samples
+			ArrayList<Sample> newSamples = new ArrayList<Sample>();
+			for (int i = 0; i < selected.size(); i++) {
+				newSamples.add(sample(iteration, selected));
+			}
 
-			// sample repeatedly
-			// TODO: figure out number to generate/replace
-			// are the last two the same thing...?
+			// remove parents from population
+			pop.removeAll(selected);
+			// replace with children
+			pop.addAll(newSamples);
+
+			iteration++;
+
 		}
 
 		// sort population by fitness
@@ -181,9 +192,21 @@ public class MOA {
 		System.out.println("Selecting " + numToSelect);
 
 		ArrayList<Sample> selected = new ArrayList<Sample>();
-		for (int i = 0; i < numToSelect; i++) {
-			// does not remove parents, as this could mess with Gibbs sampling?
-			selected.add(pop.get((pop.size() - 1) - i));
+
+		if (problem.isMaxProblem()) {
+			// recall: sorted in ascending order
+			for (int i = 0; i < numToSelect; i++) {
+				// does not remove parents, as this could mess with Gibbs
+				// sampling
+				selected.add(pop.get((pop.size() - 1) - i));
+			}
+		} else {
+			// recall: sorted in ascending order
+			for (int i = 0; i < numToSelect; i++) {
+				// does not remove parents, as this could mess with Gibbs
+				// sampling
+				selected.add(pop.get(i));
+			}
 		}
 		return selected;
 	}
@@ -194,7 +217,7 @@ public class MOA {
 	 * @return
 	 */
 	public Sample sample(int g, ArrayList<Sample> selected) {
-		
+
 		int numAttempted = 0;
 
 		// calculate temperature
@@ -202,15 +225,15 @@ public class MOA {
 
 		// generate random initial solution
 		Sample s = mn.createRandomSample();
-//		System.out.println("- - - - - - - - - - ");
-//		System.out.println("Initial sample:");
-//		s.print();
-//		System.out.println("- - - - - - - - - - ");
+		// System.out.println("- - - - - - - - - - ");
+		// System.out.println("Initial sample:");
+		// s.print();
+		// System.out.println("- - - - - - - - - - ");
 
 		for (int i = 0; i < numIterations; i++) {
-//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//			System.out.println("%%%%%%% Iteration " + i);
-//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			// System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			// System.out.println("%%%%%%% Iteration " + i);
+			// System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// chooses nodes at random
 			ArrayList<Node> nodes = mn.getNodes();
@@ -218,7 +241,7 @@ public class MOA {
 
 			// resample each node
 			for (Node N : nodes) {
-//				System.out.println("\n Resampling Node " + N.getName());
+				// System.out.println("\n Resampling Node " + N.getName());
 				// calculate p ( n | MB(n) )
 				ArrayList<Node> MB = N.getMB();
 
@@ -233,7 +256,7 @@ public class MOA {
 				for (int n = 0; n < nVals.length; n++) {
 					for (Sample a : selected) {
 						Hashtable<Node, Integer> t = a.getTable();
-						
+
 						if (t.get(N) == nVals[n]) { // nCount
 							boolean increment = true;
 							for (Node m : MB) {
@@ -251,10 +274,10 @@ public class MOA {
 					}
 				}
 
-//				System.out.println("Counts: (given MB)");
-//				for (int q = 0; q < counts.length; q++) {
-//					System.out.println(nVals[q] + ": " + counts[q]);
-//				}
+				// System.out.println("Counts: (given MB)");
+				// for (int q = 0; q < counts.length; q++) {
+				// System.out.println(nVals[q] + ": " + counts[q]);
+				// }
 
 				// for each value of N
 				for (int n = 0; n < nVals.length; n++) {
@@ -266,9 +289,9 @@ public class MOA {
 
 					// getting the denominator. ugh.
 					for (int prime = 0; prime < nVals.length; prime++) {
-						//if (prime != n) { // don't double-count
-							denominator += Math.exp((counts[prime] / selected.size()) / T);
-						//}
+						// if (prime != n) { // don't double-count
+						denominator += Math.exp((counts[prime] / selected.size()) / T);
+						// }
 					}
 
 					if (denominator == 0.0) {
@@ -277,17 +300,18 @@ public class MOA {
 
 					// update Probs
 					double prob = numerator / denominator;
-					//System.out.println(prob);
+					// System.out.println(prob);
 					probs.setProb(nVals[n], probs.getProb(nVals[n]) * prob);
-					//System.out.println(probs.getProb(nVals[n]));
-//					System.out.println("Prob == " + nVals[n] + ": " + probs.getProb(nVals[n]));
+					// System.out.println(probs.getProb(nVals[n]));
+					// System.out.println("Prob == " + nVals[n] + ": " +
+					// probs.getProb(nVals[n]));
 
 				}
 
 				// renormalize (should already be handled by the sampler,
 				// but...check?)
 				probs.normalize();
-//				probs.print();
+				// probs.print();
 
 				// TODO: set value of factor?
 
@@ -299,14 +323,14 @@ public class MOA {
 			}
 
 		}
-		
+
 		// deals with the fact that this can't handle constraints
-		if (!problem.satisfiesConstraints(s, mn.getEdges())){
+		if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 			s = sample(g, selected);
 			numAttempted++;
 		}
-		
-		if (numAttempted > 1000){
+
+		if (numAttempted > 1000) {
 			throw new RuntimeException("Tried too many");
 			// TODO: restart
 		}

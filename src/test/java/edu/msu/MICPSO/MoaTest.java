@@ -37,6 +37,7 @@ public class MoaTest {
 		Sample s = m.sample(10, m.getPop());
 		System.out.println("\n Final sample:");
 		s.print();
+		System.out.println("Fitness: " + m.getProblem().getFitnessFunction().calcFitness(s));
 				
 		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
 	}
