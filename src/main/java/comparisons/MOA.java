@@ -153,9 +153,9 @@ public class MOA {
 		int iteration = 0;
 		while (!terminated) {
 			
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println("%%%%%% Iteration " + iteration);
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%% Iteration " + iteration);
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
 
 
 			// sort the population
@@ -167,8 +167,8 @@ public class MOA {
 			} else {
 				prevBestFitness = pop.get(pop.size() - 1).getFitness();
 			}
-			System.out.println("Previous best fitness: " + prevBestFitness);
-			System.out.println("Worst fitness: " + pop.get(0).getFitness());
+//			System.out.println("Previous best fitness: " + prevBestFitness);
+//			System.out.println("Worst fitness: " + pop.get(0).getFitness());
 					
 			// select a set of solutions
 			ArrayList<Sample> selected = truncationSelect();
@@ -192,14 +192,14 @@ public class MOA {
 			removeWorst(newSamples.size());
 			
 			// TODO: testing, remove
-			Collections.sort(newSamples);
-			System.out.println("New Samples: ");
-			String str = "";
-			for (Sample sa: newSamples){
-				str += sa.getFitness();
-				str += " ";
-			}
-			System.out.println(str);
+//			Collections.sort(newSamples);
+//			System.out.println("New Samples: ");
+//			String str = "";
+//			for (Sample sa: newSamples){
+//				str += sa.getFitness();
+//				str += " ";
+//			}
+//			System.out.println(str);
 			
 			// replace with children
 			pop.addAll(newSamples);
@@ -208,15 +208,15 @@ public class MOA {
 			Collections.sort(pop);
 			
 			// TODO: testing, remove
-			System.out.println("Population: ");
-			String string = "";
-			for (Sample sa: pop){
-				string += sa.getFitness();
-				string += " ";
-			}
-			System.out.println(string);
-			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
-			pop.get(pop.size() - 1).print();
+//			System.out.println("Population: ");
+//			String string = "";
+//			for (Sample sa: pop){
+//				string += sa.getFitness();
+//				string += " ";
+//			}
+//			System.out.println(string);
+//			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
+//			pop.get(pop.size() - 1).print();
 			
 			// update best
 			if (!problem.isMaxProblem()) {
@@ -224,7 +224,7 @@ public class MOA {
 			} else {
 				bestFitness = problem.getFitnessFunction().calcFitness(pop.get(pop.size() - 1));
 			}
-			System.out.println("Best fitness: " + bestFitness);
+		//	System.out.println("Best fitness: " + bestFitness);
 
 			// checks termination criterion
 			if (Math.abs(bestFitness - prevBestFitness) < threshold){
@@ -238,7 +238,7 @@ public class MOA {
 				// number of iterations
 				terminated = true;
 			}
-			System.out.println("Unchanged: " + runsUnchanged);
+		//	System.out.println("Unchanged: " + runsUnchanged);
 				
 			iteration++;
 		}
