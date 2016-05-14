@@ -1,7 +1,9 @@
 package PSO;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
+import MN.Edge;
 import MN.MarkovNetwork;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
@@ -145,6 +147,11 @@ public class MNParticle implements Particle {
 	@Override
 	public void print() {
 		net.print();
+	}
+
+	@Override
+	public ArrayList<Edge> getEdges() {
+		return net.getEdges();
 	}
 
 }

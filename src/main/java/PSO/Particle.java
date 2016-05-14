@@ -1,5 +1,8 @@
 package PSO;
 
+import java.util.ArrayList;
+
+import MN.Edge;
 import MN.Sample;
 
 public interface Particle {
@@ -14,5 +17,6 @@ public interface Particle {
 	public void print();
 	//public Object[] getProbs(); // this is kludgy, but seems to work
 	public Sample getBestSample();
+	public ArrayList<Edge> getEdges();// for testing
 
 }

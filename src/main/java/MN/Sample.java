@@ -1,5 +1,6 @@
 package MN;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ public class Sample implements Comparable{
 	
 	private Hashtable<Node, Integer> values;
 	private double fitness;
+	private ArrayList<Edge> edges; // used for testing validity
 	
 	/**
 	 * For MICPSO

@@ -396,4 +396,9 @@ public class ICParticle implements Particle {
 		}
 	}
 
+	@Override
+	public ArrayList<Edge> getEdges() {
+		return edgesArray;
+	}
+
 }

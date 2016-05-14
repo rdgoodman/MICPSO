@@ -6,15 +6,17 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
+import MN.Sample;
 import PSO.ICPSO;
 
 public class MNPSOTest {
 
 	@Test
 	public void test() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor05Node_10Values.txt");
+		String filename = ("src/main/resources/graphColor08Node_30Values.txt");
 		ICPSO p = new ICPSO(filename, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
-		p.run();
+		Sample s = p.run();
+
 	}
 
 }

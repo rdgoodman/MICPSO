@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import MN.Edge;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
@@ -33,7 +34,8 @@ public class ICPSO {
 	private double numToConsiderConverged = 20;
 
 	// type of problem
-	ApplicationProblem problem; // TODO: this
+	ApplicationProblem problem; 
+	ArrayList<Edge> edges; // TODO: use for constraint checking in tests
 
 	// TODO: solution reporting
 	int numFitnessEvals = 0;
@@ -162,6 +164,9 @@ public class ICPSO {
 				pop.add(new ICParticle(fileName, problem, numSamples, epsilon));
 			}
 		}
+		
+		// TODO: set edges array
+		edges = pop.get(0).getEdges();
 	}
 
 	/**
@@ -310,6 +315,10 @@ public class ICPSO {
 
 	public void setFitnesses(ArrayList<Double> fitnesses) {
 		this.fitnesses = fitnesses;
+	}
+
+	public ApplicationProblem getProblem() {
+		return problem;
 	}
 
 }
