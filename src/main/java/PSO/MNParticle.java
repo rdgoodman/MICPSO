@@ -56,7 +56,9 @@ public class MNParticle implements Particle {
 
 	@Override
 	public Sample sample() {
-		return net.sample();
+		Sample s = net.sample();
+		s.setEdges(net.getEdges());
+		return s;
 	}
 
 	@Override

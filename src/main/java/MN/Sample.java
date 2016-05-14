@@ -72,5 +72,13 @@ public class Sample implements Comparable{
 			return Double.compare(this.getFitness(), ((Sample) o).getFitness());
 		}		
 	}
+
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
+
+	public void setEdges(ArrayList<Edge> edges) {
+		this.edges = edges;
+	}
 	
 }
