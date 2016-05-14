@@ -109,32 +109,6 @@ public class Edge {
 		// don't need to copy velocity because copy's position will never be updated again		
 		return e;
 	}
-	
-	/**
-	 * Enforces constraints of a graph-coloring problem
-	 */
-	public void handleGCConstraints() {
-		for (int i = 0; i < factors.length; i++){
-			// for graph-coloring problems, adjacent vertices
-			// cannot have the same color
-			if (factors[i].getValA() == factors[i].getValB()){
-				factors[i].setPotential(0.0);
-			}
-		}
-	}
-
-	/**
-	 * Throws an exception of the constraints of a graph-coloring problem are violated
-	 */
-	public void checkGCConstraints() {
-		for (int i = 0; i < factors.length; i++){
-			// for graph-coloring problems, adjacent vertices
-			// cannot have the same color
-			if ((factors[i].getValA() == factors[i].getValB()) && (factors[i].getPotential() > 0.0)){
-				throw new RuntimeException("ERROR: graph-color constraints violated");
-			}
-		}		
-	}
 
 	/**
 	 * Carries out adjustment using scaling factor

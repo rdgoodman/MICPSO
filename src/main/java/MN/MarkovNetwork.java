@@ -22,7 +22,7 @@ public class MarkovNetwork {
 	String[] stringNodes = null;
 	String[] stringEdges = null;
 	String[] stringValues = null;
-	
+
 	ApplicationProblem problem;
 
 	// number of runs for Gibbs sampling
@@ -168,13 +168,13 @@ public class MarkovNetwork {
 					}
 				}
 			}
-			// creates the Markov network
-			createNetworkStructure();
-			
+
 			// TODO: create problem
 			if (problemType.equals("GC")) {
 				problem = new GraphColoringProblem(optimalNo);
 			}
+			// creates the Markov network
+			createNetworkStructure();
 
 		} finally {
 			if (s != null) {
@@ -187,10 +187,8 @@ public class MarkovNetwork {
 	 * Sets the potentials for adjacent nodes' values being the same to zero
 	 */
 	private void handleConstraints() {
-		if (problemType.equals("GC")) {
-			for (Edge e : edgesArray) {
-				e.handleGCConstraints();
-			}
+		for (Edge e : edgesArray) {
+			problem.handleEdgeConstraints(e);
 		}
 	}
 
@@ -240,7 +238,7 @@ public class MarkovNetwork {
 
 			int numValues = tempValues.length;
 			int[] values = new int[numValues];
-			
+
 			for (int j = 0; j < numValues; j++) {
 				values[j] = Integer.parseInt(tempValues[j]);
 			}
@@ -284,14 +282,15 @@ public class MarkovNetwork {
 
 		// for testing, can remove when finished
 		handleConstraints();
-		//print();
+		// print();
 	}
-	
+
 	/**
 	 * Creates a VALID sample from a uniform distribution
+	 * 
 	 * @return
 	 */
-	public Sample createRandomValidSample(){
+	public Sample createRandomValidSample() {
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
@@ -300,7 +299,7 @@ public class MarkovNetwork {
 			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
-			
+
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
@@ -313,19 +312,20 @@ public class MarkovNetwork {
 				counter++;
 			}
 		}
-		
-		if (!problem.satisfiesConstraints(sample, edgesArray)){
+
+		if (!problem.satisfiesConstraints(sample, edgesArray)) {
 			sample = createRandomValidSample();
-		}		
-		
+		}
+
 		return sample;
 	}
-	
+
 	/**
 	 * Creates a sample from a uniform distribution
+	 * 
 	 * @return
 	 */
-	public Sample createRandomSample(){
+	public Sample createRandomSample() {
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
@@ -334,7 +334,7 @@ public class MarkovNetwork {
 			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
-			
+
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
@@ -365,7 +365,7 @@ public class MarkovNetwork {
 			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
-			
+
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
@@ -379,21 +379,20 @@ public class MarkovNetwork {
 			}
 		}
 
-		//System.out.println(" Initial sample: ");
-		//sample.print();
-		
-		
+		// System.out.println(" Initial sample: ");
+		// sample.print();
+
 		for (int i = 0; i < runs; i++) {
 
 			// 2) For each non-evidence variable (so, all of them) [order
 			// doesn't
 			// matter]...
-			
+
 			Collections.shuffle(nodesArray);
-			
+
 			for (Node N : nodesArray) {
-				
-				//System.out.println(">>>>> Resampling Node " + N.getName());
+
+				// System.out.println(">>>>> Resampling Node " + N.getName());
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
@@ -418,7 +417,7 @@ public class MarkovNetwork {
 					// System.out.print("\n P~ (" + N.getName() + " == " +
 					// nVals[n]
 					// + ") \n");
-						
+
 					for (Node M : MB) {
 						Edge edge = null;
 						// pull the edge between N and M
@@ -427,7 +426,7 @@ public class MarkovNetwork {
 								edge = e;
 							}
 						}
-						
+
 						// get sample value of M
 						double mVal = sample.getValue(M);
 
@@ -457,8 +456,8 @@ public class MarkovNetwork {
 			}
 
 			// testing, remove
-//			System.out.println("\n Final sample: ");
-//			sample.print();
+			// System.out.println("\n Final sample: ");
+			// sample.print();
 		}
 
 		return sample;
@@ -468,12 +467,10 @@ public class MarkovNetwork {
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		for (Edge e : edgesArray) {			
-			e.adjustPotentials(s, epsilon);		
+		for (Edge e : edgesArray) {
+			e.adjustPotentials(s, epsilon);
 			// shouldn't need to-zero adjustment, but let's check
-			if (problemType.equals("GC")) {
-				e.checkGCConstraints();
-			}
+			problem.checkEdgeConstraints(e);
 		}
 	}
 
@@ -483,11 +480,7 @@ public class MarkovNetwork {
 	public void updatePotentials() {
 		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
-			
-			// adjust to zero
-			if (problemType.equals("GC")) {
-				e.handleGCConstraints();
-			}
+			problem.handleEdgeConstraints(e);
 		}
 	}
 
@@ -539,15 +532,15 @@ public class MarkovNetwork {
 	}
 
 	public void print() {
-		
+
 		// TODO: uncomment some time
-//		System.out.println("NODES");
-//		for (int i = 0; i < nodesArray.size(); i++) {
-//			System.out.println("> " + nodesArray.get(i).getName());
-//		}
-//		System.out.println("EDGES");
-//		for (int i = 0; i < edgesArray.size(); i++) {
-//			edgesArray.get(i).printFactors();
-//		}
+		// System.out.println("NODES");
+		// for (int i = 0; i < nodesArray.size(); i++) {
+		// System.out.println("> " + nodesArray.get(i).getName());
+		// }
+		// System.out.println("EDGES");
+		// for (int i = 0; i < edgesArray.size(); i++) {
+		// edgesArray.get(i).printFactors();
+		// }
 	}
 }

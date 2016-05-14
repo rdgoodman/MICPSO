@@ -26,6 +26,16 @@ public interface ApplicationProblem {
 	 * Returns the penalty to be added to a solution that violates the constraints of the problem
 	 * @return
 	 */
-	public double getInvalidSolutionPenalty(); 
+	public double getInvalidSolutionPenalty();
+	/**
+	 * Throws an exception if edge potentials violate any constraints
+	 * @param e
+	 */
+	public void checkEdgeConstraints(Edge e); 
+	/**
+	 * Enforces any special constraints on a single edge
+	 * @param e
+	 */
+	public void handleEdgeConstraints(Edge e);
 
 }
