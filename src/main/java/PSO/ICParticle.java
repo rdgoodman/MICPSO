@@ -280,6 +280,8 @@ public class ICParticle implements Particle {
 			int val = probs[i].sample();
 			s.setSampledValue(probs[i].getNode(), val);
 		}
+		
+		s.setEdges(edgesArray);
 
 		System.out.println("Sample: ");
 		s.print();
