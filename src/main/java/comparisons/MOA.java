@@ -21,8 +21,7 @@ public class MOA {
 	private MarkovNetwork mn;
 	private double cr; // cooling rate for gibbs sampling
 	private ArrayList<Sample> pop;
-	private int numIterations; // I think this is for Gibbs sampling? (their
-								// version)
+	private int numIterations; // I think this is for Gibbs sampling? 
 	private double percentToSelect;
 
 	private ApplicationProblem problem;

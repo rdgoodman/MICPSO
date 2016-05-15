@@ -4,7 +4,7 @@ Current TODOs/issues (not necessarily in order of importance)
 
 > Find some non-planar graphs
 
-> Compare to greedy algorithm and hillclimb
+> Compare to greedy algorithm and hillclimb for all applications
    
 > Because the factors never really seem to decrease for MN and aren't re-normalized, they just keep getting
    bigger. This might not be an issue, but we should consider finding some way to mitigate this just
@@ -12,9 +12,6 @@ Current TODOs/issues (not necessarily in order of importance)
    
 > Change some of the bad variable names (i.e. potential wrt the tempVal read in, or s for scanner). Got IntegerParticle
   and IntegerParticle done.   
-  
-> Refactor MN and Edge classes so constraint handling (along with constraint checking) can live 
-   in ApplicationProblem class
    
 > Try using just base probabilities instead of the Boltzmann dist in MOA Gibbs sampling
   
