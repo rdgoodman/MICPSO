@@ -20,6 +20,7 @@ public class MOA {
 
 	private MarkovNetwork mn;
 	private double cr; // cooling rate for gibbs sampling
+	// per paper, cr = 0.5
 	private ArrayList<Sample> pop;
 	private int numIterations; // I think this is for Gibbs sampling? 
 	private double percentToSelect;
@@ -30,13 +31,12 @@ public class MOA {
 	private double numToConsiderConverged = 20;
 	private double threshold = 0.01;
 
-	public MOA(String fileName, double cr, int numIterations, int popSize, double percentToSelect)
+	public MOA(String fileName, double cr, int popSize, double percentToSelect)
 			throws FileNotFoundException {
 		mn = new MarkovNetwork(fileName);
 		pop = new ArrayList<Sample>();
 		this.cr = cr;
-		// TODO: this is apparently calculated in the paper...
-		this.numIterations = numIterations;
+		
 		this.percentToSelect = percentToSelect;
 
 		if (percentToSelect > 1.0) {
@@ -152,9 +152,9 @@ public class MOA {
 		int iteration = 0;
 		while (!terminated) {
 			
-//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
-//			System.out.println("%%%%%% Iteration " + iteration);
-//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println("%%%%%% Iteration " + iteration);
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
 
 
 			// sort the population
@@ -177,6 +177,7 @@ public class MOA {
 			ArrayList<Sample> newSamples = new ArrayList<Sample>();
 			for (int i = 0; i < selected.size(); i++) {
 				newSamples.add(sample(iteration, selected));
+				System.out.println("new samples: " + (i+1));
 			}
 
 			// evaluate childrens' fitness
@@ -214,7 +215,7 @@ public class MOA {
 //				string += " ";
 //			}
 //			System.out.println(string);
-//			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
+			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
 //			pop.get(pop.size() - 1).print();
 			
 			// update best
@@ -319,6 +320,9 @@ public class MOA {
 		// s.print();
 		// System.out.println("- - - - - - - - - - ");
 
+		// calcualte number of iterations
+		numIterations = (int) (selected.size() * Math.log(selected.size()) * 4);
+		
 		for (int i = 0; i < numIterations; i++) {
 			// System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			// System.out.println("%%%%%%% Iteration " + i);
