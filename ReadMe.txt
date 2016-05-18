@@ -18,3 +18,4 @@ Current TODOs/issues (not necessarily in order of importance)
 > Ensure that the penalized fitness is reflected in choosing global/local bests, but not recorded
    as results, for all non-MICPSO methods (this was/is a problem with IPSO)
     
+> Reason for MAXSAT: dependencies but not constraints
