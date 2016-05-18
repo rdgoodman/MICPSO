@@ -16,7 +16,7 @@ public class Hillclimb {
 
 	private MarkovNetwork mn; // just to store the nodes/edges of graph
 	ApplicationProblem problem;
-	// TODO: will need a termination criterion, same as anything else
+	// needs a termination criterion, same as anything else
 	private double numToConsiderConverged = 20;
 	private double threshold = 0.01;
 
@@ -25,13 +25,30 @@ public class Hillclimb {
 	public Hillclimb(String fileName) throws FileNotFoundException {
 		mn = new MarkovNetwork(fileName);
 
-		// TODO: create problem
+		// The entire file name, for retrieving the Markov net file
+		File file = new File(fileName);
+		
+		// construct the optimization problem itself
+		constructProblemFromFile(file);
+
+		f = problem.getFitnessFunction();
+	}
+	
+	/**
+	 * Handles for creating the optimization problem instance. Reads the file,
+	 * ignoring lines with % (which are comment lines). File is structured so
+	 * that the nodes are first (comma separated), followed by the edges (in
+	 * form A, B semi-colon separated) and then the values for the variables (in
+	 * form A: 0, 1). The values need to be in the same order as the node
+	 * variables.
+	 * 
+	 * @param file the file where the problem info can be found
+	 * @throws FileNotFoundException
+	 */
+	private void constructProblemFromFile(File file) throws FileNotFoundException {
 		// based on info about problem type from file,
 		// create a fitness function
 		Scanner s = null;
-
-		// The entire file name, for retrieving the Markov net file
-		File file = new File(fileName);
 
 		// Reads in the nodes, edges and values in from a specifically formatted
 		// file
@@ -43,17 +60,6 @@ public class Hillclimb {
 
 			String potential;
 
-			/*
-			 * Reads the file, ignoring lines with % (which are comment lines).
-			 * File is structured so that the nodes are first (comma separated),
-			 * followed by the edges (in form A, B semi-colon separated) and
-			 * then the values for the variables (in form A: 0, 1). The values
-			 * need to be in the same order as the node variables. At this
-			 * stage, the variables are read in as strings, and after the file
-			 * is closed they are converted to the appropriate object type
-			 * (i.e., Node or Edge objects).
-			 * 
-			 */
 			// Read the first line in the file
 			potential = s.nextLine();
 
@@ -80,7 +86,7 @@ public class Hillclimb {
 			optimal = Integer.valueOf(potential);
 			System.out.println("Size: " + optimal);
 
-			// TODO: create problem
+			// create problem
 			if (probType.equals("GC")) {
 				problem = new GraphColoringProblem(optimal);
 			}
@@ -90,8 +96,6 @@ public class Hillclimb {
 				s.close();
 			}
 		}
-
-		f = problem.getFitnessFunction();
 	}
 
 	public Sample run() {

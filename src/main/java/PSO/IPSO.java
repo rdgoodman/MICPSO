@@ -45,74 +45,78 @@ public class IPSO {
 		this.phi1 = phi1;
 		this.phi2 = phi2;
 
-		// based on info about problem type from file,
-		// create a fitness function
-
-		Scanner scanner = null;
-
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
 
+		// construct the optimization problem itself
+		constructProblemFromFile(file);
+
+		// loops to create population
+		initializePop(fileName);
+	}
+	
+	/**
+	 * Handles for creating the optimization problem instance. Reads the file,
+	 * ignoring lines with % (which are comment lines). File is structured so
+	 * that the nodes are first (comma separated), followed by the edges (in
+	 * form A, B semi-colon separated) and then the values for the variables (in
+	 * form A: 0, 1). The values need to be in the same order as the node
+	 * variables.
+	 * 
+	 * @param file the file where the problem info can be found
+	 * @throws FileNotFoundException
+	 */
+	private void constructProblemFromFile(File file) throws FileNotFoundException {
+		// based on info about problem type from file,
+		// create a fitness function
+		Scanner s = null;
+
 		// Reads in the nodes, edges and values in from a specifically formatted
 		// file
-
-		String problemType;
+		// as well as problem type
 		int optimal;
-
+		String probType;
 		try {
-			scanner = new Scanner(new BufferedReader(new FileReader(file)));
+			s = new Scanner(new BufferedReader(new FileReader(file)));
 
-			String tempVal;
+			String potential;
 
-			/*
-			 * Reads the file, ignoring lines with % (which are comment lines).
-			 * File is structured so that the nodes are first (comma separated),
-			 * followed by the edges (in form A, B semi-colon separated) and
-			 * then the values for the variables (in form A: 0, 1). The values
-			 * need to be in the same order as the node variables. At this
-			 * stage, the variables are read in as strings, and after the file
-			 * is closed they are converted to the appropriate object type
-			 * (i.e., Node or Edge objects).
-			 * 
-			 */
 			// Read the first line in the file
-			tempVal = scanner.nextLine();
+			potential = s.nextLine();
 
 			// gets the node info first
 			// checks for comments, when present, discards them
-			while (tempVal.startsWith("%")) {
-				tempVal = scanner.nextLine();
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
 			}
 
-			// only getting type of problem
-			problemType = tempVal;
+			// only getting type of problem and optimal size
+			probType = potential;
 
 			// keep scanning for the next non-empty line
-			if (scanner.nextLine().equals("")) {
-				tempVal = scanner.nextLine();
+			if (s.nextLine().equals("")) {
+				potential = s.nextLine();
 			}
 
 			// checks for comments, when present, discards them
-			while (tempVal.startsWith("%")) {
-				tempVal = scanner.nextLine();
+			while (potential.startsWith("%")) {
+				potential = s.nextLine();
 			}
 
 			// gets optimal solution size
-			optimal = Integer.valueOf(tempVal);
+			optimal = Integer.valueOf(potential);
 			System.out.println("Size: " + optimal);
 
-			// TODO: create problem type
-			if (problemType.equals("GC")) {
+			// create problem
+			if (probType.equals("GC")) {
 				problem = new GraphColoringProblem(optimal);
 			}
 
 		} finally {
-			if (scanner != null) {
-				scanner.close();
+			if (s != null) {
+				s.close();
 			}
 		}
-
-		initializePop(fileName);
 	}
 
 	/**

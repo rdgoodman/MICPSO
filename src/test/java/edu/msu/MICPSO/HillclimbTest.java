@@ -18,7 +18,7 @@ public class HillclimbTest {
 
 		double avg = 0;
 		int validCount = 0;
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 10; i++) {
 			Sample s = h.run();
 
 			 System.out.println( i + ": fitness: " + s.getFitness());
@@ -30,9 +30,9 @@ public class HillclimbTest {
 		}
 
 		System.out.println("\n *** Average: ");
-		System.out.println(avg / 500);
+		System.out.println(avg / validCount);
 		System.out.println("\n *** Valid %: ");
-		System.out.println((double)validCount/500);
+		System.out.println((double)validCount/10);
 	}
 
 }
