@@ -16,7 +16,7 @@ public class MNPSOTest {
 		System.out.println("WE ARE RUNNING THE (M)ICPSO TEST");
 		for (int i = 0; i < 10; i++) {
 			String filename = ("src/main/resources/graphColor08Node_30Values.txt");
-			ICPSO p = new ICPSO(filename, false, 10, 3, 0.99, 0.4, 0.6, 0.6);
+			ICPSO p = new ICPSO(filename, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
 			Sample s = p.run();
 			assertEquals(true, p.getProblem().satisfiesConstraints(s, s.getEdges()));
 		}

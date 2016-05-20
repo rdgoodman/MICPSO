@@ -50,129 +50,127 @@ public class MarkovNetwork {
 
 			String tempVal;
 
-			/*
-			 * Reads the file, ignoring lines with % (which are comment lines).
-			 * File is structured so that the problem description (GC or DS) is
-			 * first, the number associated with the optimal solution is second,
-			 * nodes are next (comma separated), followed by the edges (in form
-			 * A, B semi-colon separated) and then the values for the variables
-			 * (in form A: 0, 1). The values need to be in the same order as the
-			 * node variables. At this stage, the variables are read in as
-			 * strings, and after the file is closed they are converted to the
-			 * appropriate object type (i.e., Node or Edge objects).
-			 * 
-			 */
-			while (s.hasNext()) {
-				// Read the first line in the file
+			// while (s.hasNext()) {
+			// Read the first line in the file
+			tempVal = s.nextLine();
+
+			// gets the type of problem first
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
 				tempVal = s.nextLine();
-
-				// gets the type of problem first
-				// checks for comments, when present, discards them
-				while (tempVal.startsWith("%")) {
-					tempVal = s.nextLine();
-				}
-
-				problemType = tempVal;
-
-				// keep scanning for the next non-empty line
-				if (s.nextLine().equals("")) {
-					tempVal = s.nextLine();
-				}
-
-				// gets the number associated with the optimal solution
-				// checks for comments, when present, discards them
-				while (tempVal.startsWith("%")) {
-					tempVal = s.nextLine();
-				}
-
-				// if the line is not a comment, per the file structure is the
-				// optimal number
-				// associated with the solution
-				if (!tempVal.startsWith("%")) {
-					optimalNo = Integer.parseInt(tempVal);
-				}
-
-				// keep scanning for the next non-empty line
-				if (s.nextLine().equals("")) {
-					tempVal = s.nextLine();
-				}
-
-				// gets the node info
-				// checks for comments, when present, discards them
-				while (tempVal.startsWith("%")) {
-					tempVal = s.nextLine();
-				}
-
-				// splits the string into an array of separate node objects
-				if (!tempVal.startsWith("%")) {
-					stringNodes = tempVal.split(",");
-				}
-
-				// trims extra whitespace from node objects
-				for (int i = 0; i < stringNodes.length; i++) {
-					if (stringNodes[i].startsWith(" ")) {
-						stringNodes[i] = stringNodes[i].trim();
-					}
-				}
-
-				// keep scanning for the next non-empty line
-				if (s.nextLine().equals("")) {
-					tempVal = s.nextLine();
-				}
-
-				// gets the edge info first
-				// checks for comments, when present, discards them
-				while (tempVal.startsWith("%")) {
-					tempVal = s.nextLine();
-				}
-
-				// if the line is not a comment, per the file structure is the
-				// edges
-				if (!tempVal.startsWith("%")) {
-					stringEdges = tempVal.split(";");
-				}
-
-				// trims extra whitespace from edge objects
-				for (int i = 0; i < stringEdges.length; i++) {
-					if (stringEdges[i].startsWith(" ")) {
-						stringEdges[i] = stringEdges[i].trim();
-					}
-				}
-
-				// keep scanning for the next non-empty line
-				if (s.nextLine().equals("")) {
-					tempVal = s.nextLine();
-				}
-
-				// get variable info
-				// checks for comments, when present, discards them
-				while (tempVal.startsWith("%")) {
-					tempVal = s.nextLine();
-				}
-
-				// if the line is not a comment, per file structure is values
-				if (!tempVal.startsWith("%")) {
-					stringValues = tempVal.split(";");
-				}
-
-				// trims the extra information and gets the (in node order)
-				// values
-				for (int i = 0; i < stringValues.length; i++) {
-					// gets the information in format NODE: X, X
-					int startOfValues;
-					startOfValues = stringValues[i].lastIndexOf(":");
-					stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
-					// trims extra whitespace from edge objects
-					if (stringValues[i].startsWith(" ")) {
-						stringValues[i] = stringValues[i].trim();
-					}
-				}
 			}
 
-			// TODO: create problem
+			problemType = tempVal;
+
+			// TODO: adding here
 			if (problemType.equals("GC")) {
-				problem = new GraphColoringProblem(optimalNo);
+				// TODO: this
 			}
+
+			// // keep scanning for the next non-empty line
+			// if (s.nextLine().equals("")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // gets the number associated with the optimal solution
+			// // checks for comments, when present, discards them
+			// while (tempVal.startsWith("%")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // if the line is not a comment, per the file structure is the
+			// // optimal number
+			// // associated with the solution
+			// if (!tempVal.startsWith("%")) {
+			// optimalNo = Integer.parseInt(tempVal);
+			// }
+			//
+			// // keep scanning for the next non-empty line
+			// if (s.nextLine().equals("")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // gets the node info
+			// // checks for comments, when present, discards them
+			// while (tempVal.startsWith("%")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // splits the string into an array of separate node objects
+			// if (!tempVal.startsWith("%")) {
+			// stringNodes = tempVal.split(",");
+			// }
+			//
+			// // trims extra whitespace from node objects
+			// for (int i = 0; i < stringNodes.length; i++) {
+			// if (stringNodes[i].startsWith(" ")) {
+			// stringNodes[i] = stringNodes[i].trim();
+			// }
+			// }
+			//
+			// // keep scanning for the next non-empty line
+			// if (s.nextLine().equals("")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // gets the edge info first
+			// // checks for comments, when present, discards them
+			// while (tempVal.startsWith("%")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // if the line is not a comment, per the file structure is the
+			// // edges
+			// if (!tempVal.startsWith("%")) {
+			// stringEdges = tempVal.split(";");
+			// }
+			//
+			// // trims extra whitespace from edge objects
+			// for (int i = 0; i < stringEdges.length; i++) {
+			// if (stringEdges[i].startsWith(" ")) {
+			// stringEdges[i] = stringEdges[i].trim();
+			// }
+			// }
+			//
+			// // keep scanning for the next non-empty line
+			// if (s.nextLine().equals("")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // get variable info
+			// // checks for comments, when present, discards them
+			// while (tempVal.startsWith("%")) {
+			// tempVal = s.nextLine();
+			// }
+			//
+			// // if the line is not a comment, per file structure is values
+			// if (!tempVal.startsWith("%")) {
+			// stringValues = tempVal.split(";");
+			// }
+			//
+			// // trims the extra information and gets the (in node order)
+			// // values
+			// for (int i = 0; i < stringValues.length; i++) {
+			// // gets the information in format NODE: X, X
+			// int startOfValues;
+			// startOfValues = stringValues[i].lastIndexOf(":");
+			// stringValues[i] = stringValues[i].substring(startOfValues + 1,
+			// stringValues[i].length());
+			// // trims extra whitespace from edge objects
+			// if (stringValues[i].startsWith(" ")) {
+			// stringValues[i] = stringValues[i].trim();
+			// }
+			// }
+			// }
+			//
+			// // TODO: create problem
+			// if (problemType.equals("GC")) {
+			// problem = new GraphColoringProblem(optimalNo);
+			// }
+
+			// TODO: adding here
+			readGCProblemFromFile(s);
+
 			// creates the Markov network
 			createNetworkStructure();
 
@@ -181,6 +179,111 @@ public class MarkovNetwork {
 				s.close();
 			}
 		}
+	}
+
+	public void readGCProblemFromFile(Scanner s) {
+
+		String tempVal = null;
+		int optimalNo = 0;
+
+		while (s.hasNext()) {
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				tempVal = s.nextLine();
+			}
+
+			// gets the number associated with the optimal solution
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
+				tempVal = s.nextLine();
+			}
+
+			// if the line is not a comment, per the file structure is the
+			// optimal number
+			// associated with the solution
+			if (!tempVal.startsWith("%")) {
+				optimalNo = Integer.parseInt(tempVal);
+			}
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				tempVal = s.nextLine();
+			}
+
+			// gets the node info
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
+				tempVal = s.nextLine();
+			}
+
+			// splits the string into an array of separate node objects
+			if (!tempVal.startsWith("%")) {
+				stringNodes = tempVal.split(",");
+			}
+
+			// trims extra whitespace from node objects
+			for (int i = 0; i < stringNodes.length; i++) {
+				if (stringNodes[i].startsWith(" ")) {
+					stringNodes[i] = stringNodes[i].trim();
+				}
+			}
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				tempVal = s.nextLine();
+			}
+
+			// gets the edge info first
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
+				tempVal = s.nextLine();
+			}
+
+			// if the line is not a comment, per the file structure is the
+			// edges
+			if (!tempVal.startsWith("%")) {
+				stringEdges = tempVal.split(";");
+			}
+
+			// trims extra whitespace from edge objects
+			for (int i = 0; i < stringEdges.length; i++) {
+				if (stringEdges[i].startsWith(" ")) {
+					stringEdges[i] = stringEdges[i].trim();
+				}
+			}
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				tempVal = s.nextLine();
+			}
+
+			// get variable info
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
+				tempVal = s.nextLine();
+			}
+
+			// if the line is not a comment, per file structure is values
+			if (!tempVal.startsWith("%")) {
+				stringValues = tempVal.split(";");
+			}
+
+			// trims the extra information and gets the (in node order)
+			// values
+			for (int i = 0; i < stringValues.length; i++) {
+				// gets the information in format NODE: X, X
+				int startOfValues;
+				startOfValues = stringValues[i].lastIndexOf(":");
+				stringValues[i] = stringValues[i].substring(startOfValues + 1, stringValues[i].length());
+				// trims extra whitespace from edge objects
+				if (stringValues[i].startsWith(" ")) {
+					stringValues[i] = stringValues[i].trim();
+				}
+			}
+		}
+
+		// create problem
+		problem = new GraphColoringProblem(optimalNo);
 	}
 
 	/**
