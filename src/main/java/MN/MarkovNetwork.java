@@ -67,12 +67,13 @@ public class MarkovNetwork {
 			// read in the problem
 			if (problemType.equals("GC")) {
 				readGCProblemFromFile(s);
+				// creates the Markov network
+				createNetworkStructure();
 			} else if (problemType.equals("MS")) {
 				readMaxSatProblemFromFile(s);
+				// MN structure automatically created by this function too
 			}
 
-			// creates the Markov network
-			createNetworkStructure();
 
 		} finally {
 			if (s != null) {
@@ -162,15 +163,24 @@ public class MarkovNetwork {
 			predicates.add(p);
 			System.out.println("New predicate: ");
 			System.out.println(p.toString());
-		}	
-		
-		
-		// TODO: add edges
+			
+			// TODO: add edges			
+			ArrayList<Node> combinedNodes = new ArrayList<Node>();
+			combinedNodes.addAll(positivePNodes);
+			combinedNodes.addAll(negativePNodes);
+			
+			for (Node e1: combinedNodes){
+				for (Node e2 : combinedNodes){
+					if (!e1.equals(e2) && !hasEdge(e1, e2)){
+						System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+						edgesArray.add(new Edge(e1, e2));
+					}
+				}
+			}
+		}			
 		
 		// create problem
 		problem = new MaxSatProblem(predicates);
-		
-		System.exit(0);
 	}
 
 	/**
