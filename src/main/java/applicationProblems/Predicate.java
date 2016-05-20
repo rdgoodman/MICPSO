@@ -71,14 +71,14 @@ public class Predicate {
 	public String toString(){
 		String s = "(";
 		for (Node n : nonNegatedNodes){
-			s += ( " " + n.getName() + "v ");
+			s += ( n.getName() + " v ");
 		}
 		
 		for (Node n : negatedNodes){
-			s += ( " !" + n.getName() + "v ");
+			s += ( "!" + n.getName() + " v ");
 		}
 		
-		s += ") ^ ";
+		s += ") ";
 		
 		return s;
 	}

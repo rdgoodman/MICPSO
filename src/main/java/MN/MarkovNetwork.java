@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
+import applicationProblems.MaxSatProblem;
+import applicationProblems.Predicate;
 
 public class MarkovNetwork {
 	// Array list for storing nodes and edges
@@ -65,10 +67,9 @@ public class MarkovNetwork {
 			// read in the problem
 			if (problemType.equals("GC")) {
 				readGCProblemFromFile(s);
-			} else if (problemType.equals("MS")){
+			} else if (problemType.equals("MS")) {
 				readMaxSatProblemFromFile(s);
 			}
-
 
 			// creates the Markov network
 			createNetworkStructure();
@@ -82,18 +83,102 @@ public class MarkovNetwork {
 
 	/**
 	 * Reads in a MAXSAT problem from a specially formatted file
+	 * 
 	 * @param s
 	 */
 	private void readMaxSatProblemFromFile(Scanner s) {
-		// TODO Auto-generated method stub
+		String tempVal = null;
+		String allClauses = "";
+		ArrayList<Predicate> predicates = new ArrayList<Predicate>();
+
+		// keep scanning for the next non-empty line
+		if (s.nextLine().equals("")) {
+			tempVal = s.nextLine();
+		}
+
+		// checks for comments, when present, discards them
+		while (tempVal.startsWith("c")) {
+			tempVal = s.nextLine();
+		}
+
+		// reads preamble
+		if (tempVal.startsWith("p")) {
+			// split on spaces
+			String[] preamble = tempVal.split("\\s+");
+			// error-check
+			if (!preamble[1].equals("cnf")) {
+				throw new RuntimeException("Not in CNF, can't read file");
+			}
+			// read number of variables
+			int numNodes = Integer.valueOf(preamble[2]);
+			
+			// create correct number of nodes
+			for (int i = 1; i <= numNodes; i++) {
+				int[] binaryVals = { 0, 1 };
+				nodesArray.add(new Node(binaryVals, String.valueOf(i)));
+			}
+
+		}
+
+		// create our predicates
+		while (s.hasNext()) {
+			tempVal = s.nextLine();
+			System.out.println(tempVal);
+			
+			// smush all the clause info together since 0 is the
+			// actual breakpoint between them, not a line break
+			allClauses += (tempVal + " ");
+		}
 		
+		// break into individual predicates
+		String[] clauses = allClauses.split("0");
+		for (int i = 0; i < clauses.length; i++){
+
+			
+			// read which nodes are in this predicate
+			ArrayList<Node> positivePNodes = new ArrayList<Node>();
+			ArrayList<Node> negativePNodes = new ArrayList<Node>();			
+			String[] clauseNodes = clauses[i].split("\\s+");
+			for (int j = 0; j < clauseNodes.length; j++){				
+				if (clauseNodes[j].trim().startsWith("-")){
+					// add as a negated variable
+					for (Node n : nodesArray){
+						if (n.getName().equals(clauseNodes[j].trim().substring(1))){
+							negativePNodes.add(n);
+						}
+					}
+				} else {
+					// add as a positive variable
+					for (Node n : nodesArray){
+						if (n.getName().equals(clauseNodes[j].trim())){
+							positivePNodes.add(n);
+						}
+					}
+				}
+			}
+
+			// actually make predicate
+			Predicate p = new Predicate(positivePNodes, negativePNodes);
+			predicates.add(p);
+			System.out.println("New predicate: ");
+			System.out.println(p.toString());
+		}	
+		
+		
+		// TODO: add edges
+		
+		// create problem
+		problem = new MaxSatProblem(predicates);
+		
+		System.exit(0);
 	}
 
 	/**
 	 * Reads in a graph-coloring problem from a specially formatted file
+	 * 
 	 * @param s
 	 */
-	public void readGCProblemFromFile(Scanner s) {
+	private void readGCProblemFromFile(Scanner s) {
 
 		String tempVal = null;
 		int optimalNo = 0;
@@ -554,5 +639,23 @@ public class MarkovNetwork {
 		// for (int i = 0; i < edgesArray.size(); i++) {
 		// edgesArray.get(i).printFactors();
 		// }
+	}
+
+//	private boolean hasNode(String name) {
+//		for (Node n : nodesArray) {
+//			if (n.getName().equals(name)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+	private boolean hasEdge(Node e1, Node e2) {
+		for (Edge e : edgesArray) {
+			if (e.getEndpoints().contains(e1) && e.getEndpoints().contains(e2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
