@@ -45,20 +45,6 @@ public class Predicate {
 		return false;
 	}
 
-//	/**
-//	 * Flips the truth assignment to this Node's variable
-//	 * @param n
-//	 */
-//	public void flipValue(Node n){
-//		if (nonNegatedNodes.contains(n)){
-//			nonNegatedNodes.remove(n);
-//			negatedNodes.add(n);
-//		} else if (negatedNodes.contains(n)){
-//			negatedNodes.add(n);
-//			nonNegatedNodes.add(n);
-//		}
-//		// do nothing if that variable isn't in this predicate
-//	}
 	
 	/**
 	 * Returns a deep copy of this predicate
@@ -78,4 +64,23 @@ public class Predicate {
 		
 		return new Predicate(newP, newN);
 	}
+	
+	/**
+	 * Returns a string representing this predicate
+	 */
+	public String toString(){
+		String s = "(";
+		for (Node n : nonNegatedNodes){
+			s += ( " " + n.getName() + "v ");
+		}
+		
+		for (Node n : negatedNodes){
+			s += ( " !" + n.getName() + "v ");
+		}
+		
+		s += ") ^ ";
+		
+		return s;
+	}
 }
+

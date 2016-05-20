@@ -26,7 +26,7 @@ public class MarkovNetwork {
 	ApplicationProblem problem;
 
 	// number of runs for Gibbs sampling
-	// TODO: ultimately this should be tunable
+	// ultimately this should be tunable
 	int runs = 1;
 
 	/**
@@ -62,114 +62,13 @@ public class MarkovNetwork {
 
 			problemType = tempVal;
 
-			// TODO: adding here
+			// read in the problem
 			if (problemType.equals("GC")) {
-				// TODO: this
+				readGCProblemFromFile(s);
+			} else if (problemType.equals("MS")){
+				readMaxSatProblemFromFile(s);
 			}
 
-			// // keep scanning for the next non-empty line
-			// if (s.nextLine().equals("")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // gets the number associated with the optimal solution
-			// // checks for comments, when present, discards them
-			// while (tempVal.startsWith("%")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // if the line is not a comment, per the file structure is the
-			// // optimal number
-			// // associated with the solution
-			// if (!tempVal.startsWith("%")) {
-			// optimalNo = Integer.parseInt(tempVal);
-			// }
-			//
-			// // keep scanning for the next non-empty line
-			// if (s.nextLine().equals("")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // gets the node info
-			// // checks for comments, when present, discards them
-			// while (tempVal.startsWith("%")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // splits the string into an array of separate node objects
-			// if (!tempVal.startsWith("%")) {
-			// stringNodes = tempVal.split(",");
-			// }
-			//
-			// // trims extra whitespace from node objects
-			// for (int i = 0; i < stringNodes.length; i++) {
-			// if (stringNodes[i].startsWith(" ")) {
-			// stringNodes[i] = stringNodes[i].trim();
-			// }
-			// }
-			//
-			// // keep scanning for the next non-empty line
-			// if (s.nextLine().equals("")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // gets the edge info first
-			// // checks for comments, when present, discards them
-			// while (tempVal.startsWith("%")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // if the line is not a comment, per the file structure is the
-			// // edges
-			// if (!tempVal.startsWith("%")) {
-			// stringEdges = tempVal.split(";");
-			// }
-			//
-			// // trims extra whitespace from edge objects
-			// for (int i = 0; i < stringEdges.length; i++) {
-			// if (stringEdges[i].startsWith(" ")) {
-			// stringEdges[i] = stringEdges[i].trim();
-			// }
-			// }
-			//
-			// // keep scanning for the next non-empty line
-			// if (s.nextLine().equals("")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // get variable info
-			// // checks for comments, when present, discards them
-			// while (tempVal.startsWith("%")) {
-			// tempVal = s.nextLine();
-			// }
-			//
-			// // if the line is not a comment, per file structure is values
-			// if (!tempVal.startsWith("%")) {
-			// stringValues = tempVal.split(";");
-			// }
-			//
-			// // trims the extra information and gets the (in node order)
-			// // values
-			// for (int i = 0; i < stringValues.length; i++) {
-			// // gets the information in format NODE: X, X
-			// int startOfValues;
-			// startOfValues = stringValues[i].lastIndexOf(":");
-			// stringValues[i] = stringValues[i].substring(startOfValues + 1,
-			// stringValues[i].length());
-			// // trims extra whitespace from edge objects
-			// if (stringValues[i].startsWith(" ")) {
-			// stringValues[i] = stringValues[i].trim();
-			// }
-			// }
-			// }
-			//
-			// // TODO: create problem
-			// if (problemType.equals("GC")) {
-			// problem = new GraphColoringProblem(optimalNo);
-			// }
-
-			// TODO: adding here
-			readGCProblemFromFile(s);
 
 			// creates the Markov network
 			createNetworkStructure();
@@ -181,6 +80,19 @@ public class MarkovNetwork {
 		}
 	}
 
+	/**
+	 * Reads in a MAXSAT problem from a specially formatted file
+	 * @param s
+	 */
+	private void readMaxSatProblemFromFile(Scanner s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Reads in a graph-coloring problem from a specially formatted file
+	 * @param s
+	 */
 	public void readGCProblemFromFile(Scanner s) {
 
 		String tempVal = null;
@@ -546,7 +458,6 @@ public class MarkovNetwork {
 					// probs.print();
 
 					// re-normalize
-					// TODO: does this need to move?
 					probs.normalize();
 
 					// System.out.println("Normalized");
@@ -635,8 +546,6 @@ public class MarkovNetwork {
 	}
 
 	public void print() {
-
-		// TODO: uncomment some time
 		// System.out.println("NODES");
 		// for (int i = 0; i < nodesArray.size(); i++) {
 		// System.out.println("> " + nodesArray.get(i).getName());
