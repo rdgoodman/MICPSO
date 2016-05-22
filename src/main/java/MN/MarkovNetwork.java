@@ -422,6 +422,9 @@ public class MarkovNetwork {
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
 
+			// TODO: this might be stupid
+			if (vals.length != 2){
+
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
@@ -432,6 +435,13 @@ public class MarkovNetwork {
 					break;
 				}
 				counter++;
+			}
+			} else {
+				if (r < 0.5){
+					sample.setSampledValue(n, vals[0]);
+				} else {
+					sample.setSampledValue(n, vals[1]);
+				}
 			}
 		}
 
@@ -457,6 +467,9 @@ public class MarkovNetwork {
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
 
+			// TODO: this might be stupid
+			if (vals.length != 2){
+
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
 				if (r < i) {
@@ -467,6 +480,13 @@ public class MarkovNetwork {
 					break;
 				}
 				counter++;
+			}
+			} else {
+				if (r < 0.5){
+					sample.setSampledValue(n, vals[0]);
+				} else {
+					sample.setSampledValue(n, vals[1]);
+				}
 			}
 		}
 		return sample;

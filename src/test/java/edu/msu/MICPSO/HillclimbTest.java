@@ -13,7 +13,8 @@ public class HillclimbTest {
 
 	@Test
 	public void test() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor38Node_30Values.txt");
+		//String filename = ("src/main/resources/graphColor38Node_30Values.txt");
+		String filename = ("src/main/resources/maxSatTestFile2.txt");
 		Hillclimb h = new Hillclimb(filename);
 
 		double avg = 0;
