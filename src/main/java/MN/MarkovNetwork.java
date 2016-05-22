@@ -52,7 +52,6 @@ public class MarkovNetwork {
 
 			String tempVal;
 
-			// while (s.hasNext()) {
 			// Read the first line in the file
 			tempVal = s.nextLine();
 
