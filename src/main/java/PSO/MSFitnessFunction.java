@@ -23,6 +23,7 @@ public class MSFitnessFunction implements FitnessFunction {
 			}
 		}
 		
+		s.setFitness(numSatisfied);
 		return numSatisfied;
 	}
 
