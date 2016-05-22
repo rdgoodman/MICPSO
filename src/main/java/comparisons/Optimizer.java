@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import MN.MarkovNetwork;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
+import applicationProblems.MaxSatProblem;
 
 public abstract class Optimizer implements OptimizationAlgorithm {
 
@@ -20,12 +22,13 @@ public abstract class Optimizer implements OptimizationAlgorithm {
 	 * form A: 0, 1). The values need to be in the same order as the node
 	 * variables.
 	 * 
-	 * @param file the file where the problem info can be found
+	 * @param file
+	 *            the file where the problem info can be found
 	 * @throws FileNotFoundException
 	 */
 	public ApplicationProblem constructProblemFromFile(File file) throws FileNotFoundException {
 		ApplicationProblem problem = null;
-		
+
 		// based on info about problem type from file,
 		// create a fitness function
 		Scanner s = null;
@@ -52,23 +55,34 @@ public abstract class Optimizer implements OptimizationAlgorithm {
 			// only getting type of problem and optimal size
 			probType = potential;
 
-			// keep scanning for the next non-empty line
-			if (s.nextLine().equals("")) {
-				potential = s.nextLine();
-			}
-
-			// checks for comments, when present, discards them
-			while (potential.startsWith("%")) {
-				potential = s.nextLine();
-			}
-
-			// gets optimal solution size
-			optimal = Integer.valueOf(potential);
-			System.out.println("Size: " + optimal);
-
-			// create problem
 			if (probType.equals("GC")) {
-				problem = new GraphColoringProblem(optimal);
+
+				// keep scanning for the next non-empty line
+				if (s.nextLine().equals("")) {
+					potential = s.nextLine();
+				}
+
+				// checks for comments, when present, discards them
+				while (potential.startsWith("%")) {
+					potential = s.nextLine();
+				}
+
+				// gets optimal solution size
+				optimal = Integer.valueOf(potential);
+				System.out.println("Size: " + optimal);
+
+				// create problem
+				if (probType.equals("GC")) {
+					problem = new GraphColoringProblem(optimal);
+				}
+			} else {
+				// TODO: this is not good
+				// we need this to be the same set of predicates used 
+				// in each MN particle somehow...FUCK.
+				// or, store predicates
+				// and make sure we only have one set...
+				MarkovNetwork mn = new MarkovNetwork(file.getPath());
+				problem = mn.getProblem();
 			}
 
 		} finally {
@@ -76,7 +90,7 @@ public abstract class Optimizer implements OptimizationAlgorithm {
 				s.close();
 			}
 		}
-		
+
 		return problem;
 	}
 

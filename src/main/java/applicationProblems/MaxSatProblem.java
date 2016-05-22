@@ -17,6 +17,7 @@ public class MaxSatProblem implements ApplicationProblem {
 	public MaxSatProblem(ArrayList<Predicate> predicates) {
 		// TODO: doesn't currently take an optimal, but could...
 		this.predicates = predicates;
+		createFitnessFunction(0);
 	}
 
 	@Override

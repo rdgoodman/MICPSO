@@ -157,14 +157,26 @@ public class MarkovNetwork {
 					}
 				}
 			}
+			
+			// build list of names for predicate
+			ArrayList<String> pNames = new ArrayList<String>();
+			ArrayList<String> nNames = new ArrayList<String>();
+			
+			for (Node n : positivePNodes){
+				pNames.add(n.getName());
+			}
+			
+			for (Node n : negativePNodes){
+				nNames.add(n.getName());
+			}
 
 			// actually make predicate
-			Predicate p = new Predicate(positivePNodes, negativePNodes);
+			Predicate p = new Predicate(pNames, nNames);
 			predicates.add(p);
 			System.out.println("New predicate: ");
 			System.out.println(p.toString());
 			
-			// TODO: add edges			
+			// add edges between nodes in same predicate			
 			ArrayList<Node> combinedNodes = new ArrayList<Node>();
 			combinedNodes.addAll(positivePNodes);
 			combinedNodes.addAll(negativePNodes);
@@ -475,6 +487,9 @@ public class MarkovNetwork {
 			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
+			
+			// TODO: this might be stupid
+			if (vals.length != 2){
 
 			int counter = 0;
 			for (double i = interval; i <= 1; i += interval) {
@@ -486,6 +501,13 @@ public class MarkovNetwork {
 					break;
 				}
 				counter++;
+			}
+			} else {
+				if (r < 0.5){
+					sample.setSampledValue(n, vals[0]);
+				} else {
+					sample.setSampledValue(n, vals[1]);
+				}
 			}
 		}
 
@@ -667,5 +689,9 @@ public class MarkovNetwork {
 			}
 		}
 		return false;
+	}
+
+	public ApplicationProblem getProblem() {
+		return problem;
 	}
 }

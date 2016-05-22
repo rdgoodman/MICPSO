@@ -35,6 +35,7 @@ public class MNParticle implements Particle {
 	public MNParticle(String fileName, ApplicationProblem problem, int numSamples, double epsilon)
 			throws FileNotFoundException {
 		this.f = problem.getFitnessFunction();
+		
 		this.problem = problem;
 
 		this.numSamples = numSamples;

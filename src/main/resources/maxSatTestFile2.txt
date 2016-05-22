@@ -1,6 +1,6 @@
 MS
 
-c Example CNF format file
+c CNF format file for the example from Brownlee et al
 p cnf 4 3
 1 -2 3 0 2 
 3 0 -4 2

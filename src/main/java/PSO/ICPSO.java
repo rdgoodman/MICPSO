@@ -80,6 +80,8 @@ public class ICPSO extends Optimizer{
 
 		// construct the optimization problem itself
 		problem = constructProblemFromFile(file);
+		// TODO: for maxsat we need to revisit this
+		// maybe pull out the predicates here...
 
 		// loops to create population
 		initializePop(fileName, Markov);
