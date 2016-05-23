@@ -28,7 +28,7 @@ public class PSOTest {
 	@Test
 	public void testIPSO() throws FileNotFoundException {
 //		String filename = ("src/main/resources/graphColor05Node2_30Values.txt");
-		String filename = ("src/main/resources/maxSatTestFile.txt");
+		String filename = ("src/main/resources/maxSatTestFile2.txt");
 
 		// String fileName, boolean Markov, int numParticles, int numSamples,
 		// double epsilon, double omega,

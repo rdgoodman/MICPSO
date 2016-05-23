@@ -98,9 +98,9 @@ public class RunModels {
 		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
 			
-		MNExperiment m = new MNExperiment(20, experimentGraphs);
-		ICExperiment ic = new ICExperiment(20, experimentGraphs);
-		IExperiment i = new IExperiment(20, experimentGraphs);
+		MNExperiment m = new MNExperiment(30, experimentGraphs);
+		ICExperiment ic = new ICExperiment(30, experimentGraphs);
+		IExperiment i = new IExperiment(30, experimentGraphs);
 
 	}
 }
