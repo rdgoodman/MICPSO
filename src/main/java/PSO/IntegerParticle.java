@@ -10,8 +10,12 @@ import java.util.Scanner;
 
 import MN.Edge;
 import MN.Node;
+import MN.ProbDist;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
+import applicationProblems.MaxSatProblem;
+import applicationProblems.Predicate;
 
 public class IntegerParticle {
 
@@ -36,6 +40,161 @@ public class IntegerParticle {
 		this.f = problem.getFitnessFunction();
 		this.problem = problem;
 
+		System.out.println("///////////////////////////////////////////////////////////");
+
+		if (problem instanceof GraphColoringProblem) {
+			readGCParticle(fileName);
+			System.out.println("VERTEX-COLOR problem");
+		} else if (problem instanceof MaxSatProblem) {
+			readMSParticle(fileName);
+			System.out.println("MAXSAT Problem");
+		}
+
+//		System.out.println("NODES:");
+//		for (Node n : nodes) {
+//			System.out.println(n.getName());
+//		}
+//
+//		System.out.println("EDGES");
+//		for (Edge e : edgesArray) {
+//			e.printFactors();
+//		}
+
+		initializeVelocityAndPosition();
+	}
+
+	private void readMSParticle(String fileName) throws FileNotFoundException {
+		Scanner s = null;
+		String tempVal = null;
+
+		// The entire file name, for retrieving the Markov net file
+		File file = new File(fileName);
+
+		// Reads in the nodes, edges and values in from a specifically formatted
+		// file
+		try {
+			s = new Scanner(new BufferedReader(new FileReader(file)));
+
+			// Read the first line in the file
+			tempVal = s.nextLine();
+
+			// gets the type of problem first
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("%")) {
+				tempVal = s.nextLine();
+			}
+
+			String allClauses = "";
+			ArrayList<Predicate> predicates = new ArrayList<Predicate>();
+
+			// keep scanning for the next non-empty line
+			if (s.nextLine().equals("")) {
+				tempVal = s.nextLine();
+			}
+
+			// checks for comments, when present, discards them
+			while (tempVal.startsWith("c")) {
+				tempVal = s.nextLine();
+			}
+
+			// reads preamble
+			if (tempVal.startsWith("p")) {
+				// split on spaces
+				String[] preamble = tempVal.split("\\s+");
+				// error-check
+				if (!preamble[1].equals("cnf")) {
+					throw new RuntimeException("Not in CNF, can't read file");
+				}
+				// read number of variables
+				int numNodes = Integer.valueOf(preamble[2]);
+
+				// create correct number of nodes
+				for (int i = 1; i <= numNodes; i++) {
+					int[] binaryVals = { 0, 1 };
+					nodes.add(new Node(binaryVals, String.valueOf(i)));
+				}
+
+			}
+
+			// create our predicates
+			while (s.hasNext()) {
+				tempVal = s.nextLine();
+				System.out.println(tempVal);
+
+				// smush all the clause info together since 0 is the
+				// actual breakpoint between them, not a line break
+				allClauses += (tempVal + " ");
+			}
+
+			// break into individual predicates
+			String[] clauses = allClauses.split("0");
+			for (int i = 0; i < clauses.length; i++) {
+
+				// read which nodes are in this predicate
+				ArrayList<Node> positivePNodes = new ArrayList<Node>();
+				ArrayList<Node> negativePNodes = new ArrayList<Node>();
+				String[] clauseNodes = clauses[i].split("\\s+");
+				for (int j = 0; j < clauseNodes.length; j++) {
+					if (clauseNodes[j].trim().startsWith("-")) {
+						// add as a negated variable
+						for (Node n : nodes) {
+							if (n.getName().equals(clauseNodes[j].trim().substring(1))) {
+								negativePNodes.add(n);
+							}
+						}
+					} else {
+						// add as a positive variable
+						for (Node n : nodes) {
+							if (n.getName().equals(clauseNodes[j].trim())) {
+								positivePNodes.add(n);
+							}
+						}
+					}
+				}
+
+				// build list of names for predicate
+				ArrayList<String> pNames = new ArrayList<String>();
+				ArrayList<String> nNames = new ArrayList<String>();
+
+				for (Node n : positivePNodes) {
+					pNames.add(n.getName());
+				}
+
+				for (Node n : negativePNodes) {
+					nNames.add(n.getName());
+				}
+
+				// actually make predicate
+				Predicate p = new Predicate(pNames, nNames);
+				predicates.add(p);
+				System.out.println("New predicate: ");
+				System.out.println(p.toString());
+
+				// add edges between nodes in same predicate
+				ArrayList<Node> combinedNodes = new ArrayList<Node>();
+				combinedNodes.addAll(positivePNodes);
+				combinedNodes.addAll(negativePNodes);
+
+				for (Node e1 : combinedNodes) {
+					for (Node e2 : combinedNodes) {
+						if (!e1.equals(e2) && !hasEdge(e1, e2)) {
+							System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+							edgesArray.add(new Edge(e1, e2));
+						}
+					}
+				}
+			}
+
+
+		} finally {
+			if (s != null) {
+				s.close();
+			}
+		}
+
+	}
+
+	private void readGCParticle(String fileName) throws FileNotFoundException {
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
 
@@ -46,17 +205,6 @@ public class IntegerParticle {
 
 			String tempVal;
 
-			/*
-			 * Reads the file, ignoring lines with % (which are comment lines).
-			 * File is structured so that the nodes are first (comma separated),
-			 * followed by the edges (in form A, B semi-colon separated) and
-			 * then the values for the variables (in form A: 0, 1). The values
-			 * need to be in the same order as the node variables. At this
-			 * stage, the variables are read in as strings, and after the file
-			 * is closed they are converted to the appropriate object type
-			 * (i.e., Node or Edge objects).
-			 * 
-			 */
 			while (scanner.hasNext()) {
 				// Read the first line in the file
 				tempVal = scanner.nextLine();
@@ -215,18 +363,6 @@ public class IntegerParticle {
 			Edge E = new Edge(startingNode, endingNode);
 			edgesArray.add(E);
 		}
-
-		System.out.println("NODES:");
-		for (Node n : nodes) {
-			System.out.println(n.getName());
-		}
-
-		System.out.println("EDGES");
-		for (Edge e : edgesArray) {
-			e.printFactors();
-		}
-
-		initializeVelocityAndPosition();
 	}
 
 	/**
@@ -339,15 +475,9 @@ public class IntegerParticle {
 				pBest[i] = position[i];
 			}
 		}
-		
+
 		fitness = s.getFitness();
-		
-		if (fitness > 0){
-			s.print();
-			System.out.println("Constraints: " + problem.satisfiesConstraints(s, edgesArray));
-			throw new RuntimeException("Invalid fitness");
-		}
-		
+
 		return fit;
 	}
 
@@ -365,5 +495,14 @@ public class IntegerParticle {
 
 	public double getFitness() {
 		return fitness;
+	}
+	
+	private boolean hasEdge(Node e1, Node e2) {
+		for (Edge e : edgesArray) {
+			if (e.getEndpoints().contains(e1) && e.getEndpoints().contains(e2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

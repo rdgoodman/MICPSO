@@ -109,7 +109,9 @@ public class IPSO extends Optimizer{
 				}
 				gBest_fitness = fit;
 				s = p.buildSampleFromPosition();
-
+				// TODO: added
+				problem.getFitnessFunction().calcFitness(s);
+				
 				System.out.println("Global Best " + gBest_fitness);
 			}
 		}
@@ -131,7 +133,7 @@ public class IPSO extends Optimizer{
 				p.updateVelocity(omega, phi1, phi2, gBest);
 
 				// 2) update position
-				System.out.println(">> Position Update ");
+				//System.out.println(">> Position Update ");
 				p.updatePosition();
 				// print for this particle
 				//p.print();
@@ -155,6 +157,8 @@ public class IPSO extends Optimizer{
 					}
 					gBest_fitness = fit;
 					s = p.buildSampleFromPosition();
+					// TODO: added
+					problem.getFitnessFunction().calcFitness(s);
 				}
 			}
 
@@ -181,6 +185,7 @@ public class IPSO extends Optimizer{
 		// System.out.println();
 		System.out.println("Returning best sample:");
 		s.print();
+		System.out.println("GBest fitness: " + gBest_fitness);
 		// System.out.println("Number of fitness evaluations: " +
 		// numFitnessEvals);
 		return s;
@@ -196,6 +201,10 @@ public class IPSO extends Optimizer{
 
 	public ArrayList<Double> getFitnesses() {
 		return fitnesses;
+	}
+
+	public ApplicationProblem getProblem() {
+		return problem;
 	}
 
 }

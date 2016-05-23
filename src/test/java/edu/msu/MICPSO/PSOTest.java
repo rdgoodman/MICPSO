@@ -27,21 +27,25 @@ public class PSOTest {
 
 	@Test
 	public void testIPSO() throws FileNotFoundException {
-		String filename = ("src/main/resources/graphColor05Node2_30Values.txt");
+//		String filename = ("src/main/resources/graphColor05Node2_30Values.txt");
+		String filename = ("src/main/resources/maxSatTestFile.txt");
 
 		// String fileName, boolean Markov, int numParticles, int numSamples,
 		// double epsilon, double omega,
 		// double phi1, double phi2
 
-		for (int i = 0; i < 100; i++) {
+		//for (int i = 0; i < 100; i++) {
 			IPSO p = new IPSO(filename, 10, 1.0, 1.4, 1.4);
 			Sample s = p.run();
 			System.out.println("\n");
 			s.print();
 			System.out.println("Fitness: " + s.getFitness());
 			
-			assertEquals(true, s.getFitness() <= 0);
-		}
+			System.out.println("Stored fitness: " + s.getFitness());
+			System.out.println("Calculated fitness: " + p.getProblem().getFitnessFunction().calcFitness(s));
+			
+			//assertEquals(true, s.getFitness() <= 0);
+		//}
 	}
 
 }
