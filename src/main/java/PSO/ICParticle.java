@@ -134,7 +134,7 @@ public class ICParticle implements Particle {
 			}
 
 			// break into individual predicates
-			String[] clauses = allClauses.split("0");
+			String[] clauses = allClauses.split(" 0 ");
 			for (int i = 0; i < clauses.length; i++) {
 
 				// read which nodes are in this predicate
@@ -185,19 +185,22 @@ public class ICParticle implements Particle {
 				for (Node e1 : combinedNodes) {
 					for (Node e2 : combinedNodes) {
 						if (!e1.equals(e2) && !hasEdge(e1, e2)) {
-							System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+							// System.out.println("added an edge: (" +
+							// e1.getName() + " - " + e2.getName() + ")");
 							edgesArray.add(new Edge(e1, e2));
 						}
 					}
 				}
+				
 			}
 			
+			System.out.println("Number of predicates: " + predicates.size());
+
 			probs = new ProbDist[nodesArray.size()];
-			for (int i = 0; i < nodesArray.size(); i++){
+			for (int i = 0; i < nodesArray.size(); i++) {
 				probs[i] = new ProbDist(nodesArray.get(i).getVals(), nodesArray.get(i));
 				probs[i].normalize();
 			}
-
 
 		} finally {
 			if (s != null) {
@@ -430,8 +433,8 @@ public class ICParticle implements Particle {
 
 		s.setEdges(edgesArray);
 
-//		System.out.println("Sample: ");
-//		s.print();
+		// System.out.println("Sample: ");
+		// s.print();
 		return s;
 	}
 
@@ -453,7 +456,7 @@ public class ICParticle implements Particle {
 				particleFit += fit;
 			}
 
-			//System.out.println("Sample fitness: " + fit);
+			// System.out.println("Sample fitness: " + fit);
 
 			// 2) Save this sample if it's the new pBest
 			if (pBest_sample == null || problem.compare(pBest_sample.getFitness(), fit) == 1) {
@@ -486,7 +489,7 @@ public class ICParticle implements Particle {
 
 	@Override
 	public void setPBest(Sample s) {
-		//System.out.println(" ^ new ^ personal ^ best");
+		// System.out.println(" ^ new ^ personal ^ best");
 		pBest_sample = s;
 		adjustPBest();
 		// sets pBest dist!
@@ -541,9 +544,9 @@ public class ICParticle implements Particle {
 	@Override
 	public void print() {
 		// TODO: uncomment at some point
-//		for (int i = 0; i < probs.length; i++) {
-//			probs[i].print();
-//		}
+		// for (int i = 0; i < probs.length; i++) {
+		// probs[i].print();
+		// }
 	}
 
 	@Override

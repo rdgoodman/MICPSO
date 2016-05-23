@@ -131,7 +131,7 @@ public class MarkovNetwork {
 		}
 		
 		// break into individual predicates
-		String[] clauses = allClauses.split("0");
+		String[] clauses = allClauses.split(" 0 ");
 		for (int i = 0; i < clauses.length; i++){
 
 			

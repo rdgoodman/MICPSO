@@ -19,6 +19,8 @@ public class MSFitnessFunction implements FitnessFunction {
 		// counts number of satisfied predicates in the instance
 		for (Predicate p : maxSat.getPredicates()){
 			if (p.isSatisfied(s)){
+//				System.out.println("Satisfied: " + p.toString());
+//				System.out.println("NumSatisfied: " + numSatisfied);
 				numSatisfied++;
 			}
 		}
