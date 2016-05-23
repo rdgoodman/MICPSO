@@ -1,0 +1,7 @@
+MS
+
+c This one is from a cs.toronto.edu presentation on MaxSat
+c and is not satisfiable
+p cnf 4 4
+-1 0 1 2 0
+-2 0 4 3
