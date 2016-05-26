@@ -78,6 +78,7 @@ public class ICPSO extends Optimizer{
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
 
+
 		// construct the optimization problem itself
 		problem = constructProblemFromFile(file);
 		// TODO: for maxsat we need to revisit this
@@ -143,15 +144,14 @@ public class ICPSO extends Optimizer{
 		}
 
 		while (!terminated) {
-			// System.out.println("\n \n
-			// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			// System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			// System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+//			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {
-				// System.out.println("\n >>>> Particle ");
-				// p.print();
+//				 System.out.println("\n >>>> Particle ");
+//				 p.print();
 
 				// 1) update velocity
 				// System.out.println(">> Velocity Update");
@@ -160,7 +160,7 @@ public class ICPSO extends Optimizer{
 				// 2) update position
 				// System.out.println(">> Position Update ");
 				p.updatePosition();
-				p.print();
+				//p.print();
 
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = bestSample.getFitness();

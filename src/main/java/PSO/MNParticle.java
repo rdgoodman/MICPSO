@@ -127,15 +127,16 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void adjustPBest() {
-		// System.out.println("________________________ s");
-		// System.out.println("Adjusting using sample: ");
-		// pBest_sample.print();
-		// print();
+//		 System.out.println("________________________ s");
+//		 System.out.println("Adjusting using sample: ");
+//		 pBest_sample.print();
+//		 print();
 
 		net.adjustPotentials(pBest_sample, epsilon);
 
-		print();
-		// System.out.println("________________________ f");
+//		print();
+//		 System.out.println("________________________ f");
+		 
 	}
 
 	private double[][] getAllPotentials() {

@@ -25,6 +25,10 @@ public class Sample implements Comparable{
 		values = new Hashtable<Node, Integer>();
 	}
 	
+	public Sample(CliqueMarkovNetwork cliqueMarkovNetwork) {
+		// TODO this
+	}
+
 	/**
 	 * Sets the value for a node's variable
 	 * @param n Node which has been sampled

@@ -29,7 +29,7 @@ public class MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 1;
+	int runs = 100;
 
 	/**
 	 * Constructor when read in from file
@@ -73,7 +73,6 @@ public class MarkovNetwork {
 				// MN structure automatically created by this function too
 			}
 
-
 		} finally {
 			if (s != null) {
 				s.close();
@@ -111,7 +110,7 @@ public class MarkovNetwork {
 			}
 			// read number of variables
 			int numNodes = Integer.valueOf(preamble[2]);
-			
+
 			// create correct number of nodes
 			for (int i = 1; i <= numNodes; i++) {
 				int[] binaryVals = { 0, 1 };
@@ -123,73 +122,70 @@ public class MarkovNetwork {
 		// create our predicates
 		while (s.hasNext()) {
 			tempVal = s.nextLine();
-			System.out.println(tempVal);
-			
 			// smush all the clause info together since 0 is the
 			// actual breakpoint between them, not a line break
 			allClauses += (tempVal + " ");
 		}
-		
+
 		// break into individual predicates
 		String[] clauses = allClauses.split(" 0 ");
-		for (int i = 0; i < clauses.length; i++){
+		for (int i = 0; i < clauses.length; i++) {
 
-			
 			// read which nodes are in this predicate
 			ArrayList<Node> positivePNodes = new ArrayList<Node>();
-			ArrayList<Node> negativePNodes = new ArrayList<Node>();			
+			ArrayList<Node> negativePNodes = new ArrayList<Node>();
 			String[] clauseNodes = clauses[i].split("\\s+");
-			for (int j = 0; j < clauseNodes.length; j++){				
-				if (clauseNodes[j].trim().startsWith("-")){
+			for (int j = 0; j < clauseNodes.length; j++) {
+				if (clauseNodes[j].trim().startsWith("-")) {
 					// add as a negated variable
-					for (Node n : nodesArray){
-						if (n.getName().equals(clauseNodes[j].trim().substring(1))){
+					for (Node n : nodesArray) {
+						if (n.getName().equals(clauseNodes[j].trim().substring(1))) {
 							negativePNodes.add(n);
 						}
 					}
 				} else {
 					// add as a positive variable
-					for (Node n : nodesArray){
-						if (n.getName().equals(clauseNodes[j].trim())){
+					for (Node n : nodesArray) {
+						if (n.getName().equals(clauseNodes[j].trim())) {
 							positivePNodes.add(n);
 						}
 					}
 				}
 			}
-			
+
 			// build list of names for predicate
 			ArrayList<String> pNames = new ArrayList<String>();
 			ArrayList<String> nNames = new ArrayList<String>();
-			
-			for (Node n : positivePNodes){
+
+			for (Node n : positivePNodes) {
 				pNames.add(n.getName());
 			}
-			
-			for (Node n : negativePNodes){
+
+			for (Node n : negativePNodes) {
 				nNames.add(n.getName());
 			}
 
 			// actually make predicate
 			Predicate p = new Predicate(pNames, nNames);
 			predicates.add(p);
-			System.out.println("New predicate: ");
-			System.out.println(p.toString());
-			
-			// add edges between nodes in same predicate			
+//			System.out.println("New predicate: ");
+//			System.out.println(p.toString());
+
+			// add edges between nodes in same predicate
 			ArrayList<Node> combinedNodes = new ArrayList<Node>();
 			combinedNodes.addAll(positivePNodes);
 			combinedNodes.addAll(negativePNodes);
-			
-			for (Node e1: combinedNodes){
-				for (Node e2 : combinedNodes){
-					if (!e1.equals(e2) && !hasEdge(e1, e2)){
-						System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+
+			for (Node e1 : combinedNodes) {
+				for (Node e2 : combinedNodes) {
+					if (!e1.equals(e2) && !hasEdge(e1, e2)) {
+						//System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
 						edgesArray.add(new Edge(e1, e2));
 					}
 				}
 			}
-		}			
-		
+		}
+
 		// create problem
 		problem = new MaxSatProblem(predicates);
 	}
@@ -422,21 +418,21 @@ public class MarkovNetwork {
 			double interval = (double) 1 / vals.length;
 
 			// TODO: this might be stupid
-			if (vals.length != 2){
+			if (vals.length != 2) {
 
-			int counter = 0;
-			for (double i = interval; i <= 1; i += interval) {
-				if (r < i) {
-					sample.setSampledValue(n, vals[counter]);
-					break;
-				} else if (counter == vals.length - 2) {
-					sample.setSampledValue(n, vals[counter - 1]);
-					break;
+				int counter = 0;
+				for (double i = interval; i <= 1; i += interval) {
+					if (r < i) {
+						sample.setSampledValue(n, vals[counter]);
+						break;
+					} else if (counter == vals.length - 2) {
+						sample.setSampledValue(n, vals[counter - 1]);
+						break;
+					}
+					counter++;
 				}
-				counter++;
-			}
 			} else {
-				if (r < 0.5){
+				if (r < 0.5) {
 					sample.setSampledValue(n, vals[0]);
 				} else {
 					sample.setSampledValue(n, vals[1]);
@@ -467,21 +463,21 @@ public class MarkovNetwork {
 			double interval = (double) 1 / vals.length;
 
 			// TODO: this might be stupid
-			if (vals.length != 2){
+			if (vals.length != 2) {
 
-			int counter = 0;
-			for (double i = interval; i <= 1; i += interval) {
-				if (r < i) {
-					sample.setSampledValue(n, vals[counter]);
-					break;
-				} else if (counter == vals.length - 2) {
-					sample.setSampledValue(n, vals[counter - 1]);
-					break;
+				int counter = 0;
+				for (double i = interval; i <= 1; i += interval) {
+					if (r < i) {
+						sample.setSampledValue(n, vals[counter]);
+						break;
+					} else if (counter == vals.length - 2) {
+						sample.setSampledValue(n, vals[counter - 1]);
+						break;
+					}
+					counter++;
 				}
-				counter++;
-			}
 			} else {
-				if (r < 0.5){
+				if (r < 0.5) {
 					sample.setSampledValue(n, vals[0]);
 				} else {
 					sample.setSampledValue(n, vals[1]);
@@ -506,23 +502,23 @@ public class MarkovNetwork {
 			int[] vals = n.getVals();
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
-			
-			// TODO: this might be stupid
-			if (vals.length != 2){
 
-			int counter = 0;
-			for (double i = interval; i <= 1; i += interval) {
-				if (r < i) {
-					sample.setSampledValue(n, vals[counter]);
-					break;
-				} else if (counter == vals.length - 2) {
-					sample.setSampledValue(n, vals[counter - 1]);
-					break;
+			// TODO: this might be stupid
+			if (vals.length != 2) {
+
+				int counter = 0;
+				for (double i = interval; i <= 1; i += interval) {
+					if (r < i) {
+						sample.setSampledValue(n, vals[counter]);
+						break;
+					} else if (counter == vals.length - 2) {
+						sample.setSampledValue(n, vals[counter - 1]);
+						break;
+					}
+					counter++;
 				}
-				counter++;
-			}
 			} else {
-				if (r < 0.5){
+				if (r < 0.5) {
 					sample.setSampledValue(n, vals[0]);
 				} else {
 					sample.setSampledValue(n, vals[1]);
@@ -682,24 +678,24 @@ public class MarkovNetwork {
 	}
 
 	public void print() {
-		// System.out.println("NODES");
-		// for (int i = 0; i < nodesArray.size(); i++) {
-		// System.out.println("> " + nodesArray.get(i).getName());
-		// }
-		// System.out.println("EDGES");
-		// for (int i = 0; i < edgesArray.size(); i++) {
-		// edgesArray.get(i).printFactors();
-		// }
+		System.out.println("NODES");
+		for (int i = 0; i < nodesArray.size(); i++) {
+			System.out.println("> " + nodesArray.get(i).getName());
+		}
+		System.out.println("EDGES");
+		for (int i = 0; i < edgesArray.size(); i++) {
+			edgesArray.get(i).printFactors();
+		}
 	}
 
-//	private boolean hasNode(String name) {
-//		for (Node n : nodesArray) {
-//			if (n.getName().equals(name)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	// private boolean hasNode(String name) {
+	// for (Node n : nodesArray) {
+	// if (n.getName().equals(name)) {
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
 
 	private boolean hasEdge(Node e1, Node e2) {
 		for (Edge e : edgesArray) {
