@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
@@ -81,7 +81,7 @@ public abstract class Optimizer implements OptimizationAlgorithm {
 				// in each MN particle somehow...FUCK.
 				// or, store predicates
 				// and make sure we only have one set...
-				MarkovNetwork mn = new MarkovNetwork(file.getPath());
+				PairwiseMarkovNetwork mn = new PairwiseMarkovNetwork(file.getPath());
 				problem = mn.getProblem();
 			}
 

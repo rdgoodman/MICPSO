@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 
 public class MNTest {
 
@@ -14,7 +14,7 @@ public class MNTest {
 	public void test() throws FileNotFoundException {
 		String filename = "src/main/resources/maxSatTestFile2.txt";
 		
-		MarkovNetwork net = new MarkovNetwork(filename);
+		PairwiseMarkovNetwork net = new PairwiseMarkovNetwork(filename);
 	}
 
 }

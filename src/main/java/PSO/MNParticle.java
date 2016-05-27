@@ -3,10 +3,13 @@ package PSO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import MN.CliqueMarkovNetwork;
 import MN.Edge;
 import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
+import applicationProblems.GraphColoringProblem;
 
 public class MNParticle implements Particle {
 
@@ -35,13 +38,18 @@ public class MNParticle implements Particle {
 	public MNParticle(String fileName, ApplicationProblem problem, int numSamples, double epsilon)
 			throws FileNotFoundException {
 		this.f = problem.getFitnessFunction();
-		
+
 		this.problem = problem;
 
 		this.numSamples = numSamples;
 		this.epsilon = epsilon;
 
-		net = new MarkovNetwork(fileName);
+		// TODO: deal with this in other files, too
+		if (problem instanceof GraphColoringProblem) {
+			net = new PairwiseMarkovNetwork(fileName);
+		} else {
+			net = new CliqueMarkovNetwork(fileName);
+		}
 
 	}
 
@@ -73,7 +81,6 @@ public class MNParticle implements Particle {
 			particleFit += fit;
 			// System.out.println("Sample fitness: " + fit);
 			s.setFitness(fit);
-			
 
 			// 2) Save this sample if it's the new pBest
 			if (pBest_sample == null || problem.compare(pBest_sample.getFitness(), fit) == 1) {
@@ -127,16 +134,16 @@ public class MNParticle implements Particle {
 
 	@Override
 	public void adjustPBest() {
-//		 System.out.println("________________________ s");
-//		 System.out.println("Adjusting using sample: ");
-//		 pBest_sample.print();
-//		 print();
+		// System.out.println("________________________ s");
+		// System.out.println("Adjusting using sample: ");
+		// pBest_sample.print();
+		// print();
 
 		net.adjustPotentials(pBest_sample, epsilon);
 
-//		print();
-//		 System.out.println("________________________ f");
-		 
+		// print();
+		// System.out.println("________________________ f");
+
 	}
 
 	private double[][] getAllPotentials() {

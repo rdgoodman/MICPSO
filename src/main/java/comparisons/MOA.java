@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Scanner;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Node;
 import MN.ProbDist;
 import MN.Sample;
@@ -18,7 +18,7 @@ import applicationProblems.GraphColoringProblem;
 
 public class MOA extends Optimizer{
 
-	private MarkovNetwork mn;
+	private PairwiseMarkovNetwork mn;
 	private double cr; // cooling rate for gibbs sampling
 	// per paper, cr = 0.5
 	private ArrayList<Sample> pop;
@@ -33,7 +33,7 @@ public class MOA extends Optimizer{
 
 	public MOA(String fileName, double cr, int popSize, double percentToSelect)
 			throws FileNotFoundException {
-		mn = new MarkovNetwork(fileName);
+		mn = new PairwiseMarkovNetwork(fileName);
 		pop = new ArrayList<Sample>();
 		this.cr = cr;
 		
@@ -379,7 +379,7 @@ public class MOA extends Optimizer{
 		return problem;
 	}
 
-	public MarkovNetwork getMN() {
+	public PairwiseMarkovNetwork getMN() {
 		return mn;
 	}
 

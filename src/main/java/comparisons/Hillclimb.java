@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Sample;
 import PSO.FitnessFunction;
 import applicationProblems.ApplicationProblem;
@@ -14,7 +14,7 @@ import applicationProblems.GraphColoringProblem;
 
 public class Hillclimb extends Optimizer{
 
-	private MarkovNetwork mn; // just to store the nodes/edges of graph
+	private PairwiseMarkovNetwork mn; // just to store the nodes/edges of graph
 	ApplicationProblem problem;
 	// needs a termination criterion, same as anything else
 	private double numToConsiderConverged = 20;
@@ -23,7 +23,7 @@ public class Hillclimb extends Optimizer{
 	FitnessFunction f;
 
 	public Hillclimb(String fileName) throws FileNotFoundException {
-		mn = new MarkovNetwork(fileName);
+		mn = new PairwiseMarkovNetwork(fileName);
 
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
@@ -94,7 +94,7 @@ public class Hillclimb extends Optimizer{
 		return s;
 	}
 
-	public MarkovNetwork getMN() {
+	public PairwiseMarkovNetwork getMN() {
 		return mn;
 	}
 

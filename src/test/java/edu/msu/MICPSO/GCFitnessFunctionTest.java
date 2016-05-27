@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Sample;
 import PSO.GCFitnessFunction;
 
@@ -21,7 +21,7 @@ public class GCFitnessFunctionTest {
 
 	@Test
 	public void test() throws FileNotFoundException {
-		MarkovNetwork m = new MarkovNetwork(inputFile);
+		PairwiseMarkovNetwork m = new PairwiseMarkovNetwork(inputFile);
 		GCFitnessFunction f = new GCFitnessFunction(3);
         
         // samples the above network using Gibbs sampling

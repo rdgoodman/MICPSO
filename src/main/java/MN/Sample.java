@@ -14,7 +14,7 @@ public class Sample implements Comparable{
 	 * For MICPSO
 	 * @param mn the Markov Network generating this sample
 	 */
-	public Sample(MarkovNetwork mn){
+	public Sample(PairwiseMarkovNetwork mn){
 		values = new Hashtable<Node, Integer>();
 	}
 	

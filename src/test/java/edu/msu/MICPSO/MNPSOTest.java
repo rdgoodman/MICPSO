@@ -19,7 +19,7 @@ public class MNPSOTest {
 			String filename = ("src/main/resources/BigMaxSatTestFile3.txt");
 			// String filename =
 			// ("src/main/resources/graphColor10Node_30Values.txt");
-			ICPSO p = new ICPSO(filename, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
+			ICPSO p = new ICPSO(filename, false, 20, 3, 0.99, 0.4, 0.6, 0.6);
 			Sample s = p.run();
 			assertEquals(true, p.getProblem().satisfiesConstraints(s, s.getEdges()));
 

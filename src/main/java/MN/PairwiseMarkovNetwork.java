@@ -13,12 +13,10 @@ import applicationProblems.GraphColoringProblem;
 import applicationProblems.MaxSatProblem;
 import applicationProblems.Predicate;
 
-public class CliqueMarkovNetwork implements MarkovNetwork{
+public class PairwiseMarkovNetwork implements MarkovNetwork{
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
-	// TODO: in this network, edges are only for constraint-checking
-	// as the potentials live elsewhere
 
 	// Variables for storing the string values read in from file
 	String problemType = "";
@@ -39,10 +37,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	 * @param inputFile
 	 * @throws FileNotFoundException
 	 */
-	public CliqueMarkovNetwork(String inputFile) throws FileNotFoundException {
-		
-		// TODO: change all this
-		
+	public PairwiseMarkovNetwork(String inputFile) throws FileNotFoundException {
 		// The scanner for reading in the Markov net file
 		Scanner s = null;
 
@@ -314,6 +309,14 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 		}
 	}
 
+	/**
+	 * Copy constructor
+	 */
+	public PairwiseMarkovNetwork(String problemType, int optimalNo, int runs) {
+		this.problemType = problemType;
+		this.optimalNo = optimalNo;
+		this.runs = runs;
+	}
 
 	/**
 	 * Copy constructor

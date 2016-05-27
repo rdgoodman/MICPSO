@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Node;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
@@ -16,11 +16,11 @@ import applicationProblems.GraphColoringProblem;
 
 public class GreedyVC extends Optimizer {
 
-	private MarkovNetwork mn; // just to store the nodes/edges of graph
+	private PairwiseMarkovNetwork mn; // just to store the nodes/edges of graph
 	ApplicationProblem problem;
 
 	public GreedyVC(String fileName) throws FileNotFoundException {
-		mn = new MarkovNetwork(fileName);
+		mn = new PairwiseMarkovNetwork(fileName);
 
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
@@ -70,7 +70,7 @@ public class GreedyVC extends Optimizer {
 		return s;
 	}
 
-	public MarkovNetwork getMN() {
+	public PairwiseMarkovNetwork getMN() {
 		return mn;
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import MN.Edge;
-import MN.MarkovNetwork;
+import MN.PairwiseMarkovNetwork;
 import MN.Node;
 import PSO.GCFitnessFunction;
 import PSO.ICPSO;
