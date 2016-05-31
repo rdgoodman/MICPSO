@@ -26,7 +26,7 @@ public class Sample implements Comparable{
 	}
 	
 	public Sample(CliqueMarkovNetwork cliqueMarkovNetwork) {
-		// TODO this
+		values = new Hashtable<Node, Integer>();
 	}
 
 	/**

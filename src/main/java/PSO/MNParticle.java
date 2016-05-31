@@ -45,11 +45,11 @@ public class MNParticle implements Particle {
 		this.epsilon = epsilon;
 
 		// TODO: deal with this in other files, too
-		if (problem instanceof GraphColoringProblem) {
+//		if (problem instanceof GraphColoringProblem) {
 			net = new PairwiseMarkovNetwork(fileName);
-		} else {
-			net = new CliqueMarkovNetwork(fileName);
-		}
+//		} else {
+//			net = new CliqueMarkovNetwork(fileName);
+//		}
 
 	}
 
@@ -77,6 +77,7 @@ public class MNParticle implements Particle {
 		for (int i = 0; i < numSamples; i++) {
 			// 1) generate a sample and calculate its fitness
 			Sample s = sample();
+			// TODO: sample is null somehow?
 			double fit = f.calcFitness(s);
 			particleFit += fit;
 			// System.out.println("Sample fitness: " + fit);

@@ -78,6 +78,9 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 				s.close();
 			}
 		}
+		
+		System.out.println("Nodes: " + nodesArray.size());
+		System.out.println("Edges:" + edgesArray.size());
 	}
 
 	/**
@@ -179,8 +182,11 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			for (Node e1 : combinedNodes) {
 				for (Node e2 : combinedNodes) {
 					if (!e1.equals(e2) && !hasEdge(e1, e2)) {
-						//System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+//						System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
 						edgesArray.add(new Edge(e1, e2));
+						// TODO: just added this
+						e1.addNeighbor(e2);
+						e2.addNeighbor(e1);
 					}
 				}
 			}
@@ -408,6 +414,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 	 * @return
 	 */
 	public Sample createRandomValidSample() {
+
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
@@ -453,6 +460,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 	 * @return
 	 */
 	public Sample createRandomSample() {
+		
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
@@ -493,7 +501,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 	 * @return
 	 */
 	public Sample sample() {
-
+		
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
