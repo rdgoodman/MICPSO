@@ -19,6 +19,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
 	// TODO: in this network, edges are only for constraint-checking
 	// as the potentials live elsewhere
+	private ArrayList<Clique> maxCliques = new ArrayList<Clique>();
 
 	// Variables for storing the string values read in from file
 	String problemType = "";
@@ -188,7 +189,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 			for (Node e1 : combinedNodes) {
 				for (Node e2 : combinedNodes) {
 					if (!e1.equals(e2) && !hasEdge(e1, e2)) {
-						//System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
+//						System.out.println("added an edge: (" + e1.getName() + " - " + e2.getName() + ")");
 						edgesArray.add(new Edge(e1, e2));
 						e1.addNeighbor(e2);
 						e2.addNeighbor(e1);
@@ -638,40 +639,90 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	/**
 	 * Finds the maximal cliques using the Bron-Kerbosch algorithm with degeneracy ordering
 	 */
-	public ArrayList<Clique> bronKerbosch(){
-		ArrayList<Clique> maxCliques = new ArrayList<Clique>();
+	public void bronKerbosch(ArrayList<Node> R, ArrayList<Node> P, ArrayList<Node> X){
 		
-		System.out.println("Nodes:");
-		for (Node n : nodesArray){
-			System.out.println(n.getName() + ": " + n.getMB().size());
+//		// create degeneracy ordering of vertices
+//		ArrayList<Node> ordering = new ArrayList<Node>();
+//		ArrayList<Node> allNodes = new ArrayList<Node>();
+//		allNodes.addAll(nodesArray);
+//		// repeatedly select vertex of minimum degree
+//		while (!allNodes.isEmpty()){
+//			double minDegree = nodesArray.size() + 1;
+//			Node toSelect = null;
+//			for (Node n : allNodes){
+//				if (n.getMB().size() < minDegree){
+//					minDegree = n.getMB().size();
+//					toSelect = n;
+//				}
+//			}
+//			ordering.add(toSelect);	
+//			allNodes.remove(toSelect);
+//		}
+//		
+//		System.out.println("Degeneracy Ordering:");
+//		for (Node n : ordering){
+//			System.out.println(n.getName() + ": " + n.getMB().size());
+//		}
+//		// TODO: this ordering needs to be of P...
+//		
+		if (P.isEmpty() && X.isEmpty()){
+			// R is a maximal clique
+			maxCliques.add(new Clique(R));
 		}
-		System.out.println("");
 		
-		// create degeneracy ordering of vertices
-		ArrayList<Node> ordering = new ArrayList<Node>();
-		ArrayList<Node> allNodes = new ArrayList<Node>();
-		allNodes.addAll(nodesArray);
-		// repeatedly select vertex of minimum degree
-		while (!allNodes.isEmpty()){
-			double minDegree = nodesArray.size() + 1;
-			Node toSelect = null;
-			for (Node n : allNodes){
-				if (n.getMB().size() < minDegree){
-					minDegree = n.getMB().size();
-					toSelect = n;
+		// avoid concurrent modification issues
+		// TODO: could this cause issues...?
+		ArrayList<Node> cp = new ArrayList<Node>();
+		cp.addAll(P);
+		for (Node v : cp){
+			System.out.println(">>> Node " + v.getName());
+			
+			// union of R and v
+			ArrayList<Node> RuV = new ArrayList<Node>();
+			RuV.addAll(R);
+			RuV.add(v);
+			System.out.println("RuV:");
+			for (Node a : RuV){
+				System.out.println(a.getName());
+			}
+			// intersection of P and neighbors of v
+			ArrayList<Node> PiN = new ArrayList<Node>();
+			for (Node a : P){
+				if (v.getMB().contains(a)){
+					PiN.add(a);
 				}
 			}
-			ordering.add(toSelect);	
-			allNodes.remove(toSelect);
+			for (Node a : v.getMB()){
+				if (P.contains(a) && !PiN.contains(a)){
+					PiN.add(a);
+				}
+			}
+			System.out.println("PiN:");
+			for (Node a : PiN){
+				System.out.println(a.getName());
+			}
+			// intersection of X and neighbors of v
+			ArrayList<Node> XiN = new ArrayList<Node>();
+			for (Node a : X){
+				if (v.getMB().contains(a)){
+					XiN.add(a);
+				}
+			}
+			for (Node a : v.getMB()){
+				if (X.contains(a) && !XiN.contains(a)){
+					XiN.add(a);
+				}
+			}
+			System.out.println("XiN:");
+			for (Node a : XiN){
+				System.out.println(a.getName());
+			}
+			
+			bronKerbosch(RuV, PiN, XiN);
+			P.remove(v);
+			X.add(v);
 		}
-		
-		// TODO: testing remove
-		System.out.println("Degeneracy Ordering:");
-		for (Node n : ordering){
-			System.out.println(n.getName() + ": " + n.getMB().size());
-		}
-		
-		return maxCliques;		
+	
 	}
 
 	public ArrayList<Node> getNodes() {
@@ -752,5 +803,9 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 
 	public ApplicationProblem getProblem() {
 		return problem;
+	}
+
+	public ArrayList<Clique> getMaxCliques() {
+		return maxCliques;
 	}
 }

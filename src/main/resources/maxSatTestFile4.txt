@@ -1,0 +1,6 @@
+MS
+
+c CNF format file for the example from the Clique ppt
+p cnf 6 4
+-1 3 4 0 -1 2 
+-4 0 -2 5 -4 0 4 -6
