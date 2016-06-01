@@ -1,6 +1,6 @@
 package MN;
 
-public class FactorEntry {
+public class PairwiseFactorEntry {
 	
 	private Node A;
 	private Node B;
@@ -15,7 +15,7 @@ public class FactorEntry {
 	 * @param valA the value of A for this entry
 	 * @param valB the value of B for this entry
 	 */
-	public FactorEntry(Node A, Node B, int valA, int valB) {
+	public PairwiseFactorEntry(Node A, Node B, int valA, int valB) {
 		this.A = A;
 		this.B = B;
 		this.valA = valA;
@@ -27,7 +27,7 @@ public class FactorEntry {
 	/**
 	 * For use only with copy method
 	 */
-	public FactorEntry(Node A, Node B){
+	public PairwiseFactorEntry(Node A, Node B){
 		this.A = A;
 		this.B = B;
 	}
@@ -38,8 +38,8 @@ public class FactorEntry {
 	 * @param A
 	 * @param B
 	 */
-	public FactorEntry copy(Node A, Node B){
-		FactorEntry fe = new FactorEntry(A, B);
+	public PairwiseFactorEntry copy(Node A, Node B){
+		PairwiseFactorEntry fe = new PairwiseFactorEntry(A, B);
 		fe.setValA(valA);
 		fe.setValB(valB);
 		fe.setPotential(potential);		

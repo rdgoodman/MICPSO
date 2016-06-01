@@ -42,8 +42,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	 */
 	public CliqueMarkovNetwork(String inputFile) throws FileNotFoundException {
 		
-		// TODO: change all this
-		
 		// The scanner for reading in the Markov net file
 		Scanner s = null;
 
@@ -84,6 +82,25 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 				s.close();
 			}
 		}
+		
+		// creates the list of cliques
+		ArrayList<Node> R = new ArrayList<Node>();
+		ArrayList<Node> X = new ArrayList<Node>();
+		ArrayList<Node> P = new ArrayList<Node>();
+		P.addAll(nodesArray);
+		bronKerbosch(R, P, X);
+		
+		// parameterizes clique potentials
+		// TODO: uncomment
+		//setUpCliquePotentials();
+	}
+
+	/**
+	 * Creates the potentials for the Markov Network, factorized into its maximal cliques
+	 */
+	private void setUpCliquePotentials() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public CliqueMarkovNetwork(String problemType2, int optimalNo2, int runs2) {
@@ -334,6 +351,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 		for (int i = 0; i < edgesArray.size(); i++) {
 			e.add(edgesArray.get(i).copy());
 		}
+		// TODO: will need to copy the cliques!
 
 		// pulls all the new copied nodes
 		ArrayList<Node> n = new ArrayList<Node>();
@@ -619,10 +637,15 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		for (Edge e : edgesArray) {
-			e.adjustPotentials(s, epsilon);
+		// TODO: this should occur on cliques, not edges
+		for (Clique c : maxCliques) {
+			c.adjustPotentials(s, epsilon);
 			// shouldn't need to-zero adjustment, but let's check
-			problem.checkEdgeConstraints(e);
+		}
+		
+		// still check constraints 
+		for (Edge e : edgesArray){
+		problem.checkEdgeConstraints(e);
 		}
 	}
 
@@ -630,6 +653,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 	 * Performs position update
 	 */
 	public void updatePotentials() {
+		// TODO: nope, not for this
 		for (Edge e : edgesArray) {
 			e.updateFactorPotentials();
 			problem.handleEdgeConstraints(e);
@@ -675,16 +699,16 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 		ArrayList<Node> cp = new ArrayList<Node>();
 		cp.addAll(P);
 		for (Node v : cp){
-			System.out.println(">>> Node " + v.getName());
+//			System.out.println(">>> Node " + v.getName());
 			
 			// union of R and v
 			ArrayList<Node> RuV = new ArrayList<Node>();
 			RuV.addAll(R);
 			RuV.add(v);
-			System.out.println("RuV:");
-			for (Node a : RuV){
-				System.out.println(a.getName());
-			}
+//			System.out.println("RuV:");
+//			for (Node a : RuV){
+//				System.out.println(a.getName());
+//			}
 			// intersection of P and neighbors of v
 			ArrayList<Node> PiN = new ArrayList<Node>();
 			for (Node a : P){
@@ -697,10 +721,10 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 					PiN.add(a);
 				}
 			}
-			System.out.println("PiN:");
-			for (Node a : PiN){
-				System.out.println(a.getName());
-			}
+//			System.out.println("PiN:");
+//			for (Node a : PiN){
+//				System.out.println(a.getName());
+//			}
 			// intersection of X and neighbors of v
 			ArrayList<Node> XiN = new ArrayList<Node>();
 			for (Node a : X){
@@ -713,10 +737,10 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 					XiN.add(a);
 				}
 			}
-			System.out.println("XiN:");
-			for (Node a : XiN){
-				System.out.println(a.getName());
-			}
+//			System.out.println("XiN:");
+//			for (Node a : XiN){
+//				System.out.println(a.getName());
+//			}
 			
 			bronKerbosch(RuV, PiN, XiN);
 			P.remove(v);

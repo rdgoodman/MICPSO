@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class Edge {
 
 	private LinkedList<Node> endpoints;
-	private FactorEntry[] factors; // potentials
+	private PairwiseFactorEntry[] factors; // potentials
 	private double[] velocity; // velocity vector
 
 	/**
@@ -30,7 +30,7 @@ public class Edge {
 	 *            the number of potentials in the table
 	 */
 	private void initializeFactors(int size) {
-		factors = new FactorEntry[size];
+		factors = new PairwiseFactorEntry[size];
 		velocity = new double[size];
 
 		int counter = 0;
@@ -40,7 +40,7 @@ public class Edge {
 		// and a new velocity entry to each as well
 		for (int s = 0; s < endpoints.getFirst().getVals().length; s++) {
 			for (int e = 0; e < endpoints.getLast().getVals().length; e++) {
-				factors[counter] = new FactorEntry(endpoints.getFirst(), endpoints.getLast(),
+				factors[counter] = new PairwiseFactorEntry(endpoints.getFirst(), endpoints.getLast(),
 						endpoints.getFirst().getVals()[s], endpoints.getLast().getVals()[e]);
 				velocity[counter] = Math.random();
 				counter++;
@@ -69,7 +69,7 @@ public class Edge {
 	 */
 	protected double getPotential(Node n1, double valN1, Node n2, double valN2) {
 		// search through factorentry[]
-		for (FactorEntry f : factors) {
+		for (PairwiseFactorEntry f : factors) {
 			if (f.getValue(n1) == valN1 && f.getValue(n2) == valN2) {
 				return f.getPotential();
 			}
@@ -99,7 +99,7 @@ public class Edge {
 		
 		// USE THE NODES FROM THESE COPIED EDGES TO BUILD NODEARRAY
 		
-		FactorEntry[] f = new FactorEntry[factors.length];
+		PairwiseFactorEntry[] f = new PairwiseFactorEntry[factors.length];
 		for(int i = 0; i < f.length; i++){
 			// copy all the FactorEntries
 			f[i] = factors[i].copy(e.getEndpoints().getFirst(), e.getEndpoints().getLast());
@@ -167,11 +167,11 @@ public class Edge {
 		this.endpoints = endpoints;
 	}
 
-	public FactorEntry[] getFactors() {
+	public PairwiseFactorEntry[] getFactors() {
 		return factors;
 	}
 
-	public void setFactors(FactorEntry[] factors) {
+	public void setFactors(PairwiseFactorEntry[] factors) {
 		this.factors = factors;
 	}
 

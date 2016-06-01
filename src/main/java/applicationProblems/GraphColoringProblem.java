@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import MN.Edge;
-import MN.FactorEntry;
+import MN.PairwiseFactorEntry;
 import MN.Node;
 import MN.Sample;
 import PSO.FitnessFunction;
@@ -105,7 +105,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 
 	@Override
 	public void checkEdgeConstraints(Edge e) {
-		FactorEntry[] factors = e.getFactors();
+		PairwiseFactorEntry[] factors = e.getFactors();
 		for (int i = 0; i < factors.length; i++) {
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
@@ -117,7 +117,7 @@ public class GraphColoringProblem implements ApplicationProblem {
 
 	@Override
 	public void handleEdgeConstraints(Edge e) {
-		FactorEntry[] factors = e.getFactors();
+		PairwiseFactorEntry[] factors = e.getFactors();
 		for (int i = 0; i < factors.length; i++) {
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
