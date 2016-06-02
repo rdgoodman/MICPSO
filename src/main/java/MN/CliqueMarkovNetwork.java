@@ -89,18 +89,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork{
 		ArrayList<Node> P = new ArrayList<Node>();
 		P.addAll(nodesArray);
 		bronKerbosch(R, P, X);
-		
-		// parameterizes clique potentials
-		// TODO: uncomment
-		//setUpCliquePotentials();
-	}
-
-	/**
-	 * Creates the potentials for the Markov Network, factorized into its maximal cliques
-	 */
-	private void setUpCliquePotentials() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public CliqueMarkovNetwork(String problemType2, int optimalNo2, int runs2) {

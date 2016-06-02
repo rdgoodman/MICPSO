@@ -70,7 +70,5 @@ public class CliqueFactorEntry {
 		this.potential = potential;
 	}
 	
-
-	
 	
 }

@@ -25,8 +25,8 @@ public class Clique {
 	 * Creates the factor potential for this clique
 	 */
 	private void createFactors() {
-		System.out.println("\n >>> Clique: ");
-		print();
+//		System.out.println("\n >>> Clique: ");
+//		print();
 		
 		Node[] allNodes = new Node[nodes.size()];
 		nodes.toArray(allNodes);
@@ -42,10 +42,10 @@ public class Clique {
 		
 		factor = new CliqueFactorEntry[allCombos.size()];
 		
-		System.out.println("combinations:");
+		//System.out.println("combinations:");
 		for (int i = 0; i < allCombos.size(); i++){
 			factor[i] = new CliqueFactorEntry(allNodes, allCombos.get(i));
-			System.out.println(Arrays.toString(allCombos.get(i)));
+			//System.out.println(Arrays.toString(allCombos.get(i)));
 		}
 	}
 
