@@ -48,6 +48,22 @@ public class Clique {
 			//System.out.println(Arrays.toString(allCombos.get(i)));
 		}
 	}
+	
+	/**
+	 * Returns the factor potential's value corresponding to this assignment to the nodes
+	 * @param nodes
+	 * @param values
+	 * @return
+	 */
+	public double getPotentialCorrespondingToAssignment(Node[] sNodes, int[] sValues){
+		for (int i = 0; i < factor.length; i++){
+			if (factor[i].correspondsToAssignment(sNodes, sValues)){
+				System.out.println("Potential corresponding to this assignment: " + factor[i].getPotential());
+				return factor[i].getPotential();
+			}
+		}
+		return 0;
+	}
 
 
 	/**
@@ -75,6 +91,15 @@ public class Clique {
 
 	}
 	
+	/**
+	 * Returns true if this clique includes this node
+	 * @param n
+	 * @return
+	 */
+	public boolean includes(Node n){
+		return nodes.contains(n);
+	}
+	
 	public void print() {
 		String s = "(";
 		for (Node n : nodes) {
@@ -82,5 +107,10 @@ public class Clique {
 		}
 		s += ")";
 		System.out.println(s);
+	}
+
+	public Node[] getNodesAsArray() {
+		Node[] array = nodes.toArray(new Node[nodes.size()]);
+		return array;
 	}
 }

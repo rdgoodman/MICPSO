@@ -14,7 +14,6 @@ public class CliqueFactorEntry {
 	}
 	
 	
-	
 	/**
 	 * For use only with copy method
 	 */
@@ -60,6 +59,31 @@ public class CliqueFactorEntry {
 		}		
 		// retrieve value at corresponding index
 		return values[index];
+	}
+	
+	/**
+	 * Returns true if this factor corresponds to the given assignment to the nodes
+	 * @param nodes
+	 * @param values
+	 * @return
+	 */
+	public boolean correspondsToAssignment(Node[] sNodes, int[] sValues){
+		for (int i = 0; i < sNodes.length; i++){
+			// get index in nodes of the sNode
+			int valueIndex = 0;
+			for (int j = 0; j < nodes.length; j++){
+				if (sNodes[i].equals(nodes[j])){
+					valueIndex = j;
+					break;
+				}
+			}
+			// if inputted value is not equal to stored value,
+			// doesn't correspond to assignment
+			if (sValues[i] != values[valueIndex]){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public double getPotential() {
