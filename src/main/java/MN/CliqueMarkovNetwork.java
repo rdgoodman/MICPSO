@@ -506,8 +506,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	 * @return
 	 */
 	public Sample sample() {
-
-		// TODO: redo this with clique potentials
 		Sample sample = createRandomValidSample();
 
 //		System.out.println(" Initial sample: ");
@@ -598,7 +596,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		// testing, remove
 //		System.out.println("\n Final sample: ");
 //		sample.print();
-
 		return sample;
 	}
 
@@ -622,11 +619,10 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	 * Performs position update
 	 */
 	public void updatePotentials() {
-		// TODO: nope, not for this
-		for (Edge e : edgesArray) {
-			e.updateFactorPotentials();
-			problem.handleEdgeConstraints(e);
+		for (Clique c: maxCliques){
+			c.updateFactorPotentials();
 		}
+		// TODO: problem.handleCliqueConstraints...doesn't exist yet, but should eventually
 	}
 
 	/**
@@ -741,14 +737,11 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		}
 	}
 
-	public void print() {
-		System.out.println("NODES");
-		for (int i = 0; i < nodesArray.size(); i++) {
-			System.out.println("> " + nodesArray.get(i).getName());
-		}
-		System.out.println("EDGES");
-		for (int i = 0; i < edgesArray.size(); i++) {
-			edgesArray.get(i).printFactors();
+	public void print() {	
+		
+		for (Clique c : maxCliques){
+			c.print();
+			c.printFactors();
 		}
 	}
 

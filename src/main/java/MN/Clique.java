@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class Clique {
 
-	ArrayList<Node> nodes;
-	CliqueFactorEntry[] factor;
-	// TODO: need velocity
+	private ArrayList<Node> nodes;
+	private CliqueFactorEntry[] factor;
+	private double[] velocity;
 
 	/**
 	 * Creates a new clique consisting of these nodes
@@ -20,6 +20,17 @@ public class Clique {
 		this.nodes.addAll(nodes);
 
 		createFactors();
+		initializeVelocity();
+	}
+
+	/**
+	 * Initializes velocity vector
+	 */
+	private void initializeVelocity() {
+		velocity = new double[factor.length];
+		for (int i = 0; i < velocity.length; i++){
+			velocity[i] = Math.random();
+		}
 	}
 
 	/**
@@ -31,6 +42,8 @@ public class Clique {
 
 		Node[] allNodes = new Node[nodes.size()];
 		nodes.toArray(allNodes);
+		
+		
 
 		ArrayList<int[]> allCombos = new ArrayList<int[]>();
 
@@ -85,6 +98,15 @@ public class Clique {
 			int[] newPrefix = Arrays.copyOfRange(prefix, 0, prefix.length + 1);
 			newPrefix[newPrefix.length - 1] = i;
 			getAllCombinations(allVals, n + 1, newPrefix, allCombos);
+		}
+	}
+
+	/**
+	 * Adds the velocity vector to each potential value
+	 */
+	public void updateFactorPotentials() {
+		for (int i = 0; i < factor.length; i++){
+			factor[i].setPotential(factor[i].getPotential() + velocity[i]);
 		}
 	}
 
