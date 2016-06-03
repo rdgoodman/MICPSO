@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,8 +19,8 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	// Array list for storing nodes and edges
 	private ArrayList<Node> nodesArray = new ArrayList<Node>();
 	private ArrayList<Edge> edgesArray = new ArrayList<Edge>();
-	// TODO: in this network, edges are only for constraint-checking
-	// as the potentials live elsewhere
+	// in this network, edges are only for constraint-checking
+	// as the potentials are defined over maximal cliques
 	private ArrayList<Clique> maxCliques = new ArrayList<Clique>();
 
 	// Variables for storing the string values read in from file
@@ -33,8 +34,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 2;
-	// TODO: change back to 100
+	int runs = 100;
 
 	/**
 	 * Constructor when read in from file
@@ -510,26 +510,26 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		// TODO: redo this with clique potentials
 		Sample sample = createRandomValidSample();
 
-		System.out.println(" Initial sample: ");
-		sample.print();
+//		System.out.println(" Initial sample: ");
+//		sample.print();
 
 		for (int i = 0; i < runs; i++) {
-			System.out.println("\n ********** RUN # " + (i + 1));
+//			System.out.println("\n ********** RUN # " + (i + 1));
 
 			// 2) For each non-evidence variable (so, all of them) [order
 			// doesn't
 			// matter]...
 			Collections.shuffle(nodesArray);
 			for (Node N : nodesArray) {
-				System.out.println("\n >>>>> Resampling Node " + N.getName());
+//				System.out.println("\n >>>>> Resampling Node " + N.getName());
 
 				// get all cliques with factors containing N
-				System.out.println("Relevant cliques:");
+//				System.out.println("Relevant cliques:");
 				ArrayList<Clique> relevantCliques = new ArrayList<Clique>();
 				for (Clique c : maxCliques) {
 					if (c.includes(N)) {
 						relevantCliques.add(c);
-						c.print();
+//						c.print();
 					}
 				}
 
@@ -539,14 +539,15 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 				// for each value of N
 				int[] nVals = N.getVals();
 				for (int n = 0; n < nVals.length; n++) {
-					System.out.println();
-					System.out.print("\n P~ (" + N.getName() + " == " + nVals[n] + ") \n");
+//					System.out.println();
+//					System.out.print("\n {{{ P~ (" + N.getName() + " == " + nVals[n] + ") }}} \n");
 
-					// TODO: for each clique involving N,
+					// for each clique involving N,
 					// get the assignments to the other nodes (M)
 					// then multiply through by that factor entry
 					for (Clique c : relevantCliques) {
-						c.print();
+//						System.out.println("\n");
+//						c.printFactors();
 						// 1) identify nodes in clique
 						Node[] cliqueNodes = c.getNodesAsArray();
 						// 2) get corresponding values
@@ -562,36 +563,41 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 							}
 						}
 
-						System.out.println("Nodes: ");
-						for (int u = 0; u < sampleValues.length; u++) {
-							System.out.println("Node " + cliqueNodes[u].getName() + ": " + sampleValues[u]);
-						}
-
+//						System.out.println("Nodes and Sample Values: ");
+//						for (int u = 0; u < sampleValues.length; u++) {
+//							System.out.println("Node " + cliqueNodes[u].getName() + ": " + sampleValues[u]);
+//						}
+//
+//						DecimalFormat threed = new DecimalFormat("#.####");
+						
 						// 3) extract potential
 						double p = c.getPotentialCorrespondingToAssignment(cliqueNodes, sampleValues);
-						System.out.println("Potential: " + p);
-						System.out.println("Change to: " + (probs.getProb(nVals[n]) * p));
+//						System.out.println("Potential: " + p);
+//						System.out.println("Change to: " + threed.format(probs.getProb(nVals[n])) + " * " + threed.format(p) + " = " + threed.format(probs.getProb(nVals[n]) * p));
 						probs.setProb(nVals[n], probs.getProb(nVals[n]) * p);
 					}
 				}
 
-				System.out.println("\n Unnormalized");
-				probs.print();
+//				System.out.println("\n Unnormalized");
+//				probs.print();
 
 				// re-normalize
 				probs.normalize();
 
-				System.out.println("Normalized");
-				probs.print();
+//				System.out.println("Normalized");
+//				probs.print();
 
 				// re-sample resulting distribution for N
+//				System.out.println("Resampling:");
+//				System.out.println("> previous value = " + sample.getValue(N));
 				sample.setSampledValue(N, probs.sample());
+				//System.out.println("> new value = " + sample.getValue(N));
 			}
 		}
 
 		// testing, remove
-		System.out.println("\n Final sample: ");
-		sample.print();
+//		System.out.println("\n Final sample: ");
+//		sample.print();
 
 		return sample;
 	}
@@ -603,14 +609,7 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		
 		// adjustment occurs on cliques
 		for (Clique c : maxCliques) {
-			System.out.println("----------------------------- B.A.");
-			c.printFactors();
-			System.out.println("-----------------------------");
 			c.adjustPotentials(s, epsilon);
-			// shouldn't need to-zero adjustment
-			System.out.println("----------------------------- A.A.");
-			c.printFactors();
-			System.out.println("-----------------------------");
 		}
 
 		// still check constraints
@@ -631,42 +630,17 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	}
 
 	/**
-	 * Finds the maximal cliques using the Bron-Kerbosch algorithm with
+	 * Finds the maximal cliques using the Bron-Kerbosch algorithm without
 	 * degeneracy ordering
 	 */
 	public void bronKerbosch(ArrayList<Node> R, ArrayList<Node> P, ArrayList<Node> X) {
 
-		// // create degeneracy ordering of vertices
-		// ArrayList<Node> ordering = new ArrayList<Node>();
-		// ArrayList<Node> allNodes = new ArrayList<Node>();
-		// allNodes.addAll(nodesArray);
-		// // repeatedly select vertex of minimum degree
-		// while (!allNodes.isEmpty()){
-		// double minDegree = nodesArray.size() + 1;
-		// Node toSelect = null;
-		// for (Node n : allNodes){
-		// if (n.getMB().size() < minDegree){
-		// minDegree = n.getMB().size();
-		// toSelect = n;
-		// }
-		// }
-		// ordering.add(toSelect);
-		// allNodes.remove(toSelect);
-		// }
-		//
-		// System.out.println("Degeneracy Ordering:");
-		// for (Node n : ordering){
-		// System.out.println(n.getName() + ": " + n.getMB().size());
-		// }
-		// // TODO: this ordering needs to be of P...
-		//
 		if (P.isEmpty() && X.isEmpty()) {
 			// R is a maximal clique
 			maxCliques.add(new Clique(R));
 		}
 
 		// avoid concurrent modification issues
-		// TODO: could this cause issues...?
 		ArrayList<Node> cp = new ArrayList<Node>();
 		cp.addAll(P);
 		for (Node v : cp) {
@@ -777,15 +751,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 			edgesArray.get(i).printFactors();
 		}
 	}
-
-	// private boolean hasNode(String name) {
-	// for (Node n : nodesArray) {
-	// if (n.getName().equals(name)) {
-	// return true;
-	// }
-	// }
-	// return false;
-	// }
 
 	private boolean hasEdge(Node e1, Node e2) {
 		for (Edge e : edgesArray) {

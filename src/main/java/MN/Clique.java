@@ -61,7 +61,7 @@ public class Clique {
 	public double getPotentialCorrespondingToAssignment(Node[] sNodes, int[] sValues) {
 		for (int i = 0; i < factor.length; i++) {
 			if (factor[i].correspondsToAssignment(sNodes, sValues)) {
-				System.out.println("Potential corresponding to this assignment: " + factor[i].getPotential());
+				//System.out.println("Potential corresponding to this assignment: " + factor[i].getPotential());
 				return factor[i].getPotential();
 			}
 		}
