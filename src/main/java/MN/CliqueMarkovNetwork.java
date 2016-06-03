@@ -600,10 +600,17 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	 * Carries out adjustment using scaling factor
 	 */
 	public void adjustPotentials(Sample s, double epsilon) {
-		// TODO: this should occur on cliques, not edges
+		
+		// adjustment occurs on cliques
 		for (Clique c : maxCliques) {
+			System.out.println("----------------------------- B.A.");
+			c.printFactors();
+			System.out.println("-----------------------------");
 			c.adjustPotentials(s, epsilon);
-			// shouldn't need to-zero adjustment, but let's check
+			// shouldn't need to-zero adjustment
+			System.out.println("----------------------------- A.A.");
+			c.printFactors();
+			System.out.println("-----------------------------");
 		}
 
 		// still check constraints

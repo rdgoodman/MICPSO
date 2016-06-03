@@ -40,8 +40,31 @@ public class CliqueMNTest {
 	// }
 	// }
 
+//	@Test
+//	public void testSample() throws FileNotFoundException {
+//		String filename = "src/main/resources/maxSatTestFile2.txt";
+//		// String filename =
+//		// "src/main/resources/graphColor08Node2_10Values.txt";
+//		CliqueMarkovNetwork net = new CliqueMarkovNetwork(filename);
+//
+//		Sample s1 = net.createRandomValidSample();
+//		System.out.println("Random valid sample: ");
+//		s1.print();
+//
+//		Sample s2 = net.createRandomValidSample();
+//		System.out.println("Random sample: ");
+//		s2.print();
+//
+//		ArrayList<Clique> c = net.getMaxCliques();
+//		for (Clique l : c) {
+//			l.print();
+//		}
+//
+//		Sample s3 = net.sample();
+//	}
+	
 	@Test
-	public void testSample() throws FileNotFoundException {
+	public void testAdjustment() throws FileNotFoundException {
 		String filename = "src/main/resources/maxSatTestFile2.txt";
 		// String filename =
 		// "src/main/resources/graphColor08Node2_10Values.txt";
@@ -51,17 +74,7 @@ public class CliqueMNTest {
 		System.out.println("Random valid sample: ");
 		s1.print();
 
-		Sample s2 = net.createRandomValidSample();
-		System.out.println("Random sample: ");
-		s2.print();
-
-		ArrayList<Clique> c = net.getMaxCliques();
-		for (Clique l : c) {
-			l.print();
-		}
-
-		Sample s3 = net.sample();
-
+		net.adjustPotentials(s1, 0.9);
 	}
 
 }

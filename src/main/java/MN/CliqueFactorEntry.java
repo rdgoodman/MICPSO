@@ -1,5 +1,7 @@
 package MN;
 
+import java.text.DecimalFormat;
+
 public class CliqueFactorEntry {
 
 	private Node[] nodes;
@@ -86,12 +88,38 @@ public class CliqueFactorEntry {
 		return true;
 	}
 
+	/**
+	 * Returns true if this factor corresponds to the sample's assignment to the nodes
+	 * @param s
+	 * @return
+	 */
+	public boolean correspondsToAssignment(Sample s) {
+		
+		for (int i = 0; i < nodes.length; i++){
+			if (values[i] != s.getValue(nodes[i])){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	public double getPotential() {
 		return potential;
 	}
 
 	public void setPotential(double potential) {
 		this.potential = potential;
+	}
+
+
+	public void print(DecimalFormat fourd) {
+		String s = "";
+		for (int v = 0; v < values.length; v++){
+			s += (values[v] + "\t");
+		}	
+		s += fourd.format(potential);
+		System.out.println(s);
 	}
 	
 	
