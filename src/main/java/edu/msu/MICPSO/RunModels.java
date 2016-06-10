@@ -76,9 +76,9 @@ public class RunModels {
 		phi2s.add(0.6);
 		phi2s.add(1.0);
 		
-		MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
+		//MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
 		//ICTuningExperiment exp2 = new ICTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);		
-		//ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);		
+		ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);		
 	}
 	
 	private static void testExperiments() throws FileNotFoundException{

@@ -27,7 +27,7 @@ public class ITuningExperiment {
 		// reports results of individual params (raw numbers)
 		String singleParamFilePath = "";
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/Iresults/genAverage.txt";
+		String averageFilePath = "src/main/resources/Iresults/MS_genAverage.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -40,7 +40,7 @@ public class ITuningExperiment {
 		}
 
 		for (Integer numParticles : pNums) {
-					singleParamFilePath = "src/main/resources/Iresults/" + numParticles + ".txt";
+					singleParamFilePath = "src/main/resources/Iresults/MS_" + numParticles + ".txt";
 
 					File tuneOutput = new File(singleParamFilePath);
 					if (!tuneOutput.exists()) {
@@ -61,21 +61,23 @@ public class ITuningExperiment {
 					for (int i = 0; i < 10; i++) {
 
 						// TODO: are we doing multiple files?
-						IPSO i1 = new IPSO("src/main/resources/graphColor08Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
-						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
-						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
-
+//						IPSO i1 = new IPSO("src/main/resources/graphColor08Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
+//						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
+//						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", numParticles, 0.7, 1.4, 1.4);
+						IPSO i1 = new IPSO("src/main/resources/BigMaxSatTestFile.txt", numParticles, 0.7, 1.4, 1.4);
+						IPSO i2 = new IPSO("src/main/resources/BigMaxSatTestFile2.txt", numParticles, 0.7, 1.4, 1.4);
+						
 						i1.run();
 						double fit1 = i1.getBestFitness();
 						System.out.println("i1 ran");
 						i2.run();
 						double fit2 = i2.getBestFitness();
 						System.out.println("i2 ran");
-						i3.run();
-						double fit3 = i3.getBestFitness();
-						System.out.println("i3 ran");
+//						i3.run();
+//						double fit3 = i3.getBestFitness();
+//						System.out.println("i3 ran");
 
-						double averageFitness = (fit1 + fit2 + fit3) / 3;
+						double averageFitness = (fit1 + fit2 ) / 3;
 						averageFitnessAcrossRuns += averageFitness;
 
 						try {
@@ -115,7 +117,7 @@ public class ITuningExperiment {
 		// reports results of individual params (raw numbers)
 		String singleParamFilePath = "";
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/Iresults/multAverage.txt";
+		String averageFilePath = "src/main/resources/Iresults/MS_multAverage.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -130,7 +132,7 @@ public class ITuningExperiment {
 		for (Double omega : omegas) {
 			for (Double phi1 : phi1s) {
 				for (Double phi2 : phi2s) {
-					singleParamFilePath = "src/main/resources/Iresults/" + omega + "_" + phi1 + "_"
+					singleParamFilePath = "src/main/resources/Iresults/MS" + omega + "_" + phi1 + "_"
 							+ phi2 + ".txt";
 
 					File tuneOutput = new File(singleParamFilePath);
@@ -152,9 +154,11 @@ public class ITuningExperiment {
 					for (int i = 0; i < 10; i++) {
 
 						// TODO: are we doing multiple files?
-						IPSO i1 = new IPSO("src/main/resources/graphColor08Node_10Values.txt", 10, omega, phi1, phi2);
-						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", 10, omega, phi1, phi2);
-						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", 10, omega, phi1, phi2);
+//						IPSO i1 = new IPSO("src/main/resources/graphColor08Node_10Values.txt", 10, omega, phi1, phi2);
+//						IPSO i2 = new IPSO("src/main/resources/graphColor10Node_10Values.txt", 10, omega, phi1, phi2);
+//						IPSO i3 = new IPSO("src/main/resources/graphColor20Node_10Values.txt", 10, omega, phi1, phi2);
+						IPSO i1 = new IPSO("src/main/resources/BigMaxSatTestFile.txt", 10, omega, phi1, phi2);
+						IPSO i2 = new IPSO("src/main/resources/BigMaxSatTestFile2.txt", 10, omega, phi1, phi2);
 
 						i1.run();
 						double fit1 = i1.getBestFitness();
@@ -162,11 +166,11 @@ public class ITuningExperiment {
 						i2.run();
 						double fit2 = i2.getBestFitness();
 						System.out.println("i2 ran");
-						i3.run();
-						double fit3 = i3.getBestFitness();
-						System.out.println("i3 ran");
+//						i3.run();
+//						double fit3 = i3.getBestFitness();
+//						System.out.println("i3 ran");
 
-						double averageFitness = (fit1 + fit2 + fit3) / 3;
+						double averageFitness = (fit1 + fit2) / 3;
 						averageFitnessAcrossRuns += averageFitness;
 
 						try {

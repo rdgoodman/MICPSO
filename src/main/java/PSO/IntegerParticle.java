@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import MN.CliqueMarkovNetwork;
 import MN.Edge;
 import MN.Node;
+import MN.PairwiseMarkovNetwork;
 import MN.ProbDist;
 import MN.Sample;
 import applicationProblems.ApplicationProblem;
@@ -59,7 +61,7 @@ public class IntegerParticle {
 //		for (Edge e : edgesArray) {
 //			e.printFactors();
 //		}
-
+		
 		initializeVelocityAndPosition();
 	}
 
