@@ -16,7 +16,7 @@ public class MNPSOTest {
 		double average = 0;
 		for (int i = 0; i < 10; i++) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>> " + i);
-			String filename = ("src/main/resources/BigMaxSatTestFile2.txt");
+			String filename = ("src/main/resources/BigMaxSatTestFile3.txt");
 //			String filename = ("src/main/resources/maxSatTestFile2.txt");
 
 			// String filename =

@@ -121,6 +121,13 @@ public class CliqueFactorEntry {
 		s += fourd.format(potential);
 		System.out.println(s);
 	}
+
+
+	public CliqueFactorEntry copy() {
+		CliqueFactorEntry fe = new CliqueFactorEntry(nodes, values);
+		fe.setPotential(potential);
+		return fe;
+	}
 	
 	
 }

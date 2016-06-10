@@ -37,8 +37,8 @@ public class RunModels {
 //		ICPSO micpso = new ICPSO(inputFile, true, 10, 3, 0.99, 0.4, 0.6, 0.6);
 //		micpso.run();
 		
-//		tuneExperiments();
-		testExperiments();
+		tuneExperiments();
+//		testExperiments();
     }
 
 	private static void tuneExperiments() throws FileNotFoundException {
@@ -76,7 +76,7 @@ public class RunModels {
 		phi2s.add(0.6);
 		phi2s.add(1.0);
 		
-		//MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
+		MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);
 		//ICTuningExperiment exp2 = new ICTuningExperiment(pNums, sNums, epsilons, omegas, phi1s, phi2s);		
 		//ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);		
 	}
@@ -101,6 +101,5 @@ public class RunModels {
 		MNExperiment m = new MNExperiment(30, experimentGraphs);
 		ICExperiment ic = new ICExperiment(30, experimentGraphs);
 		IExperiment i = new IExperiment(30, experimentGraphs);
-
 	}
 }

@@ -169,6 +169,10 @@ public class Clique {
 		return array;
 	}
 	
+	public void setVelocity(double[] velocity) {
+		this.velocity = velocity;
+	}
+	
 	/**
 	 * Prints the factor potentials
 	 */
@@ -190,5 +194,28 @@ public class Clique {
 		for (int i = 0; i < factor.length; i++){
 			factor[i].print(fourd);
 		}
+	}
+
+	public Clique copy() {
+		Clique c = new Clique(nodes);
+		CliqueFactorEntry[] factorCopy = new CliqueFactorEntry[factor.length];
+		for (int i = 0; i < factor.length; i++){
+			factorCopy[i] = factor[i].copy();
+		}		
+		
+		// don't need to copy velocity because copy's position will never be updated again		
+		return c;
+	}
+
+	public double[] getVelocity() {
+		return velocity;
+	}
+
+	public double[] getAllEntries() {
+		double[] e = new double[factor.length];
+		for (int i = 0; i < factor.length; i++) {
+			e[i] = factor[i].getPotential();
+		}
+		return e;
 	}
 }

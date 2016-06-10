@@ -13,7 +13,7 @@ import applicationProblems.ApplicationProblem;
 import applicationProblems.GraphColoringProblem;
 import comparisons.Optimizer;
 
-public class ICPSO extends Optimizer{
+public class ICPSO extends Optimizer {
 
 	private ArrayList<Particle> pop; // population
 	// private FitnessFunction f;
@@ -78,7 +78,6 @@ public class ICPSO extends Optimizer{
 		// The entire file name, for retrieving the Markov net file
 		File file = new File(fileName);
 
-
 		// construct the optimization problem itself
 		problem = constructProblemFromFile(file);
 		// TODO: for maxsat we need to revisit this
@@ -87,7 +86,6 @@ public class ICPSO extends Optimizer{
 		// loops to create population
 		initializePop(fileName, Markov);
 	}
-
 
 	/**
 	 * Initializes the population
@@ -144,28 +142,30 @@ public class ICPSO extends Optimizer{
 		}
 
 		while (!terminated) {
-//			 System.out.println("\n \n %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-//			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			// System.out.println("\n \n
+			// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			// System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+			// System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {
-//				 System.out.println("\n >>>> Particle ");
-//				 p.print();
+				// System.out.println("\n >>>> Particle ");
+				// p.print();
 
 				// 1) update velocity
-				// System.out.println(">> Velocity Update");
+//				System.out.println(">> Velocity Update");
 				p.updateVelocity(omega, phi1, phi2, gBest);
 
 				// 2) update position
-				// System.out.println(">> Position Update ");
+//				System.out.println(">> Position Update ");
 				p.updatePosition();
-				//p.print();
+				// p.print();
 
 				// 2.5) change the previous best sample fitness
 				prevBestSampleFit = bestSample.getFitness();
 
 				// 3) evaluate fitness
+//				System.out.println(">> Fitness Calc");
 				double fit = p.calcFitness(); // this is never used
 				// number of evals done is incremented by numSamples
 				numFitnessEvals += numSamples;

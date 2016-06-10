@@ -93,8 +93,10 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		bronKerbosch(R, P, X);
 	}
 
-	public CliqueMarkovNetwork(String problemType2, int optimalNo2, int runs2) {
-		// TODO Auto-generated constructor stub
+	public CliqueMarkovNetwork(String problemType, int optimalNo, int runs) {
+		this.problemType = problemType;
+		this.optimalNo = optimalNo;
+		this.runs = runs;
 	}
 
 	/**
@@ -334,23 +336,29 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	 */
 	public CliqueMarkovNetwork copy() {
 		CliqueMarkovNetwork mnCopy = new CliqueMarkovNetwork(problemType, optimalNo, runs);
-		// TODO: will probably need a different constructor
 
 		ArrayList<Edge> e = new ArrayList<Edge>();
 		// copies over all the edges
 		for (int i = 0; i < edgesArray.size(); i++) {
 			e.add(edgesArray.get(i).copy());
 		}
-		// TODO: will need to copy the cliques!
 
 		// pulls all the new copied nodes
 		ArrayList<Node> n = new ArrayList<Node>();
 		for (Edge edge : e) {
 			n.addAll(edge.getEndpoints());
 		}
+		
+		// copies the cliques
+		ArrayList<Clique> cliques = new ArrayList<Clique>();
+		for (Clique c : maxCliques){
+			cliques.add(c.copy());
+		}
+		
 
 		mnCopy.setEdges(e);
 		mnCopy.setNodes(n);
+		mnCopy.setMaxCliques(cliques);
 		return mnCopy;
 	}
 
@@ -430,7 +438,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
 
-			// TODO: this might be stupid
 			if (vals.length != 2) {
 
 				int counter = 0;
@@ -475,7 +482,6 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 			double r = Math.random();
 			double interval = (double) 1 / vals.length;
 
-			// TODO: this might be stupid
 			if (vals.length != 2) {
 
 				int counter = 0;
@@ -707,19 +713,19 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 	}
 
 	public double[][] getAllPotentials() {
-		double[][] entries = new double[edgesArray.size()][];
+		double[][] entries = new double[maxCliques.size()][];
 		// each row represents all the factor potentials from one edge
-		for (int i = 0; i < edgesArray.size(); i++) {
-			entries[i] = edgesArray.get(i).getAllEntries();
+		for (int i = 0; i < maxCliques.size(); i++) {
+			entries[i] = maxCliques.get(i).getAllEntries();
 		}
 		return entries;
 	}
 
 	public double[][] getAllVelocities() {
-		double[][] velocities = new double[edgesArray.size()][];
-		// each row represents all the velocity entries from one edge
-		for (int i = 0; i < edgesArray.size(); i++) {
-			velocities[i] = edgesArray.get(i).getVelocity();
+		double[][] velocities = new double[maxCliques.size()][];
+		// each row represents all the velocity entries from one clique
+		for (int i = 0; i < maxCliques.size(); i++) {
+			velocities[i] = maxCliques.get(i).getVelocity();
 		}
 		return velocities;
 	}
@@ -733,12 +739,11 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 		// replaces the velocity vectors with the new ones, incoming from
 		// velocity update
 		for (int e = 0; e < newV.length; e++) {
-			edgesArray.get(e).setVelocity(newV[e]);
+			maxCliques.get(e).setVelocity(newV[e]);
 		}
 	}
 
-	public void print() {	
-		
+	public void print() {		
 		for (Clique c : maxCliques){
 			c.print();
 			c.printFactors();
@@ -760,5 +765,9 @@ public class CliqueMarkovNetwork implements MarkovNetwork {
 
 	public ArrayList<Clique> getMaxCliques() {
 		return maxCliques;
+	}
+
+	public void setMaxCliques(ArrayList<Clique> maxCliques) {
+		this.maxCliques = maxCliques;
 	}
 }
