@@ -10,6 +10,8 @@ import MN.Clique;
 import MN.CliqueMarkovNetwork;
 import MN.Node;
 import MN.Sample;
+import PSO.MSFitnessFunction;
+import applicationProblems.MaxSatProblem;
 
 public class CliqueMNTest {
 
@@ -76,17 +78,69 @@ public class CliqueMNTest {
 //
 //		net.adjustPotentials(s1, 0.9);
 //	}
+//	
+//	@Test
+//	public void testVelocityAdjustment() throws FileNotFoundException {
+//		String filename = "src/main/resources/maxSatTestFile2.txt";
+//		// String filename =
+//		// "src/main/resources/graphColor08Node2_10Values.txt";
+//		CliqueMarkovNetwork net = new CliqueMarkovNetwork(filename);
+//		net.print();
+//		System.out.println("\n\n UPDATING POTENTIALS \n\n");
+//		net.updatePotentials();
+//		net.print();
+//	}
 	
 	@Test
-	public void testVelocityAdjustment() throws FileNotFoundException {
-		String filename = "src/main/resources/maxSatTestFile2.txt";
-		// String filename =
-		// "src/main/resources/graphColor08Node2_10Values.txt";
+	public void testInitValues() throws FileNotFoundException{
+		String filename = "src/main/resources/BigMaxSatTestFile2.txt";
 		CliqueMarkovNetwork net = new CliqueMarkovNetwork(filename);
-		net.print();
-		System.out.println("\n\n UPDATING POTENTIALS \n\n");
-		net.updatePotentials();
-		net.print();
+		MSFitnessFunction f = new MSFitnessFunction((MaxSatProblem)net.getProblem());
+		
+		double avgFit = 0;
+		double max = -1;
+		double min = Double.MAX_VALUE;
+		for (int i = 0; i < 30; i++){
+			Sample s = net.createRandomValidSample();
+			avgFit += f.calcFitness(s);
+			if (s.getFitness() > max){
+				max = s.getFitness();
+			} 
+			if (s.getFitness() < min){
+				min = s.getFitness();
+			}
+		}
+		
+		System.out.println(filename);
+		System.out.println("Average: " + avgFit/30);
+		System.out.println("Max: " + max);
+		System.out.println("Min: " + min);
+	}
+	
+	@Test
+	public void testInitValues2() throws FileNotFoundException{
+		String filename = "src/main/resources/BigMaxSatTestFile.txt";
+		CliqueMarkovNetwork net = new CliqueMarkovNetwork(filename);
+		MSFitnessFunction f = new MSFitnessFunction((MaxSatProblem)net.getProblem());
+		
+		double avgFit = 0;
+		double max = -1;
+		double min = Double.MAX_VALUE;
+		for (int i = 0; i < 30; i++){
+			Sample s = net.createRandomValidSample();
+			avgFit += f.calcFitness(s);
+			if (s.getFitness() > max){
+				max = s.getFitness();
+			} 
+			if (s.getFitness() < min){
+				min = s.getFitness();
+			}
+		}
+		
+		System.out.println(filename);
+		System.out.println("Average: " + avgFit/30);
+		System.out.println("Max: " + max);
+		System.out.println("Min: " + min);
 	}
 
 }

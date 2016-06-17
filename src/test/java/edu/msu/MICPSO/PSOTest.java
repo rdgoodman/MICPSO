@@ -28,7 +28,7 @@ public class PSOTest {
 	@Test
 	public void testIPSO() throws FileNotFoundException {
 //		String filename = ("src/main/resources/graphColor05Node2_30Values.txt");
-		String filename = ("src/main/resources/BigMaxSatTestFile2.txt");
+		String filename = ("src/main/resources/CSMaxSatTestFile1.txt");
 
 		// String fileName, boolean Markov, int numParticles, int numSamples,
 		// double epsilon, double omega,
@@ -36,7 +36,7 @@ public class PSOTest {
 		
 		double average = 0;
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			IPSO p = new IPSO(filename, 10, 1.0, 1.4, 1.4);
 			Sample s = p.run();
 			System.out.println("\n");
@@ -49,7 +49,7 @@ public class PSOTest {
 			
 			//assertEquals(true, s.getFitness() <= 0);
 		}
-		System.out.println("Average: " + average/10);
+		System.out.println("Average: " + average/20);
 	}
 
 }

@@ -16,5 +16,7 @@ public class MNTest {
 		
 		PairwiseMarkovNetwork net = new PairwiseMarkovNetwork(filename);
 	}
+	
+
 
 }

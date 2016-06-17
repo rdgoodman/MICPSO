@@ -71,6 +71,8 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			} else if (problemType.equals("MS")) {
 				readMaxSatProblemFromFile(s);
 				// MN structure automatically created by this function too
+			} else {
+				System.out.println("How the hell did we get here");
 			}
 
 		} finally {
@@ -92,7 +94,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 		String tempVal = null;
 		String allClauses = "";
 		ArrayList<Predicate> predicates = new ArrayList<Predicate>();
-
+		
 		// keep scanning for the next non-empty line
 		if (s.nextLine().equals("")) {
 			tempVal = s.nextLine();
