@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -29,7 +30,8 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 100;
+	// TODO: change back
+	int runs = 2;
 
 	/**
 	 * Constructor when read in from file
@@ -391,6 +393,8 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 				// gets the first node from the string array of edges
 				if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
 					startingNode = nodesArray.get(n);
+//					System.out.println("start: ");
+//					System.out.println(startingNode.getName());
 				}
 			}
 
@@ -398,11 +402,18 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 				// get the last node from the string array of edges
 				if (stringEdges[e].endsWith(nodesArray.get(n).getName())) {
 					endingNode = nodesArray.get(n);
+//					System.out.println("end: ");
+//					System.out.println(endingNode.getName());
+
 				}
 			}
 
 			Edge E = new Edge(startingNode, endingNode);
 			edgesArray.add(E);
+			
+//			System.out.println(" -> edge:");
+//			System.out.println(E.toString());
+			
 			// each time an edge A-B is created, do: A.addNeighbor(B) and
 			// B.addNeighbor(A)
 			startingNode.addNeighbor(endingNode);
@@ -424,7 +435,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
-		for (Node n : nodesArray) {
+		for (Node n : nodesArray) {			
 			// chosen uniformly - does that work?
 			int[] vals = n.getVals();
 			double r = Math.random();
@@ -539,8 +550,9 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			}
 		}
 
-		// System.out.println(" Initial sample: ");
-		// sample.print();
+//		 System.out.println(" Initial sample: ");
+//		 sample.print();
+//		 System.out.println("- - - - - - - - - - - - - - - - - - -");
 
 		for (int i = 0; i < runs; i++) {
 
@@ -552,10 +564,12 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 			for (Node N : nodesArray) {
 
-				// System.out.println(">>>>> Resampling Node " + N.getName());
+//				 System.out.println(">>>>> Resampling Node " + N.getName());
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
+				System.out.println(Arrays.toString(MB.toArray()));
+				
 				ArrayList<Edge> E = new ArrayList<Edge>();
 
 				// Get all edges adjacent to N (there must be a better way to do
@@ -599,14 +613,14 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 						probs.setProb(nVals[n], probs.getProb(nVals[n]) * p);
 					}
 
-					// System.out.println("\n Unnormalized");
-					// probs.print();
+//					 System.out.println("\n Unnormalized");
+//					 probs.print();
 
 					// re-normalize
 					probs.normalize();
 
-					// System.out.println("Normalized");
-					// probs.print();
+//					 System.out.println("Normalized");
+//					 probs.print();
 
 					// re-sample resulting distribution for N
 					sample.setSampledValue(N, probs.sample());
