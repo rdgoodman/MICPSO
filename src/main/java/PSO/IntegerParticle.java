@@ -350,14 +350,14 @@ public class IntegerParticle {
 			// nodes
 			for (int n = 0; n < nodes.size(); n++) {
 				// gets the first node from the string array of edges
-				if (stringEdges[e].startsWith(nodes.get(n).getName())) {
+				if(stringEdges[e].substring(0, stringEdges[e].indexOf(',')).equals(nodes.get(n).getName())) {
 					startingNode = nodes.get(n);
 				}
 			}
 
 			for (int n = 0; n < nodes.size(); n++) {
 				// get the last node from the string array of edges
-				if (stringEdges[e].endsWith(nodes.get(n).getName())) {
+				if(stringEdges[e].substring(stringEdges[e].indexOf(',') + 1).equals(nodes.get(n).getName())) {
 					endingNode = nodes.get(n);
 				}
 			}

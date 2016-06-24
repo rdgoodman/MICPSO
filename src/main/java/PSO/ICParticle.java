@@ -394,14 +394,14 @@ public class ICParticle implements Particle {
 			// nodes
 			for (int n = 0; n < nodesArray.size(); n++) {
 				// gets the first node from the string array of edges
-				if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
+				if(stringEdges[e].substring(0, stringEdges[e].indexOf(',')).equals(nodesArray.get(n).getName())) {
 					startingNode = nodesArray.get(n);
 				}
 			}
 
 			for (int n = 0; n < nodesArray.size(); n++) {
 				// get the last node from the string array of edges
-				if (stringEdges[e].endsWith(nodesArray.get(n).getName())) {
+				if(stringEdges[e].substring(stringEdges[e].indexOf(',') + 1).equals(nodesArray.get(n).getName())) {
 					endingNode = nodesArray.get(n);
 				}
 			}
