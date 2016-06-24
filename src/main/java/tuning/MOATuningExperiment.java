@@ -16,10 +16,11 @@ public class MOATuningExperiment {
 
 
 	public MOATuningExperiment(String file1, String file2, String file3, ArrayList<Double> coolingRates, ArrayList<Integer> popSizes, ArrayList<Double> percentagesToSelect) throws FileNotFoundException{
-		tuneAll(coolingRates, popSizes, percentagesToSelect);
 		filePath1 = file1;
 		filePath2 = file2;
 		filePath3 = file3;
+		
+		tuneAll(coolingRates, popSizes, percentagesToSelect);
 	}
 
 	/**
@@ -59,8 +60,12 @@ public class MOATuningExperiment {
 						MOA m3 = new MOA(filePath3, cr, pop, perc);
 						
 						double fit1 = m1.run().getFitness();
+						System.out.println("moa1 ran");
 						double fit2 = m2.run().getFitness();
+						System.out.println("moa2 ran");
 						double fit3 = m3.run().getFitness();
+						System.out.println("moa3 ran");
+
 						
 						double avgFit = (fit1 + fit2 + fit3)/3;
 						averageFitnessAcrossRuns += avgFit;

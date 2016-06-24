@@ -8,12 +8,20 @@ import java.util.ArrayList;
 
 import PSO.ICPSO;
 
-//TODO: Figure out why avg not printing, fix in ITuning too. If possible, fix in MTuning
-
-
 public class ICTuningExperiment {
-	public ICTuningExperiment(ArrayList<Integer> pNums, ArrayList<Integer> sNums, ArrayList<Double> epsilons,
-			ArrayList<Double> omegas, ArrayList<Double> phi1s, ArrayList<Double> phi2s) throws FileNotFoundException {
+
+	String filePath1;
+	String filePath2;
+	String filePath3;
+
+	public ICTuningExperiment(String file1, String file2, String file3, ArrayList<Integer> pNums,
+			ArrayList<Integer> sNums, ArrayList<Double> epsilons, ArrayList<Double> omegas, ArrayList<Double> phi1s,
+			ArrayList<Double> phi2s) throws FileNotFoundException {
+		
+		filePath1 = file1;
+		filePath2 = file2;
+		filePath3 = file3;
+		
 		tuneGeneral(pNums, sNums, epsilons);
 		tuneMultipliers(omegas, phi1s, phi2s);
 	}
@@ -25,10 +33,8 @@ public class ICTuningExperiment {
 	 */
 	private void tuneGeneral(ArrayList<Integer> pNums, ArrayList<Integer> sNums, ArrayList<Double> epsilons)
 			throws FileNotFoundException {
-		// reports results of individual params (raw numbers)
-		String singleParamFilePath = "";
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/ICresults/genAverage.txt";
+		String averageFilePath = "src/main/resources/TuningExperiments/IC_GenAverages.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -43,20 +49,7 @@ public class ICTuningExperiment {
 		for (Integer numParticles : pNums) {
 			for (Integer numSamples : sNums) {
 				for (Double epsilon : epsilons) {
-					singleParamFilePath = "src/main/resources/ICresults/" + numParticles + "_" + numSamples + "_"
-							+ epsilon + ".txt";
 
-					File tuneOutput = new File(singleParamFilePath);
-					if (!tuneOutput.exists()) {
-						try {
-							tuneOutput.createNewFile();
-						} catch (IOException e) {
-							// Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					FileWriter singleWriter = null;
 					FileWriter avgWriter = null;
 
 					// run each 10 times
@@ -64,13 +57,9 @@ public class ICTuningExperiment {
 
 					for (int i = 0; i < 10; i++) {
 
-						// TODO: are we doing multiple files?
-						ICPSO ic1 = new ICPSO("src/main/resources/graphColor08Node_10Values.txt", false, numParticles, numSamples,
-								epsilon, 0.7, 1.4, 1.4);
-						ICPSO ic2 = new ICPSO("src/main/resources/graphColor10Node_10Values.txt", false, numParticles, numSamples,
-								epsilon, 0.7, 1.4, 1.4);
-						ICPSO ic3 = new ICPSO("src/main/resources/graphColor20Node_10Values.txt", false, numParticles, numSamples,
-								epsilon, 0.7, 1.4, 1.4);
+						ICPSO ic1 = new ICPSO(filePath1, false, numParticles, numSamples, epsilon, 0.7, 1.4, 1.4);
+						ICPSO ic2 = new ICPSO(filePath2, false, numParticles, numSamples, epsilon, 0.7, 1.4, 1.4);
+						ICPSO ic3 = new ICPSO(filePath3, false, numParticles, numSamples, epsilon, 0.7, 1.4, 1.4);
 
 						double fit1 = ic1.run().getFitness();
 						System.out.println("ic1 ran");
@@ -82,17 +71,6 @@ public class ICTuningExperiment {
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
 						averageFitnessAcrossRuns += averageFitness;
 
-						try {
-							singleWriter = new FileWriter(tuneOutput, true);
-
-							// writes raw number to individual parameter file
-							singleWriter.write("\n" + averageFitness);
-							singleWriter.close();
-
-						} catch (IOException f) {
-							f.printStackTrace();
-						}
-
 					}
 
 					averageFitnessAcrossRuns /= 10;
@@ -102,7 +80,8 @@ public class ICTuningExperiment {
 
 						// notes, in avg file, what parameter combo led to the
 						// results
-						avgWriter.write("\n" + "#P = " + numParticles + " #S = " + numSamples + " e = " + epsilon + " o = 0.7" + " p1 = 1.4" + " p2 = 1.4");
+						avgWriter.write("\n" + "#P = " + numParticles + " #S = " + numSamples + " e = " + epsilon
+								+ " o = 0.7" + " p1 = 1.4" + " p2 = 1.4");
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
 					} catch (IOException f) {
 						f.printStackTrace();
@@ -116,13 +95,14 @@ public class ICTuningExperiment {
 
 	/**
 	 * Tunes omega, phi1, phi2
-	 * @throws FileNotFoundException 
+	 * 
+	 * @throws FileNotFoundException
 	 */
-	private void tuneMultipliers(ArrayList<Double> omegas, ArrayList<Double> phi1s, ArrayList<Double> phi2s) throws FileNotFoundException {
-		// reports results of individual params (raw numbers)
-		String singleParamFilePath = "";
+	private void tuneMultipliers(ArrayList<Double> omegas, ArrayList<Double> phi1s, ArrayList<Double> phi2s)
+			throws FileNotFoundException {
+
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/ICresults/multAverage.txt";
+		String averageFilePath = "src/main/resources/TuningExperiments/IC_MultAverages.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -137,20 +117,7 @@ public class ICTuningExperiment {
 		for (Double omega : omegas) {
 			for (Double phi1 : phi1s) {
 				for (Double phi2 : phi2s) {
-					singleParamFilePath = "src/main/resources/ICresults/" + omega + "_" + phi1 + "_"
-							+ phi2 + ".txt";
 
-					File tuneOutput = new File(singleParamFilePath);
-					if (!tuneOutput.exists()) {
-						try {
-							tuneOutput.createNewFile();
-						} catch (IOException e) {
-							// Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					FileWriter singleWriter = null;
 					FileWriter avgWriter = null;
 
 					// run each 10 times
@@ -158,13 +125,12 @@ public class ICTuningExperiment {
 
 					for (int i = 0; i < 10; i++) {
 
-						// TODO: are we doing multiple files?
-						ICPSO ic1 = new ICPSO("src/main/resources/graphColor08Node_10Values.txt", true, 10, 3,
-								0.75, omega, phi1, phi2);
-						ICPSO ic2 = new ICPSO("src/main/resources/graphColor10Node_10Values.txt", true, 10, 3,
-								0.75, omega, phi1, phi2);
-						ICPSO ic3 = new ICPSO("src/main/resources/graphColor20Node_10Values.txt", true, 10, 3,
-								0.75, omega, phi1, phi2);
+						ICPSO ic1 = new ICPSO(filePath1, true, 10, 3, 0.75,
+								omega, phi1, phi2);
+						ICPSO ic2 = new ICPSO(filePath2, true, 10, 3, 0.75,
+								omega, phi1, phi2);
+						ICPSO ic3 = new ICPSO(filePath3, true, 10, 3, 0.75,
+								omega, phi1, phi2);
 
 						double fit1 = ic1.run().getFitness();
 						System.out.println("ic1 ran");
@@ -176,17 +142,6 @@ public class ICTuningExperiment {
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
 						averageFitnessAcrossRuns += averageFitness;
 
-						try {
-							singleWriter = new FileWriter(tuneOutput, true);
-
-							// writes raw number to individual parameter file
-							singleWriter.write("\n" + averageFitness);
-							singleWriter.close();
-
-						} catch (IOException f) {
-							f.printStackTrace();
-						}
-
 					}
 
 					averageFitnessAcrossRuns /= 10;
@@ -196,10 +151,11 @@ public class ICTuningExperiment {
 
 						// notes, in avg file, what parameter combo led to the
 						// results
-						avgWriter.write("\n" + "#P = 10 "  + " #S = 3 " + " e = 0.75 " + " o = " + omega + " p1 = " + phi1 + " p2 = " + phi2);
+						avgWriter.write("\n" + "#P = 10 " + " #S = 3 " + " e = 0.75 " + " o = " + omega + " p1 = "
+								+ phi1 + " p2 = " + phi2);
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
 						avgWriter.close();
-		
+
 					} catch (IOException f) {
 						f.printStackTrace();
 					}
