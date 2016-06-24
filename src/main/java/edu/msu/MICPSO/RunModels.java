@@ -53,6 +53,11 @@ public class RunModels {
 	}
 
 	private static void tuneExperiments() throws FileNotFoundException {
+		
+		String filePath1 = "src/main/resources/graphColor10Node_30Values.txt";
+		String filePath2 = "src/main/resources/graphColor16Node_30Values.txt";
+		String filePath3 = "src/main/resources/graphColor20Node_30Values.txt";
+		
 		ArrayList<Integer> pNums = new ArrayList<Integer>();
 		pNums.add(5);
 		pNums.add(10);
@@ -87,11 +92,11 @@ public class RunModels {
 		phi2s.add(0.6);
 		phi2s.add(1.0);
 
-		// MTuningExperiment exp1 = new MTuningExperiment(pNums, sNums,
+		// MTuningExperiment exp1 = new MTuningExperiment(filePath1, filePath2, filePath3, pNums, sNums,
 		// epsilons, omegas, phi1s, phi2s);
-		// ICTuningExperiment exp2 = new ICTuningExperiment(pNums, sNums,
+		// ICTuningExperiment exp2 = new ICTuningExperiment(filePath1, filePath2, filePath3, pNums, sNums,
 		// epsilons, omegas, phi1s, phi2s);
-		ITuningExperiment exp3 = new ITuningExperiment(pNums, omegas, phi1s, phi2s);
+		ITuningExperiment exp3 = new ITuningExperiment(filePath1, filePath2, filePath3, pNums, omegas, phi1s, phi2s);
 	}
 
 	private static void testExperiments() throws FileNotFoundException {
