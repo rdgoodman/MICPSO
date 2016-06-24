@@ -56,7 +56,7 @@ public class PairwiseFactorEntry {
 		return Double.MIN_VALUE;
 	}
 	
-	public Double getPotential() {
+	public Double getPotential() {	
 		return potential;
 	}
 

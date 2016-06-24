@@ -96,9 +96,8 @@ public class MNExperiment {
 
 				// add datum to average fitness over iterations
 				fitnessesPerIteration.add(m.getFitnesses());
-//				System.out.println("Size: " + m.getFitnesses().size());
-//				System.out.println("Size it should be: " + m.getNumFitnessEvals());
-
+ 			    System.out.println("Size: " + m.getFitnesses().size());
+				System.out.println("Size it should be: " + m.getNumFitnessEvals());
 				
 			}
 			
