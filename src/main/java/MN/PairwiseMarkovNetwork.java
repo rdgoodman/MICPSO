@@ -81,8 +81,12 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			}
 		}
 		
-		System.out.println("Nodes: " + nodesArray.size());
-		System.out.println("Edges:" + edgesArray.size());
+//		System.out.println("Nodes: " + nodesArray.size());
+//		System.out.println("Edges:" + edgesArray.size());
+//		
+		for (Edge e : edgesArray) {
+			problem.handleEdgeConstraints(e);
+		}
 	}
 
 	/**
@@ -502,8 +506,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 	 * 
 	 * @return
 	 */
-	public Sample sample() {
-		
+	public Sample sample() {		
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
