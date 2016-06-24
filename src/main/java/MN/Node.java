@@ -58,5 +58,10 @@ public class Node {
 		Node cp = new Node(this.vals, this.name);
 		return cp;
 	}
+	
+	@Override
+	public String toString(){
+		return name;
+	}
 
 }

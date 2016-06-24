@@ -208,5 +208,10 @@ public class Edge {
 			factors[i].setPotential(newEntries[i]);
 		}
 	}
+	
+	@Override
+	public String toString(){
+		return endpoints.getFirst().getName() + " - " + endpoints.getLast().getName();
+	}
 
 }
