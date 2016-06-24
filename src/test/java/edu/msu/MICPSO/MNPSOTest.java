@@ -21,7 +21,7 @@ public class MNPSOTest {
 //			String filename = ("src/main/resources/maxSatTestFile2.txt");
 //			String filename = ("src/main/resources/BigMaxSatTestFile.txt");
 //			String filename = ("src/main/resources/graphColor20Node_30Values.txt");
-		String filename = ("src/main/resources/myciel4_converted.txt");
+			String filename = ("src/main/resources/myciel4_converted.txt");
 
 
 			// String filename =

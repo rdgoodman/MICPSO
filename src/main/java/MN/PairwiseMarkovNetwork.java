@@ -30,8 +30,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	// TODO: change back
-	int runs = 2;
+	int runs = 100;
 
 	/**
 	 * Constructor when read in from file
@@ -69,7 +68,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			if (problemType.equals("GC")) {
 				readGCProblemFromFile(s);
 				// creates the Markov network
-				createNetworkStructure();
+				createNetworkStructure();			
 			} else if (problemType.equals("MS")) {
 				readMaxSatProblemFromFile(s);
 				// MN structure automatically created by this function too
@@ -83,14 +82,22 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			}
 		}
 		
+<<<<<<< Updated upstream
 //		System.out.println("Nodes: " + nodesArray.size());
 //		System.out.println("Edges:" + edgesArray.size());
 //		
+=======
+		//System.out.println("Nodes: " + nodesArray.size());
+		//System.out.println("Edges:" + edgesArray.size());
+
+>>>>>>> Stashed changes
 		for (Edge e : edgesArray) {
 			problem.handleEdgeConstraints(e);
 		}
 	}
 
+
+	
 	/**
 	 * Reads in a MAXSAT problem from a specially formatted file
 	 * 
@@ -272,14 +279,14 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			if (!tempVal.startsWith("%")) {
 				stringEdges = tempVal.split(";");
 			}
-
+					
 			// trims extra whitespace from edge objects
 			for (int i = 0; i < stringEdges.length; i++) {
 				if (stringEdges[i].startsWith(" ")) {
 					stringEdges[i] = stringEdges[i].trim();
 				}
 			}
-
+		
 			// keep scanning for the next non-empty line
 			if (s.nextLine().equals("")) {
 				tempVal = s.nextLine();
@@ -383,15 +390,15 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 		// makes temporary node objects to store the start/end of an edge
 		Node startingNode = null;
 		Node endingNode = null;
-
+		
 		// goes through each edge in the array of edges (from the file read in
 		// earlier)
 		for (int e = 0; e < stringEdges.length; e++) {
 			// for each node in the array of Nodes gets the starting and ending
 			// nodes
 			for (int n = 0; n < nodesArray.size(); n++) {
-				// gets the first node from the string array of edges
-				if (stringEdges[e].startsWith(nodesArray.get(n).getName())) {
+				// gets the first node from the string array of edges (which we know by position of comma)				
+				if(stringEdges[e].substring(0, stringEdges[e].indexOf(',')).equals(nodesArray.get(n).getName())) {
 					startingNode = nodesArray.get(n);
 //					System.out.println("start: ");
 //					System.out.println(startingNode.getName());
@@ -399,8 +406,8 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			}
 
 			for (int n = 0; n < nodesArray.size(); n++) {
-				// get the last node from the string array of edges
-				if (stringEdges[e].endsWith(nodesArray.get(n).getName())) {
+				// get the last node from the string array of edges (which we know by position of comma)				
+				if(stringEdges[e].substring(stringEdges[e].indexOf(',') + 1).equals(nodesArray.get(n).getName())) {
 					endingNode = nodesArray.get(n);
 //					System.out.println("end: ");
 //					System.out.println(endingNode.getName());
@@ -408,18 +415,21 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 				}
 			}
 
+			
 			Edge E = new Edge(startingNode, endingNode);
+			
 			edgesArray.add(E);
-			
-//			System.out.println(" -> edge:");
-//			System.out.println(E.toString());
-			
+
 			// each time an edge A-B is created, do: A.addNeighbor(B) and
 			// B.addNeighbor(A)
 			startingNode.addNeighbor(endingNode);
 			endingNode.addNeighbor(startingNode);
 		}
 
+//		System.out.println("Pairwise Markov, line 417");
+//		for (int i = 0; i < edgesArray.size(); i++) {
+//			System.out.println(edgesArray.get(i).getEndpoints().getFirst().getName() + "," + edgesArray.get(i).getEndpoints().getLast().getName());
+//		}
 		// for testing, can remove when finished
 		handleConstraints();
 		// print();
@@ -431,7 +441,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 	 * @return
 	 */
 	public Sample createRandomValidSample() {
-
+		
 		Sample sample = new Sample(this);
 
 		// 1) generate an initial sample (probably randomly from vals(Vars)
@@ -467,7 +477,8 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 		if (!problem.satisfiesConstraints(sample, edgesArray)) {
 			sample = createRandomValidSample();
 		}
-
+		
+		System.out.println("Created random valid sample");
 		return sample;
 	}
 
@@ -552,7 +563,6 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 //		 System.out.println(" Initial sample: ");
 //		 sample.print();
-//		 System.out.println("- - - - - - - - - - - - - - - - - - -");
 
 		for (int i = 0; i < runs; i++) {
 
@@ -632,7 +642,6 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			// System.out.println("\n Final sample: ");
 			// sample.print();
 		}
-
 		return sample;
 	}
 

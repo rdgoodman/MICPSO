@@ -31,7 +31,7 @@ public class GreedyVC extends Optimizer {
 	
 	public Sample run() {
 		Sample s = new Sample();
-
+		
 		// create random ordering of vertices
 		ArrayList<Node> vertices = mn.getNodes();
 		Collections.shuffle(vertices);
@@ -67,6 +67,9 @@ public class GreedyVC extends Optimizer {
 		if (!problem.satisfiesConstraints(s, mn.getEdges())){
 			s.setFitness(s.getFitness() + problem.getInvalidSolutionPenalty());
 		}
+		
+		
+		System.out.println("Returned solution " + s.getFitness());
 		return s;
 	}
 
