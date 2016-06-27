@@ -20,9 +20,9 @@ public class ICExperiment {
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
 			// TODO: make a specialized IC folder
-			String totalResults = "src/main/resources/RefactorTestExperiments/IC_rawResults_" + graph;
-			String fitnessEvals = "src/main/resources/RefactorTestExperiments/IC_fitEvals_" + graph;
-			String fitnessOverIterations = "src/main/resources/RefactorTestExperiments/IC_fitnesses_" + graph;
+			String totalResults = "src/main/resources/PaperExperiments/IC/rawResults_" + graph;
+			String fitnessEvals = "src/main/resources/PaperExperiments/IC/fitEvals_" + graph;
+			String fitnessOverIterations = "src/main/resources/PaperExperiments/IC/fitnesses_" + graph;
 			
 			// create our files and writers
 			File rawResults = new File(totalResults);

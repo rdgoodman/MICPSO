@@ -50,25 +50,25 @@ public class MoaTest {
 		String filename = ("src/main/resources/graphColor16Node_30Values.txt");
 		MOA m = new MOA(filename, 0.1, 50, 0.25);
 
-		double avg = 0;
-		for (int i = 0; i < 10; i++) {
+		// double avg = 0;
+		// for (int i = 0; i < 10; i++) {
 
-			Sample s = m.run();
-			s.print();
-			//System.out.println("Fitness: " + m.getProblem().getFitnessFunction().calcFitness(s));
-			System.out.println("Fitness: " + s.getFitness());
-			avg += s.getFitness();
-			
-			//System.out.println("Iteration: " + i);
-			//System.out.println("Average so far: " + (avg/(i+1)));
+		Sample s = m.run();
+		s.print();
+		// System.out.println("Fitness: " +
+		// m.getProblem().getFitnessFunction().calcFitness(s));
+		System.out.println("Fitness: " + s.getFitness());
+		// avg += s.getFitness();
 
-			assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
-		}
+		// System.out.println("Iteration: " + i);
+		// System.out.println("Average so far: " + (avg/(i+1)));
 
-		System.out.println("AVERAGE: ");
-		//System.out.println(avg);
-		System.out.println(avg/10);
+		assertEquals(true, m.getProblem().satisfiesConstraints(s, m.getMN().getEdges()));
+		// }
 
+		// System.out.println("AVERAGE: ");
+		// System.out.println(avg);
+		// System.out.println(avg/10);
 
 	}
 

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import MN.PairwiseMarkovNetwork;
@@ -19,6 +20,10 @@ public class Hillclimb extends Optimizer{
 	// needs a termination criterion, same as anything else
 	private double numToConsiderConverged = 20;
 	private double threshold = 0.01;
+	ArrayList<Double> fitnesses = new ArrayList<Double>();
+	int numFitnessEvals = 0;
+
+
 
 	FitnessFunction f;
 
@@ -43,6 +48,9 @@ public class Hillclimb extends Optimizer{
 		Sample s = mn.createRandomValidSample();
 
 		f.calcFitness(s);
+		numFitnessEvals++;
+		fitnesses.add(s.getFitness());
+		
 		if (!problem.satisfiesConstraints(s, mn.getEdges())) {
 			s.setFitness(-100.0);
 		}
@@ -53,7 +61,7 @@ public class Hillclimb extends Optimizer{
 
 			double currentFit = f.calcFitness(s);
 			double neighborFit = f.calcFitness(n);
-
+			numFitnessEvals++;
 			
 			// penalizes
 			if (!problem.satisfiesConstraints(s, mn.getEdges())) {
@@ -69,6 +77,8 @@ public class Hillclimb extends Optimizer{
 			if (problem.compare(currentFit, neighborFit) == 1) {
 				// accept neighbor if better than current
 				s = n;
+				// record new fitness
+				fitnesses.add(neighborFit);
 			}
 			
 			// Next half-dozen or so lines used to determine convergence
@@ -100,5 +110,13 @@ public class Hillclimb extends Optimizer{
 
 	public ApplicationProblem getProblem() {
 		return problem;
+	}
+
+	public ArrayList<Double> getFitnesses() {
+		return fitnesses;
+	}
+
+	public int getNumFitnessEvals() {
+		return numFitnessEvals;
 	}
 }

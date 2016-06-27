@@ -24,6 +24,10 @@ public class MOA extends Optimizer{
 	private ArrayList<Sample> pop;
 	private int numIterations; // I think this is for Gibbs sampling? 
 	private double percentToSelect;
+	
+	// TODO: solution reporting
+	int numFitnessEvals = 0;
+	ArrayList<Double> fitnesses = new ArrayList<Double>();
 
 	private ApplicationProblem problem;
 	
@@ -64,6 +68,7 @@ public class MOA extends Optimizer{
 			pop.add(s);
 			// evaluates samples as they're created
 			problem.getFitnessFunction().calcFitness(s);
+			numFitnessEvals++;
 		}
 
 		// TODO: testing, remove
@@ -92,13 +97,21 @@ public class MOA extends Optimizer{
 		int iteration = 0;
 		while (!terminated) {
 			
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
-			System.out.println("%%%%%% Iteration " + iteration);
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
+//			System.out.println("%%%%%% Iteration " + iteration);
+//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%");
 
 
-			// sort the population
+			// sort the population in ascending order
 			Collections.sort(pop);
+			
+			// TODO: add best individual's fitness to list to be returned
+			// (for experiment purposes only)
+			if (problem.isMaxProblem()){
+				fitnesses.add(pop.get(pop.size() - 1).getFitness());
+			} else {
+				fitnesses.add(pop.get(0).getFitness());
+			}
 
 			// update previous best fitness
 			if (!problem.isMaxProblem()) {
@@ -117,12 +130,13 @@ public class MOA extends Optimizer{
 			ArrayList<Sample> newSamples = new ArrayList<Sample>();
 			for (int i = 0; i < selected.size(); i++) {
 				newSamples.add(sample(iteration, selected));
-				System.out.println("new samples: " + (i+1));
+				//System.out.println("new samples: " + (i+1));
 			}
 
 			// evaluate childrens' fitness
 			for (Sample s : newSamples){
 				problem.getFitnessFunction().calcFitness(s);
+				numFitnessEvals++;
 			}
 			
 			// remove parents from population
@@ -155,7 +169,7 @@ public class MOA extends Optimizer{
 //				string += " ";
 //			}
 //			System.out.println(string);
-			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
+//			System.out.println("Best sample: " + pop.get(pop.size() - 1).getFitness());
 //			pop.get(pop.size() - 1).print();
 			
 			// update best
@@ -182,6 +196,12 @@ public class MOA extends Optimizer{
 				
 			iteration++;
 		}
+		
+		System.out.println("Fitness Aross Evals:");
+		for (Double d : fitnesses) {
+			System.out.print(d + " ");
+		}
+		System.out.println();
 
 		// sort population by fitness
 		Collections.sort(pop);
@@ -381,6 +401,14 @@ public class MOA extends Optimizer{
 
 	public PairwiseMarkovNetwork getMN() {
 		return mn;
+	}
+
+	public int getNumFitnessEvals() {
+		return numFitnessEvals;
+	}
+
+	public ArrayList<Double> getFitnesses() {
+		return fitnesses;
 	}
 
 }

@@ -20,9 +20,9 @@ public class MNExperiment {
 			String graph = graphName.split("/")[graphName.split("/").length -1];
 
 			// TODO: make a specialized MN folder
-			String totalResults = "src/main/resources/RefactorTestExperiments/MN_rawResults_" + graph;
-			String fitnessEvals = "src/main/resources/RefactorTestExperiments/MN_fitEvals_" + graph;
-			String fitnessOverIterations = "src/main/resources/RefactorTestExperiments/MN_fitnesses_" + graph;
+			String totalResults = "src/main/resources/PaperExperiments/MN/rawResults_" + graph;
+			String fitnessEvals = "src/main/resources/PaperExperiments/MN/fitEvals_" + graph;
+			String fitnessOverIterations = "src/main/resources/PaperExperiments/MN/fitnesses_" + graph;
 			
 			// create our files and writers
 			File rawResults = new File(totalResults);
