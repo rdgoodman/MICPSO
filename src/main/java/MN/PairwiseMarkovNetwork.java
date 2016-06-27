@@ -30,7 +30,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 100;
+	int runs = 50;
 
 	/**
 	 * Constructor when read in from file
@@ -82,15 +82,6 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			}
 		}
 		
-<<<<<<< Updated upstream
-//		System.out.println("Nodes: " + nodesArray.size());
-//		System.out.println("Edges:" + edgesArray.size());
-//		
-=======
-		//System.out.println("Nodes: " + nodesArray.size());
-		//System.out.println("Edges:" + edgesArray.size());
-
->>>>>>> Stashed changes
 		for (Edge e : edgesArray) {
 			problem.handleEdgeConstraints(e);
 		}
@@ -578,7 +569,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
-				System.out.println(Arrays.toString(MB.toArray()));
+				//System.out.println(Arrays.toString(MB.toArray()));
 				
 				ArrayList<Edge> E = new ArrayList<Edge>();
 

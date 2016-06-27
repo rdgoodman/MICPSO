@@ -83,8 +83,10 @@ public class MTuningExperiment {
 						avgWriter.write("\n" + "#P = " + numParticles + " #S = " + numSamples + " e = " + epsilon
 								+ " o = 0.7" + " p1 = 1.4" + " p2 = 1.4");
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
+						//System.out.println("\n\n &&&&&&&&&&&&&&&&& AVERAGE:::::: \n\n" + averageFitnessAcrossRuns + " \n\n &&&&&&&&&&&&&&&&&");
 						avgWriter.flush();
 						// TODO: close/flush
+						
 					} catch (IOException f) {
 						f.printStackTrace();
 					}

@@ -142,9 +142,9 @@ public class ICPSO extends Optimizer {
 		}
 
 		while (!terminated) {
-			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+//			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {
@@ -218,9 +218,9 @@ public class ICPSO extends Optimizer {
 	 * Creates a copy of the best sample
 	 */
 	private void setBestSample(Sample s) {
-		 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		 System.out.println("!!! New best sample with fitness " +
-		 s.getFitness() + "!!!");
+//		 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//		 System.out.println("!!! New best sample with fitness " +
+//		 s.getFitness() + "!!!");
 		bestSample = s;
 	}
 
