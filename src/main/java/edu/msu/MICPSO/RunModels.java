@@ -118,20 +118,20 @@ public class RunModels {
 
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
 		String filePath = "src/main/resources/";
+		
+		experimentGraphs.add(filePath + "huck_converted.txt");		
+		experimentGraphs.add(filePath + "myciel3_converted.txt");
+		experimentGraphs.add(filePath + "myciel4_converted.txt");
+		experimentGraphs.add(filePath + "myciel5_converted.txt");
+		experimentGraphs.add(filePath + "queen5_5color_converted.txt");		
 
-		// experimentGraphs.add(filePath + "huck_converted.txt");
-		// experimentGraphs.add(filePath + "myciel3_converted.txt");
-		// experimentGraphs.add(filePath + "myciel4_converted.txt");
-		// experimentGraphs.add(filePath + "myciel5_converted.txt");
-		// experimentGraphs.add(filePath + "queen5_5color_converted.txt");
-
-		// MT to do: check these on other computer.
-		// experimentGraphs.add(filePath + "queen6_6color_converted.txt");
-		// experimentGraphs.add(filePath + "queen7_7color_converted.txt");
-		// experimentGraphs.add(filePath + "queen8_8color_converted.txt");
-		// experimentGraphs.add(filePath + "queen8_12color_converted.txt");
-
-		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
+		//MT to do: check these on other computer.
+//		experimentGraphs.add(filePath + "queen6_6color_converted.txt");
+//		experimentGraphs.add(filePath + "queen7_7color_converted.txt");
+//		experimentGraphs.add(filePath + "queen8_8color_converted.txt");	
+//		experimentGraphs.add(filePath + "queen8_12color_converted.txt");		
+		
+     	experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values_NP.txt");
 		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");

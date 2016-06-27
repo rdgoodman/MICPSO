@@ -469,7 +469,6 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 			sample = createRandomValidSample();
 		}
 		
-		System.out.println("Created random valid sample");
 		return sample;
 	}
 
@@ -569,7 +568,9 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 				// 4) Calculate P(X|MB(X)) using current values for MB(X)
 				ArrayList<Node> MB = N.getMB();
+				
 				//System.out.println(Arrays.toString(MB.toArray()));
+
 				
 				ArrayList<Edge> E = new ArrayList<Edge>();
 
