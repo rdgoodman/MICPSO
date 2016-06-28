@@ -22,7 +22,7 @@ public class MTuningExperiment {
 		filePath2 = file2;
 		filePath3 = file3;
 
-		tuneGeneral(pNums, sNums, epsilons);
+		//tuneGeneral(pNums, sNums, epsilons);
 		tuneMultipliers(omegas, phi1s, phi2s);
 	}
 

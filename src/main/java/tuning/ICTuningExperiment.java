@@ -83,6 +83,7 @@ public class ICTuningExperiment {
 						avgWriter.write("\n" + "#P = " + numParticles + " #S = " + numSamples + " e = " + epsilon
 								+ " o = 0.7" + " p1 = 1.4" + " p2 = 1.4");
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
+						avgWriter.flush();
 					} catch (IOException f) {
 						f.printStackTrace();
 					}

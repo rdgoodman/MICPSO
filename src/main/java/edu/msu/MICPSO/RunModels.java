@@ -49,14 +49,14 @@ public class RunModels {
 
 	private static void tuneExperiments() throws FileNotFoundException {
 
-		String filePath1 = "src/main/resources/myciel4_converted.txt";
-		String filePath2 = "src/main/resources/graphColor10Node_30Values.txt";
-		String filePath3 = "src/main/resources/graphColor16Node_30Values.txt";
+		  String filePath1 = "src/main/resources/myciel3_converted.txt";
+		  String filePath2 = "src/main/resources/myciel4_converted.txt";
+		  String filePath3 = "src/main/resources/queen5_5color_converted.txt";
 
 		ArrayList<Integer> pNums = new ArrayList<Integer>();
 		pNums.add(5);
 		pNums.add(10);
-		//pNums.add(15);
+		// pNums.add(15);
 
 		ArrayList<Integer> sNums = new ArrayList<Integer>();
 		sNums.add(1);
@@ -73,19 +73,19 @@ public class RunModels {
 		omegas.add(0.2);
 		omegas.add(0.5);
 		omegas.add(0.9);
-		//omegas.add(1.0);
+		// omegas.add(1.0);
 
 		ArrayList<Double> phi1s = new ArrayList<Double>();
 		phi1s.add(1.4);
 		phi1s.add(0.2);
 		phi1s.add(0.6);
-		//phi1s.add(1.0);
+		// phi1s.add(1.0);
 
 		ArrayList<Double> phi2s = new ArrayList<Double>();
 		phi2s.add(1.4);
 		phi2s.add(0.2);
 		phi2s.add(0.6);
-		//phi2s.add(1.0);
+		// phi2s.add(1.0);
 
 		ArrayList<Double> crs = new ArrayList<Double>();
 		crs.add(0.1);
@@ -105,33 +105,36 @@ public class RunModels {
 		System.out.println("Running Markov Experiments");
 		MTuningExperiment exp1 = new MTuningExperiment(filePath1, filePath2, filePath3, pNums, sNums, epsilons, omegas,
 				phi1s, phi2s);
-		System.out.println("Running IC Experiments");
-		ICTuningExperiment exp2 = new ICTuningExperiment(filePath1, filePath2, filePath3, pNums, sNums, epsilons,
-				omegas, phi1s, phi2s);
-		System.out.println("Running Integer Experiments");
-		ITuningExperiment exp3 = new ITuningExperiment(filePath1, filePath2, filePath3, pNums, omegas, phi1s, phi2s);
-		System.out.println("Running MOA Experiments");
-		MOATuningExperiment exp4 = new MOATuningExperiment(filePath1, filePath2, filePath3, crs, pop, percentages);
+
+//		System.out.println("Running IC Experiments");
+//		ICTuningExperiment exp2 = new ICTuningExperiment(filePath1, filePath2, filePath3, pNums, sNums, epsilons,
+//				omegas, phi1s, phi2s);
+//
+//		System.out.println("Running Integer Experiments");
+//
+//		ITuningExperiment exp3 = new ITuningExperiment(filePath1, filePath2, filePath3, pNums, omegas, phi1s, phi2s);
+//		System.out.println("Running MOA Experiments");
+//		MOATuningExperiment exp4 = new MOATuningExperiment(filePath1, filePath2, filePath3, crs, pop, percentages);
 	}
 
 	private static void testExperiments() throws FileNotFoundException {
 
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
 		String filePath = "src/main/resources/";
-		
-		experimentGraphs.add(filePath + "huck_converted.txt");		
+
+		experimentGraphs.add(filePath + "huck_converted.txt");
 		experimentGraphs.add(filePath + "myciel3_converted.txt");
 		experimentGraphs.add(filePath + "myciel4_converted.txt");
 		experimentGraphs.add(filePath + "myciel5_converted.txt");
-		experimentGraphs.add(filePath + "queen5_5color_converted.txt");		
+		experimentGraphs.add(filePath + "queen5_5color_converted.txt");
 
-		//MT to do: check these on other computer.
-//		experimentGraphs.add(filePath + "queen6_6color_converted.txt");
-//		experimentGraphs.add(filePath + "queen7_7color_converted.txt");
-//		experimentGraphs.add(filePath + "queen8_8color_converted.txt");	
-//		experimentGraphs.add(filePath + "queen8_12color_converted.txt");		
-		
-     	experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
+		// MT to do: check these on other computer.
+		// experimentGraphs.add(filePath + "queen6_6color_converted.txt");
+		// experimentGraphs.add(filePath + "queen7_7color_converted.txt");
+		// experimentGraphs.add(filePath + "queen8_8color_converted.txt");
+		// experimentGraphs.add(filePath + "queen8_12color_converted.txt");
+
+		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
 		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values_NP.txt");
 		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
