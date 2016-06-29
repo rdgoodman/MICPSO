@@ -22,8 +22,8 @@ public class MTuningExperiment {
 		filePath2 = file2;
 		filePath3 = file3;
 
-		//tuneGeneral(pNums, sNums, epsilons);
 		tuneMultipliers(omegas, phi1s, phi2s);
+		tuneGeneral(pNums, sNums, epsilons);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class MTuningExperiment {
 						double fit1 = m1.run().getFitness();
 						System.out.println("m1 ran");
 						double fit2 = m2.run().getFitness();
-						System.out.println("m1 ran");
+						System.out.println("m2 ran");
 						double fit3 = m3.run().getFitness();
-						System.out.println("m1 ran");
+						System.out.println("m3 ran");
 
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
 						averageFitnessAcrossRuns += averageFitness;
@@ -127,9 +127,9 @@ public class MTuningExperiment {
 
 					for (int i = 0; i < 10; i++) {
 
-						ICPSO m1 = new ICPSO(filePath1, true, 10, 3, 0.75, omega, phi1, phi2);
-						ICPSO m2 = new ICPSO(filePath2, true, 10, 3, 0.75, omega, phi1, phi2);
-						ICPSO m3 = new ICPSO(filePath3, true, 10, 3, 0.75, omega, phi1, phi2);
+						ICPSO m1 = new ICPSO(filePath1, true, 6, 3, 0.75, omega, phi1, phi2);
+						ICPSO m2 = new ICPSO(filePath2, true, 6, 3, 0.75, omega, phi1, phi2);
+						ICPSO m3 = new ICPSO(filePath3, true, 6, 3, 0.75, omega, phi1, phi2);
 
 						double fit1 = m1.run().getFitness();
 						System.out.println("m1 ran");

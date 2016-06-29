@@ -126,11 +126,11 @@ public class ICTuningExperiment {
 
 					for (int i = 0; i < 10; i++) {
 
-						ICPSO ic1 = new ICPSO(filePath1, true, 10, 3, 0.75,
+						ICPSO ic1 = new ICPSO(filePath1, false, 10, 3, 0.75,
 								omega, phi1, phi2);
-						ICPSO ic2 = new ICPSO(filePath2, true, 10, 3, 0.75,
+						ICPSO ic2 = new ICPSO(filePath2, false, 10, 3, 0.75,
 								omega, phi1, phi2);
-						ICPSO ic3 = new ICPSO(filePath3, true, 10, 3, 0.75,
+						ICPSO ic3 = new ICPSO(filePath3, false, 10, 3, 0.75,
 								omega, phi1, phi2);
 
 						double fit1 = ic1.run().getFitness();
