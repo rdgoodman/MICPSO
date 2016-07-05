@@ -129,7 +129,11 @@ public class MOA extends Optimizer{
 			// generate the correct number of samples
 			ArrayList<Sample> newSamples = new ArrayList<Sample>();
 			for (int i = 0; i < selected.size(); i++) {
-				newSamples.add(sample(iteration, selected));
+				Sample ns = sample(iteration, selected);
+				while (ns == null){
+					ns = sample(iteration, selected);
+				}
+				newSamples.add(ns);
 				//System.out.println("new samples: " + (i+1));
 			}
 
@@ -383,9 +387,10 @@ public class MOA extends Optimizer{
 			numAttempted++;
 		}
 
-		if (numAttempted > 1000) {
-			throw new RuntimeException("Tried too many");
+		if (numAttempted > 100) {
+			//throw new RuntimeException("Tried too many");
 			// TODO: restart
+			return null;
 		}
 
 		return s;

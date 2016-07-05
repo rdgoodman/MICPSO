@@ -69,10 +69,10 @@ public class RunModels {
 		epsilons.add(0.95);
 
 		ArrayList<Double> omegas = new ArrayList<Double>();
-		omegas.add(0.7);
 		omegas.add(0.2);
-		omegas.add(0.5);
-		omegas.add(0.9);
+//		omegas.add(0.5);
+//		omegas.add(0.9);
+//		omegas.add(0.7);
 		// omegas.add(1.0);
 
 		ArrayList<Double> phi1s = new ArrayList<Double>();
