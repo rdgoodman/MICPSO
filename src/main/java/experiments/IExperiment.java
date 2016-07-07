@@ -69,11 +69,11 @@ public class IExperiment {
 
 			for (int i = 0; i < numRuns; i++) {
 				// chosen params (found in param tuning experiments):
-				// #P = 10  o = 1.0 p1 = 1.4 p2 = 1.4
-				// -2.7666666666666666
+				// #P = 10  o = 0.2 p1 = 0.2 p2 = 1.4 ****
+
 
 				// runs on a single graph instance
-				IPSO intPSO = new IPSO(graphName, 10, 1.0, 1.4, 1.4);
+				IPSO intPSO = new IPSO(graphName, 10, 0.2, 0.2, 1.4);
 				
 				intPSO.run();
 				double fitness = intPSO.getBestFitness();

@@ -22,8 +22,8 @@ public class MTuningExperiment {
 		filePath2 = file2;
 		filePath3 = file3;
 
-		//tuneGeneral(pNums, sNums, epsilons);
 		tuneMultipliers(omegas, phi1s, phi2s);
+		//tuneGeneral(pNums, sNums, epsilons);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class MTuningExperiment {
 						double fit1 = m1.run().getFitness();
 						System.out.println("m1 ran");
 						double fit2 = m2.run().getFitness();
-						System.out.println("m1 ran");
+						System.out.println("m2 ran");
 						double fit3 = m3.run().getFitness();
-						System.out.println("m1 ran");
+						System.out.println("m3 ran");
 
 						double averageFitness = (fit1 + fit2 + fit3) / 3;
 						averageFitnessAcrossRuns += averageFitness;
@@ -105,7 +105,7 @@ public class MTuningExperiment {
 	private void tuneMultipliers(ArrayList<Double> omegas, ArrayList<Double> phi1s, ArrayList<Double> phi2s)
 			throws FileNotFoundException {
 		// reports results of combination of params (average)
-		String averageFilePath = "src/main/resources/TuningExperiments/MIC_MultAverages.txt";
+		String averageFilePath = "src/main/resources/TuningExperiments/MIC_Faster_MultAverages.txt";
 
 		File avgOutput = new File(averageFilePath);
 		if (!avgOutput.exists()) {
@@ -123,13 +123,14 @@ public class MTuningExperiment {
 					FileWriter avgWriter = null;
 
 					// run each 10 times
+					// TODO: change back to 10
 					double averageFitnessAcrossRuns = 0;
 
-					for (int i = 0; i < 10; i++) {
+					for (int i = 0; i < 5; i++) {
 
-						ICPSO m1 = new ICPSO(filePath1, true, 10, 3, 0.75, omega, phi1, phi2);
-						ICPSO m2 = new ICPSO(filePath2, true, 10, 3, 0.75, omega, phi1, phi2);
-						ICPSO m3 = new ICPSO(filePath3, true, 10, 3, 0.75, omega, phi1, phi2);
+						ICPSO m1 = new ICPSO(filePath1, true, 5, 1, 0.75, omega, phi1, phi2);
+						ICPSO m2 = new ICPSO(filePath2, true, 5, 1, 0.75, omega, phi1, phi2);
+						ICPSO m3 = new ICPSO(filePath3, true, 5, 1, 0.75, omega, phi1, phi2);
 
 						double fit1 = m1.run().getFitness();
 						System.out.println("m1 ran");
@@ -143,14 +144,14 @@ public class MTuningExperiment {
 
 					}
 
-					averageFitnessAcrossRuns /= 10;
+					averageFitnessAcrossRuns /= 5;
 
 					try {
 						avgWriter = new FileWriter(avgOutput, true);
 
 						// notes, in avg file, what parameter combo led to the
 						// results
-						avgWriter.write("\n" + "#P = 10 " + " #S = 3 " + " e = 0.75 " + " o = " + omega + " p1 = "
+						avgWriter.write("\n" + "#P = 5 " + " #S = 1 " + " e = 0.75 " + " o = " + omega + " p1 = "
 								+ phi1 + " p2 = " + phi2);
 						avgWriter.write("\n" + averageFitnessAcrossRuns);
 						avgWriter.flush();

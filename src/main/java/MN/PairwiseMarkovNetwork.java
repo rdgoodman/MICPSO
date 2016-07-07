@@ -30,7 +30,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 50;
+	int runs = 100;
 
 	/**
 	 * Constructor when read in from file

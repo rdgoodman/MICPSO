@@ -14,6 +14,8 @@ import PSO.ICPSO;
 import PSO.ICParticle;
 import PSO.IPSO;
 import comparisons.GreedyVC;
+import experiments.GreedyExperiment;
+import experiments.HCExperiment;
 import experiments.ICExperiment;
 import experiments.MNExperiment;
 import experiments.IExperiment;
@@ -43,8 +45,8 @@ public class RunModels {
 		// 0.6);
 		// micpso.run();
 
-		tuneExperiments();
-		// testExperiments();
+		//tuneExperiments();
+		 testExperiments();
 	}
 
 	private static void tuneExperiments() throws FileNotFoundException {
@@ -69,10 +71,10 @@ public class RunModels {
 		epsilons.add(0.95);
 
 		ArrayList<Double> omegas = new ArrayList<Double>();
-		omegas.add(0.7);
 		omegas.add(0.2);
-		omegas.add(0.5);
-		omegas.add(0.9);
+//		omegas.add(0.5);
+//		omegas.add(0.9);
+//		omegas.add(0.7);
 		// omegas.add(1.0);
 
 		ArrayList<Double> phi1s = new ArrayList<Double>();
@@ -122,36 +124,23 @@ public class RunModels {
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
 		String filePath = "src/main/resources/";
 
-		experimentGraphs.add(filePath + "huck_converted.txt");
 		experimentGraphs.add(filePath + "myciel3_converted.txt");
 		experimentGraphs.add(filePath + "myciel4_converted.txt");
 		experimentGraphs.add(filePath + "myciel5_converted.txt");
 		experimentGraphs.add(filePath + "queen5_5color_converted.txt");
+		experimentGraphs.add(filePath + "queen6_6color_converted.txt");
+		experimentGraphs.add(filePath + "huck_converted.txt");
+		experimentGraphs.add(filePath + "david_converted.txt");
+		experimentGraphs.add(filePath + "queen7_7color_converted.txt");
+		experimentGraphs.add(filePath + "queen8_8color_converted.txt");
 
-		// MT to do: check these on other computer.
-		// experimentGraphs.add(filePath + "queen6_6color_converted.txt");
-		// experimentGraphs.add(filePath + "queen7_7color_converted.txt");
-		// experimentGraphs.add(filePath + "queen8_8color_converted.txt");
-		// experimentGraphs.add(filePath + "queen8_12color_converted.txt");
 
-		experimentGraphs.add("src/main/resources/graphColor05Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor05Node2_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor05Node3_30Values_NP.txt");
-		experimentGraphs.add("src/main/resources/graphColor08Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor08Node2_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor10Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor10Node2_30Values_NP.txt");
-		experimentGraphs.add("src/main/resources/graphColor12Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor16Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor20Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor24Node_30Values.txt");
-		experimentGraphs.add("src/main/resources/graphColor38Node_30Values.txt");
-
-		MNExperiment m = new MNExperiment(1, experimentGraphs);
-		// ICExperiment ic = new ICExperiment(30, experimentGraphs);
-		// IExperiment i = new IExperiment(30, experimentGraphs);
-		// GreedyVC g = new GreedyVC(filePath + "queen8_8color_converted.txt");
-		// g.run();
+		int numRuns = 20;
+		MNExperiment m = new MNExperiment(numRuns, experimentGraphs);
+		// ICExperiment ic = new ICExperiment(numRuns, experimentGraphs);
+		// IExperiment i = new IExperiment(numRuns, experimentGraphs);
+		//GreedyExperiment g = new GreedyExperiment(numRuns, experimentGraphs);
+		//HCExperiment hc = new HCExperiment(numRuns, experimentGraphs);
 	}
 
 	// TODO: this
