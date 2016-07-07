@@ -142,9 +142,9 @@ public class ICPSO extends Optimizer {
 		}
 
 		while (!terminated) {
-			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+//			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {

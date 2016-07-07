@@ -68,11 +68,10 @@ public class ICExperiment {
 
 			for (int i = 0; i < numRuns; i++) {
 				// chosen params (found in param tuning experiments):
-				// #P = 10 #S = 3 e = 0.75 o = 0.5 p1 = 0.6 p2 = 0.6
-				// -0.333
+				// #P = 10 #S = 3 e = 0.95 o = 0.7 p1 = 1.4 p2 = 1.4
 
 				// runs on a single graph instance
-				ICPSO ic = new ICPSO(graphName,false, 10, 3, 0.75, 0.5, 0.6, 0.6);
+				ICPSO ic = new ICPSO(graphName,false, 10, 3, 0.95, 0.7, 1.4, 1.4);
 				
 				double fitness = ic.run().getFitness();
 				double fitEvals = ic.getNumFitnessEvals();
