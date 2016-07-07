@@ -53,7 +53,7 @@ public class MOATuningExperiment {
 
 					double averageFitnessAcrossRuns = 0;
 					// run each 10 times
-					for (int i = 0; i < 10; i++) {
+					for (int i = 0; i < 5; i++) {
 						// creates a MOA instance for each file
 						MOA m1 = new MOA(filePath1, cr, pop, perc);
 						MOA m2 = new MOA(filePath2, cr, pop, perc);
@@ -71,7 +71,7 @@ public class MOATuningExperiment {
 						averageFitnessAcrossRuns += avgFit;
 					}
 					
-					averageFitnessAcrossRuns /= 10;
+					averageFitnessAcrossRuns /= 5;
 					
 					try {
 						avgWriter = new FileWriter(avgOutput, true);
