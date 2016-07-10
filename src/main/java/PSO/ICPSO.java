@@ -106,6 +106,7 @@ public class ICPSO extends Optimizer {
 			} else {
 				pop.add(new ICParticle(fileName, problem, numSamples, epsilon));
 			}
+			System.out.println("Added particle " + i);
 		}
 	}
 
@@ -120,7 +121,7 @@ public class ICPSO extends Optimizer {
 										// point
 		int runs = 0; // testing, remove
 
-		// System.out.println("Evaluating Particles");
+		 System.out.println("Evaluating Particles");
 		// 1) evaluate all particles
 		// 2) set gBest
 		double maxFit = problem.getWorstValue();
@@ -136,15 +137,15 @@ public class ICPSO extends Optimizer {
 				maxFit = fit;
 				bestSample = p.getBestSample();
 				gBest = p.copy();
-				// System.out.println("Global best:");
-				// bestSample.print();
+				 System.out.println("Global best:");
+				 bestSample.print();
 			}
 		}
 
 		while (!terminated) {
-//			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
-//			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			 System.out.println("\n \n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			 System.out.println(" %%%%%%%%%%%%% RUN " + runs);
+			 System.out.println(" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 			// iterate through all particles
 			for (Particle p : pop) {

@@ -124,15 +124,17 @@ public class RunModels {
 		ArrayList<String> experimentGraphs = new ArrayList<String>();
 		String filePath = "src/main/resources/";
 
-		experimentGraphs.add(filePath + "myciel3_converted.txt");
-		experimentGraphs.add(filePath + "myciel4_converted.txt");
-		experimentGraphs.add(filePath + "myciel5_converted.txt");
-		experimentGraphs.add(filePath + "queen5_5color_converted.txt");
-		experimentGraphs.add(filePath + "queen6_6color_converted.txt");
-		experimentGraphs.add(filePath + "huck_converted.txt");
+//		experimentGraphs.add(filePath + "myciel3_converted.txt");
+//		experimentGraphs.add(filePath + "myciel4_converted.txt");
+//		experimentGraphs.add(filePath + "myciel5_converted.txt");
+//		experimentGraphs.add(filePath + "queen5_5color_converted.txt");
+		
+//		experimentGraphs.add(filePath + "queen6_6color_converted.txt");		
+//		experimentGraphs.add(filePath + "huck_converted.txt");
 		experimentGraphs.add(filePath + "david_converted.txt");
-		experimentGraphs.add(filePath + "queen7_7color_converted.txt");
-		experimentGraphs.add(filePath + "queen8_8color_converted.txt");
+//		
+//		experimentGraphs.add(filePath + "queen7_7color_converted.txt");
+//		experimentGraphs.add(filePath + "queen8_8color_converted.txt");
 
 
 		int numRuns = 20;

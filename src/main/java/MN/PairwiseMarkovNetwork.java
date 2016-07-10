@@ -30,7 +30,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 	// number of runs for Gibbs sampling
 	// ultimately this should be tunable
-	int runs = 100;
+	int runs = 1;
 
 	/**
 	 * Constructor when read in from file
@@ -408,6 +408,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 
 			
 			Edge E = new Edge(startingNode, endingNode);
+			//System.out.println(E.toString());
 			
 			edgesArray.add(E);
 
@@ -644,6 +645,7 @@ public class PairwiseMarkovNetwork implements MarkovNetwork{
 		for (Edge e : edgesArray) {
 			e.adjustPotentials(s, epsilon);
 			// shouldn't need to-zero adjustment, but let's check
+			problem.handleEdgeConstraints(e);
 			problem.checkEdgeConstraints(e);
 		}
 	}

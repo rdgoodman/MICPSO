@@ -105,12 +105,12 @@ public class GraphColoringProblem implements ApplicationProblem {
 
 	@Override
 	public void checkEdgeConstraints(Edge e) {
-		PairwiseFactorEntry[] factors = e.getFactors();
-		
+		PairwiseFactorEntry[] factors = e.getFactors();		
 		for (int i = 0; i < factors.length; i++) {
 			// for graph-coloring problems, adjacent vertices
 			// cannot have the same color
 			if ((factors[i].getValA() == factors[i].getValB()) && (factors[i].getPotential() > 0.0)) {
+				System.out.println(factors[i].getA().getName() + " = " + factors[i].getValA() + " AND " + factors[i].getB().getName() + " = " + factors[i].getValB());
 				throw new RuntimeException("ERROR: graph-color constraints violated");
 			}
 		}
