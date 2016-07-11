@@ -70,7 +70,7 @@ public class MOAExperiment {
 					
 					// runs on a single graph instance
 					// TODO: put in actual params!!!
-					MOA h = new MOA(graphName, numRuns, i, numRuns);
+					MOA h = new MOA(graphName, 0.1, 25, 0.5);
 					double fitness = h.run().getFitness();
 					double fitEvals = h.getNumFitnessEvals();
 

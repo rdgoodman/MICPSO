@@ -65,6 +65,7 @@ public class MOA extends Optimizer{
 		// creates n randomly (uniformly) initialized samples
 		for (int i = 0; i < n; i++) {
 			Sample s = mn.createRandomValidSample();
+			System.out.println("added a sample");
 			pop.add(s);
 			// evaluates samples as they're created
 			problem.getFitnessFunction().calcFitness(s);
@@ -79,6 +80,8 @@ public class MOA extends Optimizer{
 			}
 			// s.print();
 		}
+		
+		System.out.println("Population created");
 	}
 
 	/**
