@@ -150,8 +150,8 @@ public class RunModels {
 //		MNExperiment m = new MNExperiment(numRuns, experimentGraphs);
   //      ICExperiment ic = new ICExperiment(numRuns, experimentGraphs);
 		// IExperiment i = new IExperiment(numRuns, experimentGraphs);
-		//GreedyExperiment g = new GreedyExperiment(numRuns, experimentGraphs);
-		HCExperiment hc = new HCExperiment(numRuns, experimentGraphs);
+		GreedyExperiment g = new GreedyExperiment(numRuns, experimentGraphs);
+//		HCExperiment hc = new HCExperiment(numRuns, experimentGraphs);
 //		MOAExperiment ma = new MOAExperiment(numRuns, experimentGraphs);
 	}
 
